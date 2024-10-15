@@ -1,6 +1,6 @@
 
 Projekt: ITP-Lernplattform
-Projektbeschreibung
+Projektbeschreibung 
 Das Projekt ist eine Lernplattform zur spielerischen Unterstützung von IT-Projekten (ITP). Es ermöglicht Benutzern, über ein grafisches Benutzerinterface (GUI) Fragen zu verwalten, Quizze zu spielen und ein Hangman-Spiel zu nutzen. Die Hauptzielgruppe sind Schüler und Lehrer, insbesondere an der HTL und TGM, die den Lernfortschritt durch interaktive Lernmethoden fördern wollen.
 
 Zusätzlich können Lehrpersonen Karteikarten exportieren und mit Schülern teilen, was das gemeinsame Lernen erleichtert. Weitere Spielmodule lassen sich durch den Hersteller modular hinzufügen, um die Funktionalität der Anwendung zu erweitern.
@@ -46,11 +46,7 @@ Funktionalität: Einfache Erweiterbarkeit durch modular hinzufügbare Spielmodi.
 Zuverlässigkeit: Schnell ladende Fragen und Statistiken.
 Benutzbarkeit: Eine benutzerfreundliche und anpassbare Oberfläche.
 Effizienz: Schnelle Interaktionen und Reaktionszeiten.
-Glossar
-HTL: Höhere Technische Lehranstalt
-TGM: Technologisches Gewerbemuseum
-GUI: Graphical User Interface (Benutzeroberfläche)
-URL: Uniform Resource Locator (Webadresse für Ressourcen)
+
 Dieses Projekt zielt darauf ab, das Lernen von IT-Projekt-Fragen in einem spielerischen und interaktiven Kontext zu unterstützen. Durch die modulare Erweiterbarkeit bleibt die Anwendung flexibel und zukunftssicher.
 
 
