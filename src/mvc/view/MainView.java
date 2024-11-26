@@ -2,11 +2,13 @@ package mvc.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MainView {
     JButton cards ;
     JButton quiz;
     JButton hangman;
+    JButton more;
     public MainView(String title) {
         JFrame frame = new JFrame(title);
         frame.setMinimumSize(new Dimension(850, 600));
@@ -22,14 +24,26 @@ public class MainView {
 
 
         panel.setLayout(new GridLayout(2,2));
-        JButton main = new JButton("MainMenu");
-        cards = new JButton("Karteikarten");
-        quiz = new JButton("Quiz");
-        hangman = new JButton("Hangman");
 
+        cards = new JButton("Karteikarten");
+        cards.setActionCommand("cards");
+        quiz = new JButton("Quiz");
+        quiz.setActionCommand("quiz");
+        hangman = new JButton("Hangman");
+        more = new JButton("More?");
+        more.setEnabled(false);
+        more.setActionCommand("more");
+
+        panel.add(more);
         panel.add(cards, BorderLayout.WEST);
         panel.add(quiz, BorderLayout.CENTER);
         panel.add(hangman, BorderLayout.EAST);
 
+    }
+    public void addButtonListener(ActionListener l) {
+        more.addActionListener(l);
+        cards.addActionListener(l);
+        quiz.addActionListener(l);
+        hangman.addActionListener(l);
     }
 }
