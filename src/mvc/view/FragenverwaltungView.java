@@ -2,7 +2,7 @@ package mvc.view;
 
 import javax.swing.*;
 import java.awt.*;
-public class MainMenuView extends JFrame {
+public class FragenverwaltungView extends JFrame {
     JTextArea cards;
     JScrollPane cardsPane;
     JButton add;
@@ -10,10 +10,10 @@ public class MainMenuView extends JFrame {
     JButton save;
     JButton load;
 
-    public MainMenuView() {
-        JFrame frame = new JFrame();
-
-        frame.setSize(800, 600);
+    public FragenverwaltungView(String title) {
+        JFrame frame = new JFrame(title);
+        frame.setMinimumSize(new Dimension(850, 600));
+        frame.setSize(900, 700);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -26,7 +26,7 @@ public class MainMenuView extends JFrame {
 
         panel.setLayout(new BorderLayout());
 
-        JPanel operations = new JPanel(new GridLayout(4, 1));
+        JPanel operations = new JPanel(new FlowLayout(FlowLayout.CENTER));
         add = new JButton("Hinzufuegen");
         delete = new JButton("Loeschen");
         save = new JButton("Speichern");
@@ -42,13 +42,13 @@ public class MainMenuView extends JFrame {
         cards = new JTextArea("");
         cards.setEditable(false);
         cards.setColumns(8);
-        cards.setRows(10);
+        cards.setRows(7);
         cards.setEditable(false);
         cards.setFont(new Font("Monospaced", Font.PLAIN, 30));
         cardsPane = new JScrollPane(cards);
         panel.add(cardsPane, BorderLayout.CENTER);
 
-        JPanel selectButtons = new JPanel(new GridLayout(3, 1));
+        JPanel selectButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton mainMenu = new JButton("MainMenu");
         JButton quiz = new JButton("Quiz");
         JButton hangman = new JButton("Hangman");
