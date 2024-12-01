@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class FragenverwaltungPanel extends JPanel {
-    JTextArea cards;
-    JScrollPane cardsPane;
+public class FragenverwaltungView extends JPanel {
     JButton add;
     JButton delete;
     JButton save;
@@ -16,7 +14,7 @@ public class FragenverwaltungPanel extends JPanel {
     JButton hangman;
 
 
-    public FragenverwaltungPanel( ) {
+    public FragenverwaltungView( ) {
 
 
 
@@ -30,22 +28,16 @@ public class FragenverwaltungPanel extends JPanel {
         save = new JButton("Speichern");
         save.setActionCommand("save");
         load = new JButton("Laden");
+        mainMenu = new JButton("Main Menu");
 
         operations.add(add);
         operations.add(delete);
         operations.add(save);
         operations.add(load);
+        operations.add(mainMenu);
 
         this.add(operations, BorderLayout.NORTH);
 
-        cards = new JTextArea("");
-        cards.setEditable(false);
-        cards.setColumns(8);
-        cards.setRows(7);
-        cards.setEditable(false);
-        cards.setFont(new Font("Monospaced", Font.PLAIN, 30));
-        cardsPane = new JScrollPane(cards);
-        this.add(cardsPane, BorderLayout.CENTER);
     }
     public void addButtonListener(ActionListener l) {
         this.add.addActionListener(l);
@@ -58,4 +50,7 @@ public class FragenverwaltungPanel extends JPanel {
         this.hangman.addActionListener(l);
     }
 
+    public JButton getMainMenu() {
+        return mainMenu;
+    }
 }

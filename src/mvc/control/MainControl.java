@@ -1,22 +1,21 @@
 package mvc.control;
 
-import com.sun.tools.javac.Main;
 import mvc.model.MainModel;
-import mvc.view.MainView;
+import mvc.view.MasterView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainControl {
 
-    MainView view;
+    MasterView view;
     MainModel model;
-    public MainControl(MainView view, MainModel model) {
+    public MainControl(MasterView view, MainModel model) {
         this.view = view;
         this.model = model;
     }
     public static void main(String[] args) {
-        MainView view = new MainView();
+        MasterView view = new MasterView();
         MainModel model = new MainModel();
         new MainControl(view, model);
     }
