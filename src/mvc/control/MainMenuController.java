@@ -5,33 +5,31 @@ import mvc.view.MainMenuView;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class MainMenuController {
+public class MainMenuController implements ActionListener {
     private MainMenuView view;
     private MasterController masterController;
 
     public MainMenuController(MasterController masterController) {
         this.masterController = masterController;
         this.view=new MainMenuView();
-        view.getFragenverwaltung().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        view.addButtonListener(this);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command=e.getActionCommand();
+        System.out.println(command);
+        switch(command) {
+            case "Fragenverwaltung":
                 masterController.showFragenVerwaltung();
-            }
-        });
-        view.getQuiz().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                break;
+            case "Quiz":
                 masterController.showQuiz();
-            }
-        });
-        view.getHangman().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                break;
+            case "Hangman":
                 masterController.showHangman();
-            }
-        });
-
-
+                break;
+        }
+        masterController.showFragenVerwaltung();
     }
     public JPanel getView() {
         return view;

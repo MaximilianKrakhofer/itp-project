@@ -1,5 +1,8 @@
 package mvc.view;
 
+import mvc.control.HangmanControl;
+import mvc.control.QuizControl;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,6 +16,11 @@ public class QuizView extends JPanel {
 
         operations.add(mainMenu);
         this.add(operations, BorderLayout.NORTH);
+    }
+    public void addButtonListener(QuizControl l) {
+
+        this.mainMenu.addActionListener(l);
+
     }
 
     public JButton getMainMenu() {

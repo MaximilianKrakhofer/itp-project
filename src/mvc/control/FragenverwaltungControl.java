@@ -38,7 +38,14 @@ public class FragenverwaltungControl implements ActionListener
                 model.saveCard(view.getCardText());
                 break;
             case "load":
-                view.appendCard(model.getLoadCards());
+                try {
+                    String[] cards = model.getLoadCards();
+                    masterController.setCards(cards);
+                    view.appendCard(cards);
+                }
+                catch(Exception exc) {
+                    JOptionPane.showMessageDialog(null,"Cards not Found");
+                }
         }
 
     }

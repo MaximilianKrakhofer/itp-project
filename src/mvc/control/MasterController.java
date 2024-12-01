@@ -5,6 +5,7 @@ import mvc.view.MasterView;
 
 public class MasterController {
     private MasterView view;
+    private String[] cards;
 
     public MasterController() {
         view = new MasterView();
@@ -25,6 +26,12 @@ public class MasterController {
     public void showHangman() {
         HangmanControl hangmanControl = new HangmanControl(this);
         view.updateContent(hangmanControl.getView());
+    }
+    public void setCards(String[] cards) {
+        this.cards = cards;
+    }
+    public String[] getCards() {
+        return cards;
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,8 @@
 package mvc.view;
 
+import mvc.control.FragenverwaltungControl;
+import mvc.control.HangmanControl;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,12 +12,17 @@ public class HangmanView extends JPanel {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         mainMenu = new JButton("Main Menu");
-
+        mainMenu.setActionCommand("mainMenu");
         operations.add(mainMenu);
+
         this.add(operations, BorderLayout.NORTH);
     }
+    public void addButtonListener(HangmanControl l) {
 
-    public JButton getMainMenu() {
+        this.mainMenu.addActionListener(l);
+
+    }
+        public JButton getMainMenu() {
         return mainMenu;
     }
 }
