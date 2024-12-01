@@ -6,11 +6,14 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class FragenverwaltungView extends JPanel {
-    JButton add;
-    JButton delete;
-    JButton save;
-    JButton load;
-    JTable table;
+    private JButton add;
+    private JButton delete;
+    private JButton save;
+    private JButton load;
+    private JTable table;
+    private JButton mainMenu;
+    DefaultTableModel cards;
+    JScrollPane cardsPane;
 
     public FragenverwaltungView( ) {
 
@@ -27,6 +30,13 @@ public class FragenverwaltungView extends JPanel {
         save.setActionCommand("save");
         load = new JButton("Laden");
         mainMenu = new JButton("Main Menu");
+        cards = new DefaultTableModel();
+        cards.addColumn("Frage");
+        cards.addColumn("Antwort");
+        table = new JTable(cards);
+        table.setModel(cards);
+        table.setRowHeight(35);
+        cardsPane = new JScrollPane(table);
 
         operations.add(add);
         operations.add(delete);
@@ -34,7 +44,9 @@ public class FragenverwaltungView extends JPanel {
         operations.add(load);
         operations.add(mainMenu);
 
+
         this.add(operations, BorderLayout.NORTH);
+
 
     }
     public void addButtonListener(ActionListener l) {

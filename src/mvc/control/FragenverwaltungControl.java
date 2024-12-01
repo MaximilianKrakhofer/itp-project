@@ -24,6 +24,24 @@ public class FragenverwaltungControl {
         });
 
     }
+    public class ButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String action = e.getActionCommand();
+            if (action.equals("add")) {
+                String[] card = model.getCard();
+                view.appendCard(card);
+            }
+            else if (action.equals("delete")) {
+                view.removeCards();
+            }
+            else if (action.equals("save")) {
+                model.saveCard(view.getCardText());
+            }
+            else if (action.equals("load")) {
+            }
+        }
+    }
     public JPanel getView() {
         return view;
     }
