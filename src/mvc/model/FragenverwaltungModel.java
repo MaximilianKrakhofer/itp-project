@@ -5,6 +5,10 @@ import java.awt.*;
 import java.io.*;
 
 public class FragenverwaltungModel {
+    /*
+    1. Model soll nicht View machen
+    2. Model soll
+     */
 
     public String[] getCard(){
 
@@ -48,8 +52,11 @@ public class FragenverwaltungModel {
 
     public String[] getLoadCards()  {
         String userHome = System.getProperty("user.home");
-        File save = new File(userHome + File.separator + "LearnITP-save "+ File.separator + "LearnITP-save.txt");
+        String outputFolder = userHome + File.separator + "LearnITP-save";
+        File folder = new File(outputFolder);
+        File save = new File(outputFolder + File.separator + "LearnITP-save.txt");
         if (!save.exists()) {
+            System.out.println("File does not exist.");
             return null;
         }
         String cards[] = new String[1];
