@@ -31,7 +31,10 @@ public class FragenverwaltungView extends JPanel {
         save = new JButton("Speichern");
         save.setActionCommand("save");
         load = new JButton("Laden");
+        load.setActionCommand("load");
         mainMenu = new JButton("Main Menu");
+
+        mainMenu.setActionCommand("main");
         cards = new DefaultTableModel();
         cards.addColumn("Frage");
         cards.addColumn("Antwort");
@@ -48,10 +51,10 @@ public class FragenverwaltungView extends JPanel {
 
 
         this.add(operations, BorderLayout.NORTH);
-
+        this.add(cardsPane, BorderLayout.CENTER);
 
     }
-    public void addButtonListener(ActionListener l) {
+    public void addButtonListener(FragenverwaltungControl l) {  //  xD Boris kocht
         this.add.addActionListener(l);
         this.delete.addActionListener(l);
         this.save.addActionListener(l);
@@ -79,7 +82,7 @@ public class FragenverwaltungView extends JPanel {
         return new String[]{front, back};
     }
 
-   public JButton getMainMenu() {
+    public JButton getMainMenu() {
         return mainMenu;
     }
 }

@@ -5,9 +5,6 @@ import mvc.view.MasterView;
 
 public class MasterController {
     private MasterView view;
-    private HangmanControl hangman;
-    private QuizControl quiz;
-    private FragenverwaltungControl fragenverwaltung;
 
     public MasterController() {
         view = new MasterView();

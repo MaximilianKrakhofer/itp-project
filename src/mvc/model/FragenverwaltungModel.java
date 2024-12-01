@@ -7,6 +7,8 @@ import java.io.*;
 public class FragenverwaltungModel {
 
     public String[] getCard(){
+
+
         JTextField front = new JTextField(5);
         JPanel panel = new JPanel(new GridLayout(2,2));
         panel.add(new JLabel("Frage:"));
@@ -35,7 +37,7 @@ public class FragenverwaltungModel {
                 System.out.println("File already exists.");
             }
             try (FileWriter myWriter = new FileWriter(myObj)) {
-                myWriter.write( card[0] + "\n" + card[1] + "\n\n");
+                myWriter.write( card[0] + "\n" + card[1] + "\n");
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -44,24 +46,36 @@ public class FragenverwaltungModel {
 
     }
 
-    public String[] getLoadCards() throws IOException {
-        String cards [];
+    public String[] getLoadCards()  {
         String userHome = System.getProperty("user.home");
         File save = new File(userHome + File.separator + "LearnITP-save "+ File.separator + "LearnITP-save.txt");
         if (!save.exists()) {
             return null;
         }
+        String cards[] = new String[1];
         try (FileInputStream input = new FileInputStream(save)) {
-            StringBuilder content = new StringBuilder();
+            System.out.println("File does not exist.2");
             BufferedReader br = new BufferedReader(new InputStreamReader(input));
             String line;
+            String[] cardsBefore = new String[0];
 
-            while ((line = br.readLine()) != null) {
+            for (int i = 0; (line = br.readLine()) != null; i++){
+                System.out.println("File does not exist.3");
+                cards  = new String[i+1];
+                int j;
+                for ( j= 0; j < cardsBefore.length && i>0; j++) {
+                    System.out.println("File does not exist.4");
+                    cards[j] = cardsBefore[j];
+                }
+                if (i!=0){
+                    cards[j+1] = line;
+                    cardsBefore = new String[cards.length];
+                    cardsBefore = cards;
+                }
 
-                content.append(line + "/n");
 
             }
-            System.out.println(content.toString());
+            return cards;
         }
         catch (IOException e) {
             e.printStackTrace();

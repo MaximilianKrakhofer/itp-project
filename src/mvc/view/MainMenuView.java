@@ -8,7 +8,7 @@ public class MainMenuView extends JPanel {
     public MainMenuView() {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        fragenVerwaltung = new JButton("Main Menu");
+        fragenVerwaltung = new JButton("FragenVerwaltung");
         quiz = new JButton("Quiz");
         hangman = new JButton("Hangman");
         operations.add(fragenVerwaltung);
