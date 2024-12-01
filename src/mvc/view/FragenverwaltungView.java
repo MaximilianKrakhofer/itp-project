@@ -5,16 +5,14 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class FragenverwaltungPanel extends JPanel {
-    DefaultTableModel cards;
-    JScrollPane cardsPane;
+public class FragenverwaltungView extends JPanel {
     JButton add;
     JButton delete;
     JButton save;
     JButton load;
     JTable table;
 
-    public FragenverwaltungPanel( ) {
+    public FragenverwaltungView( ) {
 
 
 
@@ -28,23 +26,16 @@ public class FragenverwaltungPanel extends JPanel {
         save = new JButton("Speichern");
         save.setActionCommand("save");
         load = new JButton("Laden");
+        mainMenu = new JButton("Main Menu");
 
         operations.add(add);
         operations.add(delete);
         operations.add(save);
         operations.add(load);
+        operations.add(mainMenu);
 
         this.add(operations, BorderLayout.NORTH);
 
-        cards = new DefaultTableModel();
-        cards.addColumn("Frage");
-        cards.addColumn("Antwort");
-
-        table = new JTable(cards);
-        table.setModel(cards);
-        table.setRowHeight(35);
-        cardsPane = new JScrollPane(table);
-        this.add(cardsPane, BorderLayout.CENTER);
     }
     public void addButtonListener(ActionListener l) {
         this.add.addActionListener(l);
@@ -73,4 +64,7 @@ public class FragenverwaltungPanel extends JPanel {
         return new String[]{front, back};
     }
 
+    public JButton getMainMenu() {
+        return mainMenu;
+    }
 }
