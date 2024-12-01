@@ -1,20 +1,18 @@
 package mvc.view;
 
 import javax.swing.*;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class FragenverwaltungPanel extends JPanel {
-    JTextArea cards;
+    DefaultTableModel cards;
     JScrollPane cardsPane;
     JButton add;
     JButton delete;
     JButton save;
     JButton load;
-    JButton mainMenu;
-    JButton quiz;
-    JButton hangman;
-
+    JTable table;
 
     public FragenverwaltungPanel( ) {
 
@@ -38,13 +36,14 @@ public class FragenverwaltungPanel extends JPanel {
 
         this.add(operations, BorderLayout.NORTH);
 
-        cards = new JTextArea("");
-        cards.setEditable(false);
-        cards.setColumns(8);
-        cards.setRows(7);
-        cards.setEditable(false);
-        cards.setFont(new Font("Monospaced", Font.PLAIN, 30));
-        cardsPane = new JScrollPane(cards);
+        cards = new DefaultTableModel();
+        cards.addColumn("Frage");
+        cards.addColumn("Antwort");
+
+        table = new JTable(cards);
+        table.setModel(cards);
+        table.setRowHeight(35);
+        cardsPane = new JScrollPane(table);
         this.add(cardsPane, BorderLayout.CENTER);
     }
     public void addButtonListener(ActionListener l) {
@@ -53,9 +52,25 @@ public class FragenverwaltungPanel extends JPanel {
         this.save.addActionListener(l);
         this.load.addActionListener(l);
 
-        this.mainMenu.addActionListener(l);
-        this.quiz.addActionListener(l);
-        this.hangman.addActionListener(l);
+    }
+
+
+    public void appendCard(String[] cardText) {
+        for (int i = 0; i < cardText.length; i=i+2) {
+            cards.addRow(new Object[]{cardText[i], cardText[i+1]});
+        }
+
+
+    }
+    public void removeCards () {
+        cards.removeRow(table.getSelectedRow());
+    }
+
+    public String[] getCardText() {
+        String front = cards.getValueAt(table.getSelectedRow(), 0).toString();
+        String back = cards.getValueAt(table.getSelectedRow(),  1 ).toString();
+        System.out.println(front + " " + back);
+        return new String[]{front, back};
     }
 
 }
