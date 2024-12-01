@@ -23,6 +23,9 @@ public class QuizView extends JPanel {
         this.add(operations, BorderLayout.NORTH);
         this.add(start, BorderLayout.SOUTH);
     }
+    public void showSolution(String answer) {
+        JOptionPane.showMessageDialog(null, this.question.getText()+ "\nAntwort:" + answer);
+    }
     public void startQuiz(String question) {
         this.removeAll();
         this.question = new JTextField(question);
@@ -66,6 +69,8 @@ public class QuizView extends JPanel {
         buttons.add(restart);
         this.add(griddy, BorderLayout.CENTER);
         this.add(buttons, BorderLayout.SOUTH);
+        this.repaint();
+        this.revalidate();
     }
     public JTextField getAnswer() {
         return answer;
@@ -90,9 +95,5 @@ public class QuizView extends JPanel {
             this.start.addActionListener(l);
         }
 
-    }
-
-    public JButton getMainMenu() {
-        return mainMenu;
     }
 }

@@ -33,7 +33,7 @@ public class QuizControl implements ActionListener {
                     view.startQuiz(shuffled[currentCard]);
                 }
                 else{
-                    JOptionPane.showMessageDialog(view, "Quiz is not loaded");
+                    JOptionPane.showMessageDialog(view, "Cards are not loaded");
                 }
             case "Check":
 
