@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView {
+    HangmanPanel hangmanPanel;
+    QuizPanel quizPanel;
+    FragenverwaltungPanel fragenverwaltungPanel;
     final static String kartei = "Fragenverwaltug";
     final static String quiz = "Quiz";
     final static String hangman= "Hangman";
@@ -20,9 +23,9 @@ public class MainView {
         frame.setVisible(true);
         frame.pack();
 
-        FragenverwaltungPanel fragenverwaltungPanel = new FragenverwaltungPanel();
-        HangmanPanel hangmanPanel = new HangmanPanel();
-        QuizPanel quizPanel = new QuizPanel();
+        fragenverwaltungPanel = new FragenverwaltungPanel();
+        hangmanPanel = new HangmanPanel();
+        quizPanel = new QuizPanel();
         main.add(fragenverwaltungPanel, kartei);
         main.add(quizPanel, quiz);
         main.add(hangmanPanel, hangman);
@@ -31,4 +34,13 @@ public class MainView {
 
     }
 
+    public HangmanPanel getHangmanPanel() {
+        return hangmanPanel;
+    }
+    public QuizPanel getQuizPanel() {
+        return quizPanel;
+    }
+    public FragenverwaltungPanel getFragenverwaltungPanel() {
+        return fragenverwaltungPanel;
+    }
 }
