@@ -16,32 +16,29 @@ public class FragenverwaltungControl {
         this.masterController = masterController;
         this.model = new FragenverwaltungModel();
         this.view = new FragenverwaltungView();
-        view.getMainMenu().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                masterController.showMainMenu();
-            }
-        });
 
     }
     public class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            masterController.showMainMenu();
             String action = e.getActionCommand();
-            if (action.equals("add")) {
-                String[] card = model.getCard();
-                view.appendCard(card);
+            switch (action) {
+                case "add":
+                    String [] card = model.getCard();
+                    view.appendCard(card);
+                    break;
+                case "delete":
+                    view.removeCards();
+                    break;
+                case "save":
+                    model.saveCard(view.getCardText());
+                    break;
+                case "load":
+
             }
-            else if (action.equals("delete")) {
-                view.removeCards();
-            }
-            else if (action.equals("save")) {
-                model.saveCard(view.getCardText());
-            }
-            else if (action.equals("load")) {
-            }
+
         }
-    }
     public JPanel getView() {
         return view;
     }

@@ -1,5 +1,7 @@
 package mvc.view;
 
+import mvc.control.FragenverwaltungControl;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -54,6 +56,7 @@ public class FragenverwaltungView extends JPanel {
         this.delete.addActionListener(l);
         this.save.addActionListener(l);
         this.load.addActionListener(l);
+        this.mainMenu.addActionListener(l);
 
     }
 
@@ -76,7 +79,7 @@ public class FragenverwaltungView extends JPanel {
         return new String[]{front, back};
     }
 
-    public JButton getMainMenu() {
+   public JButton getMainMenu() {
         return mainMenu;
     }
 }
