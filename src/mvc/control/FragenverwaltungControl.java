@@ -14,6 +14,7 @@ public class FragenverwaltungControl implements ActionListener
     private MasterController masterController;
 
     public FragenverwaltungControl(MasterController masterController)  {
+        System.out.println("FragenverwaltungControl");
         this.masterController = masterController;
         this.model = new FragenverwaltungModel();
         this.view = new FragenverwaltungView();

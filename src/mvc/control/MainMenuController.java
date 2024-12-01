@@ -29,7 +29,6 @@ public class MainMenuController implements ActionListener {
                 masterController.showHangman();
                 break;
         }
-        masterController.showFragenVerwaltung();
     }
     public JPanel getView() {
         return view;

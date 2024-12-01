@@ -20,6 +20,7 @@ public class MasterController {
         view.updateContent(fragenverwaltungControl.getView());
     }
     public void showQuiz() {
+        System.out.println("showQUi");
         QuizControl quizControl = new QuizControl(this);
         view.updateContent(quizControl.getView());
     }

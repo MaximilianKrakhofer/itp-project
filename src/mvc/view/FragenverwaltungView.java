@@ -14,8 +14,8 @@ public class FragenverwaltungView extends JPanel {
     private JButton load;
     private JTable table;
     private JButton mainMenu;
-    DefaultTableModel cards;
-    JScrollPane cardsPane;
+    private DefaultTableModel cards;
+    private JScrollPane cardsPane;
 
     public FragenverwaltungView( ) {
 

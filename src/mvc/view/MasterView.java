@@ -2,6 +2,7 @@ package mvc.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Console;
 
 public class MasterView {
     private JFrame frame;
@@ -21,6 +22,7 @@ public class MasterView {
     public void updateContent(JPanel newContent) {
         frame.getContentPane().removeAll();
         frame.getContentPane().add(newContent);
+        System.out.println("UpdateCOntent" + newContent.getName());
         frame.revalidate();
         frame.repaint();
     }
