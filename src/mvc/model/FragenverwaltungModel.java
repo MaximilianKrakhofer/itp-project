@@ -70,15 +70,13 @@ public class FragenverwaltungModel {
                 System.out.println("File does not exist.3");
                 cards  = new String[i+1];
                 int j;
-                for ( j= 0; j < cardsBefore.length && i>0; j++) {
+                for ( j= 0; j < cardsBefore.length; j++) {
                     System.out.println("File does not exist.4");
                     cards[j] = cardsBefore[j];
                 }
-                if (i!=0){
-                    cards[j+1] = line;
-                    cardsBefore = new String[cards.length];
-                    cardsBefore = cards;
-                }
+                cardsBefore = new String[cards.length];
+                cards[j] = line;
+                cardsBefore = cards;
 
 
             }
