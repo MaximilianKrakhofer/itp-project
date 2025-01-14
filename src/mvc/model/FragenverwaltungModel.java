@@ -1,10 +1,13 @@
 package mvc.model;
 
+import mvc.Karten.KarteiKarte;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
 public class FragenverwaltungModel {
+    private KarteiKarte[] karten = null;
     /*
     1. Model soll nicht View machen
     2. Model soll
