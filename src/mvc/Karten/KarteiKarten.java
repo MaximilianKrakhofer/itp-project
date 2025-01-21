@@ -2,8 +2,9 @@ package mvc.Karten;
 
 public class KarteiKarten {
     KarteiKarte[] karten = new KarteiKarte[0];
+    int aktuelleKarte = 0;
 
-    public void addKarte(KarteiKarte karte) {
+    public boolean addKarte(KarteiKarte karte) {
         if(karte != null) {
             KarteiKarte[] temp = karten;
             karten = new KarteiKarte[temp.length+1];
@@ -11,6 +12,10 @@ public class KarteiKarten {
                 karten[i] = temp[i];
             }
             karten[temp.length+1] = karte;
+            return true;
+        }
+        else{
+            return false;
         }
     }
     public void removeKarte(int i) {
@@ -25,4 +30,29 @@ public class KarteiKarten {
             }
         }
     }
+    public KarteiKarte getCard(int i) {
+        if(karten[i] != null) {
+            return karten[i];
+        }
+        return null;
+    }
+    public String getCardAnswer(int i) {
+        if(karten[i]!=null) {
+            return karten[i].getAntwort();
+        }
+        else{
+            return null;
+        }
+    }
+    public String getCardQuestion(int i) {
+        if(karten[i]!=null) {
+            return karten[i].getFrage();
+        }
+        else{
+            return null;
+        }
+    }
+
+
+
 }
