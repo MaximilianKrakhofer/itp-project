@@ -1,5 +1,6 @@
 package mvc.control;
 
+import mvc.Karten.KarteiKarten;
 import mvc.model.FragenverwaltungModel;
 import mvc.view.FragenverwaltungView;
 
@@ -40,7 +41,7 @@ public class FragenverwaltungControl implements ActionListener
                 break;
             case "load":
                 try {
-                    String[] cards = model.getLoadCards();
+                    KarteiKarten cards = model.getLoadCards();
                     masterController.setCards(cards);
                     view.appendCard(cards);
                 }

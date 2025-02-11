@@ -16,7 +16,7 @@ public class FragenverwaltungView extends JPanel {
     private JButton mainMenu;
     private DefaultTableModel cards;
     private JScrollPane cardsPane;
-
+ // möglicher weise FlatLook später hinzufügen
     public FragenverwaltungView( ) {
 
 

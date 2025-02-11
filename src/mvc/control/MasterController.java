@@ -1,13 +1,17 @@
 package mvc.control;
 
+import mvc.Karten.KarteiKarten;
 import mvc.view.FragenverwaltungView;
 import mvc.view.MasterView;
 
+import javax.swing.*;
+
 public class MasterController {
     private MasterView view;
-    private String[] cards;
+    private KarteiKarten karten;
 
     public MasterController() {
+
         view = new MasterView();
         showMainMenu();
     }
@@ -28,11 +32,11 @@ public class MasterController {
         HangmanControl hangmanControl = new HangmanControl(this);
         view.updateContent(hangmanControl.getView());
     }
-    public void setCards(String[] cards) {
-        this.cards = cards;
+    public void setCards(KarteiKarten cards) {
+        this.karten = cards;
     }
-    public String[] getCards() {
-        return cards;
+    public KarteiKarten getCards() {
+        return karten;
     }
 
     public static void main(String[] args) {
