@@ -1,5 +1,6 @@
 package mvc.control;
 
+import mvc.Karten.KarteiKarten;
 import mvc.model.QuizModel;
 import mvc.view.QuizView;
 
@@ -10,7 +11,7 @@ public class QuizControl implements ActionListener {
     private QuizModel model;
     private QuizView view;
     private MasterController controller;
-    private String[] cards;
+    private KarteiKarten cards;
     private int currentCard = 0;
 
     public QuizControl(MasterController controller) {
@@ -29,8 +30,8 @@ public class QuizControl implements ActionListener {
             break;
             case "start":
                 if(isLoaded()) {
-                    String[] shuffled = model.startQuiz(cards);
-                    view.startQuiz(shuffled[currentCard]);
+                    KarteiKarten shuffled = model.startQuiz(cards);
+                    view.startQuiz(shuffled.getCardQuestion(currentCard));
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
@@ -38,13 +39,13 @@ public class QuizControl implements ActionListener {
             case "Check":
 
                 model.check(view.getAnswer().getText());
-                if(currentCard +2 > cards.length) {
+                if(currentCard +2 > cards.getCards().length) {
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
                     view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
                 }
                 else{
-                    view.nextCard(cards[currentCard]);
+                    view.nextCard(cards.getCardQuestion(currentCard));
                     currentCard+=2;
                 }
                 break;

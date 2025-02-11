@@ -9,7 +9,7 @@ import java.awt.*;
 import java.io.*;
 
 public class FragenverwaltungModel {
-    private KarteiKarten karten = null;
+    private KarteiKarten karten = new KarteiKarten();
     /*
     1. Model soll nicht View machen
     2. Model soll

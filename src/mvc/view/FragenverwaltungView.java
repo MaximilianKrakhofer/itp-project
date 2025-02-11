@@ -74,7 +74,7 @@ public class FragenverwaltungView extends JPanel {
     public void removeCards () {
         cards.removeRow(table.getSelectedRow());
     }
-
+        // Auf ALle Karten umändern
     public String[] getCardText() {
         String front = cards.getValueAt(table.getSelectedRow(), 0).toString();
         String back = cards.getValueAt(table.getSelectedRow(),  1 ).toString();
