@@ -43,7 +43,10 @@ public class FragenverwaltungControl implements ActionListener
                 try {
                     KarteiKarten cards = model.getLoadCards();
                     masterController.setCards(cards);
-                    view.appendCard(cards);
+                    for(int i = 0; i<cards.getCards().length;i++) {
+                        String[] zeile = {cards.getCardQuestion(i),cards.getCardAnswer(i)};
+                        view.appendCard(zeile);
+                    }
                 }
                 catch(Exception exc) {
                     JOptionPane.showMessageDialog(null,"Cards not Found");

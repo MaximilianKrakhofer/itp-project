@@ -30,6 +30,9 @@ public class KarteiKarten {
             }
         }
     }
+    public KarteiKarte[] getCards(){
+        return karten;
+    }
     public KarteiKarte getCard(int i) {
         if(karten[i] != null) {
             return karten[i];

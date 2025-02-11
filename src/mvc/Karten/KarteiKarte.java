@@ -27,7 +27,16 @@ public class KarteiKarte {
         }
         return charsat;
     }
-
+    public void setFrage(String frage) {
+        if(frage != null) {
+            this.frage = frage;
+        }
+    }
+    public void setAntwort(String antwort) {
+        if(antwort != null) {
+            this.antwort = antwort;
+        }
+    }
     public boolean isAntwort(String antw) {
         return antw.equalsIgnoreCase(this.antwort);
     }

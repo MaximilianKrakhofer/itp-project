@@ -1,13 +1,14 @@
 package mvc.model;
 
+import mvc.Karten.KarteiKarten;
 import mvc.control.MasterController;
 
 public class QuizModel {
-    private String[] cards;
+    private KarteiKarten cards;
     private int currentAnswer;
     private int questions;
     private int questionscorrect;
-    public String[] startQuiz(String[] cards) {
+    public KarteiKarten startQuiz(KarteiKarten cards) {
         startTime();
         currentAnswer = 1;
         this.cards = cards;
@@ -15,7 +16,7 @@ public class QuizModel {
         questionscorrect = 0;
         return shuffle();
     }
-    public String[] shuffle() { // zu implementieren
+    public KarteiKarten shuffle() { // zu implementieren
         return cards;
     }
     public int[] endQuiz() {
@@ -28,12 +29,12 @@ public class QuizModel {
     public void check(String answer) {
         questions++;
         System.out.println(currentAnswer);
-        if(cards[currentAnswer].equalsIgnoreCase(answer)) {
+        if(cards.getCardAnswer(currentAnswer).equalsIgnoreCase(answer)) {
             questionscorrect++;
-            currentAnswer=currentAnswer+2;
+            currentAnswer=currentAnswer+1;
         }
         else{
-            currentAnswer=currentAnswer+2;
+            currentAnswer=currentAnswer+1;
         }
 
     }

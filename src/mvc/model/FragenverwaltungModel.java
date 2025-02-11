@@ -1,13 +1,15 @@
 package mvc.model;
 
 import mvc.Karten.KarteiKarte;
+import mvc.Karten.KarteiKarten;
+import mvc.control.MasterController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
 public class FragenverwaltungModel {
-    private KarteiKarte[] karten = null;
+    private KarteiKarten karten = null;
     /*
     1. Model soll nicht View machen
     2. Model soll
@@ -44,7 +46,9 @@ public class FragenverwaltungModel {
                 System.out.println("File already exists.");
             }
             try (FileWriter myWriter = new FileWriter(myObj)) {
-                myWriter.write( card[0] + "\n" + card[1] + "\n");
+                for(int i = 0; i<karten.getCards().length; i++) {
+                    myWriter.write(karten.getCardQuestion(i) + ":" + karten.getCardAnswer(i) + System.lineSeparator());
+                }
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -53,7 +57,7 @@ public class FragenverwaltungModel {
 
     }
 
-    public String[] getLoadCards()  {
+    public KarteiKarten getLoadCards()  {
         String userHome = System.getProperty("user.home");
         String outputFolder = userHome + File.separator + "LearnITP-save";
         File folder = new File(outputFolder);
@@ -62,28 +66,16 @@ public class FragenverwaltungModel {
             System.out.println("File does not exist.");
             return null;
         }
-        String cards[] = new String[1];
-        try (FileInputStream input = new FileInputStream(save)) {
-            System.out.println("File does not exist.2");
-            BufferedReader br = new BufferedReader(new InputStreamReader(input));
+        KarteiKarten karten = new KarteiKarten();
+        try (BufferedReader br = new BufferedReader(new FileReader(save))) {
             String line;
-            String[] cardsBefore = new String[0];
-
+            KarteiKarte karte = new KarteiKarte();
             for (int i = 0; (line = br.readLine()) != null; i++){
-                System.out.println("File does not exist.3");
-                cards  = new String[i+1];
-                int j;
-                for ( j= 0; j < cardsBefore.length; j++) {
-                    System.out.println("File does not exist.4");
-                    cards[j] = cardsBefore[j];
-                }
-                cardsBefore = new String[cards.length];
-                cards[j] = line;
-                cardsBefore = cards;
-
-
+                String[] daten = line.split(":");
+                karte.setFrage(daten[0]);
+                karte.setAntwort(daten[1]);
+                karten.addKarte(karte);
             }
-            return cards;
         }
         catch (IOException e) {
             e.printStackTrace();
