@@ -55,7 +55,19 @@ public class KarteiKarten {
             return null;
         }
     }
-
+    public void shuffle() { // zu implementieren
+        int currentIndex = karten.length;
+        // While there remain elements to shuffle...
+        while (currentIndex != 0) {
+            // Pick a remaining element...
+            int randomIndex = (int) Math.round( Math.floor(Math.random() * currentIndex));
+            currentIndex--;
+            // And swap it with the current element.
+            KarteiKarte karteTemp = karten[currentIndex];
+            karten[currentIndex] = karten[randomIndex];
+            karten[randomIndex] = karteTemp;
+        }
+    }
 
 
 }
