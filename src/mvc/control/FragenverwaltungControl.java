@@ -37,7 +37,7 @@ public class FragenverwaltungControl implements ActionListener
                 view.removeCards();
                 break;
             case "save":
-                model.saveCard(view.getCardText());
+                model.saveCards(view.getCards());
                 break;
             case "load":
                 try {

@@ -1,11 +1,11 @@
 package mvc.view;
 
+import mvc.Karten.KarteiKarte;
 import mvc.control.FragenverwaltungControl;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class FragenverwaltungView extends JPanel {
     private JButton add;
@@ -75,11 +75,19 @@ public class FragenverwaltungView extends JPanel {
         cards.removeRow(table.getSelectedRow());
     }
         // Auf ALle Karten umändern
-    public String[] getCardText() {
-        String front = cards.getValueAt(table.getSelectedRow(), 0).toString();
-        String back = cards.getValueAt(table.getSelectedRow(),  1 ).toString();
-        System.out.println(front + " " + back);
-        return new String[]{front, back};
+    public KarteiKarte[] getCards() {
+
+        KarteiKarte[] wimma = new KarteiKarte[table.getRowCount()];
+        for(int i = 0; i< wimma.length;i++) {
+
+
+            String front = cards.getValueAt(i, 0).toString();
+            String back = cards.getValueAt(i, 1).toString();
+
+            KarteiKarte karte = new KarteiKarte(front,back);
+        }
+        return wimma;
+
     }
 
     public JButton getMainMenu() {

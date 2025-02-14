@@ -3,8 +3,17 @@ package mvc.Karten;
 public class KarteiKarte {
     private String frage;
     private String antwort;
+    public KarteiKarte(){}
+    public KarteiKarte(String frage, String antwort) {
+        if (frage != null && antwort != null) {
+            setFrage(frage);
+            setAntwort(antwort);
 
 
+
+            
+        }
+    }
 
     public String getFrage() {
         return frage;

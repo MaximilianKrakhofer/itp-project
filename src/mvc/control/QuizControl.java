@@ -1,5 +1,6 @@
 package mvc.control;
 
+import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
 import mvc.model.QuizModel;
 import mvc.view.QuizView;
@@ -30,8 +31,8 @@ public class QuizControl implements ActionListener {
             break;
             case "start":
                 if(isLoaded()) {
-                    KarteiKarten shuffled = model.startQuiz(cards);
-                    view.startQuiz(shuffled.getCardQuestion(currentCard));
+                    KarteiKarte[] shuffled = model.startQuiz(cards);
+                    view.startQuiz(shuffled[currentCard].getFrage());
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");

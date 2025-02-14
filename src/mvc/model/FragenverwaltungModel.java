@@ -9,11 +9,8 @@ import java.awt.*;
 import java.io.*;
 
 public class FragenverwaltungModel {
-    private KarteiKarten karten = new KarteiKarten();
-    /*
-    1. Model soll nicht View machen
-    2. Model soll
-     */
+    private String saveDirectory = File.separator + "LearnITP-saves";
+    private String saveFileName = "LearnITP-save.txt" ;
 
     public String[] getCard(){
 
@@ -31,23 +28,22 @@ public class FragenverwaltungModel {
         return new String[]{front.getText(), back.getText()};
     }
 
-    public void saveCard(String[] card) {
-        String userHome = System.getProperty("user.home");
-        String outputFolder = userHome + File.separator + "LearnITP-save";
+    public void saveCards(KarteiKarte[] karten) {
+        String outputFolder = saveDirectory;
         File folder = new File(outputFolder);
         if (!folder.exists()) {
             folder.mkdir();
-        }
+        } // komisches try fixen
         try {
-            File myObj = new File(outputFolder + File.separator + "LearnITP-save.txt");
+            File myObj = new File(outputFolder + File.separator + saveFileName);
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
                 System.out.println("File already exists.");
             }
             try (FileWriter myWriter = new FileWriter(myObj)) {
-                for(int i = 0; i<karten.getCards().length; i++) {
-                    myWriter.write(karten.getCardQuestion(i) + ":" + karten.getCardAnswer(i) + System.lineSeparator());
+                for(int i = 0; i<karten.length; i++) {
+                    myWriter.write(karten[i].getFrage() + ":" + karten[i].getAntwort() + System.lineSeparator());
                 }
             }
         } catch (IOException e) {
