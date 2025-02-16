@@ -12,7 +12,7 @@ public class FragenverwaltungModel {
     private String saveDirectory ="."+File.separator + "LearnITP-saves";
     private String saveFileName = "LearnITP-save.txt" ;
 
-    public String SaveLocation() {
+    public String saveLocation() {
         return saveDirectory+File.separator + saveFileName;
     }
     public void setSaveDirectory(String saveDirectory) {
@@ -44,9 +44,10 @@ public class FragenverwaltungModel {
     }
 
     public KarteiKarten getLoadCards()  {
-        String outputFolder = saveDirectory;
-        File save = new File(outputFolder + File.separator + saveFileName);
-        System.out.println(save.getAbsolutePath());
+       return getLoadCards(saveDirectory+File.separator+saveFileName);
+    }
+    public KarteiKarten getLoadCards(String directory)  {
+        File save = new File(directory);
         if (!save.exists()) {
             System.out.println("File does not exist.");
             return null;

@@ -50,7 +50,7 @@ public class FragenverwaltungControl implements ActionListener
                 break;
             case "save":
                 if (model.saveCards(karten.getCards())) {
-                    JOptionPane.showMessageDialog(view, "Cards saved at:" + model.SaveLocation());
+                    JOptionPane.showMessageDialog(view, "Cards saved at:" + model.saveLocation());
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards failed to saved");
@@ -58,7 +58,8 @@ public class FragenverwaltungControl implements ActionListener
                 break;
             case "load":
                 try {
-                    KarteiKarten cards = model.getLoadCards();
+                    String location = view.getLoadLocation(model.saveLocation());
+                    KarteiKarten cards = model.getLoadCards(location);
                     masterController.setCards(cards);
                     view.resetCards();
                     karten = new KarteiKarten();

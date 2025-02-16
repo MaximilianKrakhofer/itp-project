@@ -4,8 +4,10 @@ import mvc.Karten.KarteiKarte;
 import mvc.control.FragenverwaltungControl;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
 import java.awt.*;
+import java.io.File;
 
 public class FragenverwaltungView extends JPanel {
     private JButton add;
@@ -77,6 +79,21 @@ public class FragenverwaltungView extends JPanel {
                 "Frage und Antwort eingeben:", JOptionPane.OK_CANCEL_OPTION);
 
         return new KarteiKarte(front.getText(), back.getText());
+    }
+    public String getLoadLocation(String location) {
+        File defaultLocation = new File(location);
+        JFileChooser chooser = new JFileChooser();
+        chooser.setSelectedFile(defaultLocation);
+        chooser.setCurrentDirectory(defaultLocation.getParentFile());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt", "clv");
+        chooser.setFileFilter(filter);
+        int result = chooser.showOpenDialog(null);
+        if(result == JFileChooser.APPROVE_OPTION) {
+            return chooser.getSelectedFile().getAbsolutePath();
+        } else{
+            JOptionPane.showMessageDialog(null, "Datei nicht gefunden");
+            return null;
+        }
     }
     public void resetCards() {
         cards.setRowCount(0);
