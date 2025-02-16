@@ -62,19 +62,32 @@ public class FragenverwaltungView extends JPanel {
         this.mainMenu.addActionListener(l);
 
     }
+    public KarteiKarte getCard(){
 
 
-    public void appendCard(String[] cardText) {
-        for (int i = 0; i < cardText.length; i=i+2) {
-            cards.addRow(new Object[]{cardText[i], cardText[i+1]});
-        }
+        JTextField front = new JTextField(5);
+        JPanel panel = new JPanel(new GridLayout(2,2));
+        panel.add(new JLabel("Frage:"));
+        panel.add(front);
 
+        JTextField back = new JTextField(5);
+        panel.add(new JLabel("Antwort"));
+        panel.add(back);
+        JOptionPane.showConfirmDialog(null, panel,
+                "Frage und Antwort eingeben:", JOptionPane.OK_CANCEL_OPTION);
+
+        return new KarteiKarte(front.getText(), back.getText());
+    }
+
+    public void appendCard(KarteiKarte karte) {
+        cards.addRow(new Object[]{karte.getFrage(), karte.getAntwort()});
+    }
+    public int removeCard() {
+        int a = table.getSelectedRow();
+        cards.removeRow(a);
+        return a;
 
     }
-    public void removeCards () {
-        cards.removeRow(table.getSelectedRow());
-    }
-        // Auf ALle Karten umändern
     public KarteiKarte[] getCards() {
 
         KarteiKarte[] wimma = new KarteiKarte[table.getRowCount()];

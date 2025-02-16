@@ -11,22 +11,31 @@ public class QuizView extends JPanel {
     private JButton mainMenu, check, restart, stop, start;
     private JTextField question, answer;
     private JPanel grid;
-    public QuizView() {
+    private boolean isLoaded;
+    public QuizView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         mainMenu = new JButton("Main Menu");
         mainMenu.setActionCommand("mainmenu");
         start = new JButton("Start");
+        this.isLoaded = isLoaded;
         start.setActionCommand("start");
         operations.add(mainMenu);
         System.out.println("Quizview");
         this.add(operations, BorderLayout.NORTH);
         this.add(start, BorderLayout.SOUTH);
+        if (!isLoaded) {
+            JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
+        }
     }
     public void showSolution(String answer) {
         JOptionPane.showMessageDialog(null, this.question.getText()+ "\nAntwort:" + answer);
     }
     public void startQuiz(String question) {
+        if(!isLoaded) {
+            JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
+            return;
+        }
         this.removeAll();
         this.question = new JTextField(question);
         this.question.setEditable(false);
@@ -71,6 +80,7 @@ public class QuizView extends JPanel {
         this.add(buttons, BorderLayout.SOUTH);
         this.repaint();
         this.revalidate();
+
     }
     public JTextField getAnswer() {
         return answer;

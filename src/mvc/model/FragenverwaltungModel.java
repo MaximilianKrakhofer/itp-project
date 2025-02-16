@@ -9,55 +9,43 @@ import java.awt.*;
 import java.io.*;
 
 public class FragenverwaltungModel {
-    private String saveDirectory = File.separator + "LearnITP-saves";
+    private String saveDirectory =File.separator + "LearnITP-saves";
     private String saveFileName = "LearnITP-save.txt" ;
 
-    public String[] getCard(){
-
-
-        JTextField front = new JTextField(5);
-        JPanel panel = new JPanel(new GridLayout(2,2));
-        panel.add(new JLabel("Frage:"));
-        panel.add(front);
-
-        JTextField back = new JTextField(5);
-        panel.add(new JLabel("Antwort"));
-        panel.add(back);
-        JOptionPane.showConfirmDialog(null, panel,
-                "Frage und Antwort eingeben:", JOptionPane.OK_CANCEL_OPTION);
-        return new String[]{front.getText(), back.getText()};
+    public String SaveLocation() {
+        return saveDirectory+File.separator + saveFileName;
+    }
+    public void setSaveDirectory(String saveDirectory) {
+        if(!saveDirectory.endsWith(File.separator))
+        this.saveDirectory = saveDirectory;
+    }
+    public void setSaveFileName(String saveFileName) {
+        this.saveFileName = saveFileName;
     }
 
-    public void saveCards(KarteiKarte[] karten) {
+    public boolean saveCards(KarteiKarte[] karten) {
         String outputFolder = saveDirectory;
         File folder = new File(outputFolder);
         if (!folder.exists()) {
-            folder.mkdir();
-        } // komisches try fixen
-        try {
-            File myObj = new File(outputFolder + File.separator + saveFileName);
-            if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-            try (FileWriter myWriter = new FileWriter(myObj)) {
-                for(int i = 0; i<karten.length; i++) {
-                    myWriter.write(karten[i].getFrage() + ":" + karten[i].getAntwort() + System.lineSeparator());
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            folder.mkdirs();
         }
-
+        File file = new File(outputFolder + File.separator + saveFileName);
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for(int i = 0; i < karten.length; i++) {
+                writer.write(karten[i].getFrage()+","+ karten[i].getAntwort() + System.lineSeparator());
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     public KarteiKarten getLoadCards()  {
-        String userHome = System.getProperty("user.home");
-        String outputFolder = userHome + File.separator + "LearnITP-save";
-        File folder = new File(outputFolder);
-        File save = new File(outputFolder + File.separator + "LearnITP-save.txt");
+        String outputFolder = saveDirectory;
+        File save = new File(outputFolder + File.separator + saveFileName);
+        System.out.println(save.getAbsolutePath());
         if (!save.exists()) {
             System.out.println("File does not exist.");
             return null;
@@ -67,7 +55,7 @@ public class FragenverwaltungModel {
             String line;
             KarteiKarte karte = new KarteiKarte();
             for (int i = 0; (line = br.readLine()) != null; i++){
-                String[] daten = line.split(":");
+                String[] daten = line.split(",");
                 karte.setFrage(daten[0]);
                 karte.setAntwort(daten[1]);
                 karten.addKarte(karte);

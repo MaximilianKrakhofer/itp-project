@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class MasterController {
     private MasterView view;
-    private KarteiKarten karten;
+    private KarteiKarten karten = null;
 
     public MasterController() {
 
@@ -21,6 +21,9 @@ public class MasterController {
     }
     public void showFragenVerwaltung() {
         FragenverwaltungControl fragenverwaltungControl = new FragenverwaltungControl(this);
+        if(karten != null) {
+            fragenverwaltungControl.setKarten(karten);
+        }
         view.updateContent(fragenverwaltungControl.getView());
     }
     public void showQuiz() {

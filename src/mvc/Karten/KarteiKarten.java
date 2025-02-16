@@ -1,8 +1,7 @@
 package mvc.Karten;
 
 public class KarteiKarten {
-    KarteiKarte[] karten = new KarteiKarte[0];
-    int aktuelleKarte = 0;
+    private KarteiKarte[] karten = new KarteiKarte[0];
 
     public boolean addKarte(KarteiKarte karte) {
         if(karte != null) {
@@ -11,7 +10,7 @@ public class KarteiKarten {
             for(int i = 0; i< temp.length; i++) {
                 karten[i] = temp[i];
             }
-            karten[temp.length+1] = karte;
+            karten[temp.length] = karte;
             return true;
         }
         else{

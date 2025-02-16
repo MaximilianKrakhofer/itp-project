@@ -14,12 +14,11 @@ public class QuizControl implements ActionListener {
     private MasterController controller;
     private KarteiKarten cards;
     private int currentCard = 0;
-
     public QuizControl(MasterController controller) {
         System.out.println("quiz control");
         this.controller = controller;
         this.model = new QuizModel();
-        this.view = new QuizView();
+        this.view = new QuizView(isLoaded());
         view.addButtonListener(this);
     }
     @Override
@@ -33,21 +32,26 @@ public class QuizControl implements ActionListener {
                 if(isLoaded()) {
                     KarteiKarte[] shuffled = model.startQuiz(cards);
                     view.startQuiz(shuffled[currentCard].getFrage());
+                    view.addButtonListener(this);
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
                 }
+                break;
             case "Check":
-
-                model.check(view.getAnswer().getText());
-                if(currentCard +2 > cards.getCards().length) {
-                    System.out.println("endquizcheck");
-                    int[] affe = model.endQuiz();
-                    view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
+                if(view.getAnswer()!= null) {
+                    model.check(view.getAnswer().getText());
+                    if (currentCard + 2 > cards.getCards().length) {
+                        System.out.println("endquizcheck");
+                        int[] affe = model.endQuiz();
+                        view.endQuiz(affe[0], affe[1], affe[2], (double) affe[0] / affe[1]);
+                    } else {
+                        view.nextCard(cards.getCardQuestion(currentCard));
+                        currentCard += 2;
+                    }
                 }
                 else{
-                    view.nextCard(cards.getCardQuestion(currentCard));
-                    currentCard+=2;
+                    JOptionPane.showMessageDialog(view, "Answer not entered");
                 }
                 break;
             case "Restart":
