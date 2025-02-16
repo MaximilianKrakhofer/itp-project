@@ -38,8 +38,15 @@ public class FragenverwaltungControl implements ActionListener
                 karten.addKarte(card);
                 break;
             case "delete":
-                int row = view.removeCard();
-                karten.removeKarte(row);
+                try {
+                    int row = view.removeCard();
+                    if(row != -1) {
+                        karten.removeKarte(row);
+                    }
+                }
+                catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Keine KarteiKarte zum Löschen ausgewählt");
+                }
                 break;
             case "save":
                 if (model.saveCards(karten.getCards())) {
@@ -53,10 +60,14 @@ public class FragenverwaltungControl implements ActionListener
                 try {
                     KarteiKarten cards = model.getLoadCards();
                     masterController.setCards(cards);
+                    view.resetCards();
+                    karten = new KarteiKarten();
                     for(int i = 0; i<cards.getCards().length;i++) {
                         KarteiKarte karte = new KarteiKarte(cards.getCardQuestion(i),cards.getCardAnswer(i));
                         view.appendCard(karte);
+                        karten.addKarte(karte);
                     }
+                    model.saveCards(karten.getCards());
                 }
                 catch(Exception exc) {
                     JOptionPane.showMessageDialog(null,"Cards not Found");

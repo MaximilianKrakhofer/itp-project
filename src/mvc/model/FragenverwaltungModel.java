@@ -9,7 +9,7 @@ import java.awt.*;
 import java.io.*;
 
 public class FragenverwaltungModel {
-    private String saveDirectory =File.separator + "LearnITP-saves";
+    private String saveDirectory ="."+File.separator + "LearnITP-saves";
     private String saveFileName = "LearnITP-save.txt" ;
 
     public String SaveLocation() {
@@ -30,6 +30,7 @@ public class FragenverwaltungModel {
             folder.mkdirs();
         }
         File file = new File(outputFolder + File.separator + saveFileName);
+        System.out.println(file.getAbsolutePath());
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for(int i = 0; i < karten.length; i++) {
                 writer.write(karten[i].getFrage()+","+ karten[i].getAntwort() + System.lineSeparator());
@@ -53,17 +54,14 @@ public class FragenverwaltungModel {
         KarteiKarten karten = new KarteiKarten();
         try (BufferedReader br = new BufferedReader(new FileReader(save))) {
             String line;
-            KarteiKarte karte = new KarteiKarte();
             for (int i = 0; (line = br.readLine()) != null; i++){
                 String[] daten = line.split(",");
-                karte.setFrage(daten[0]);
-                karte.setAntwort(daten[1]);
-                karten.addKarte(karte);
+                karten.addKarte(new KarteiKarte(daten[0],daten[1]));
             }
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return karten;
     }
 }

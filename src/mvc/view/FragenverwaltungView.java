@@ -78,13 +78,18 @@ public class FragenverwaltungView extends JPanel {
 
         return new KarteiKarte(front.getText(), back.getText());
     }
+    public void resetCards() {
+        cards.setRowCount(0);
+    }
 
     public void appendCard(KarteiKarte karte) {
         cards.addRow(new Object[]{karte.getFrage(), karte.getAntwort()});
     }
     public int removeCard() {
         int a = table.getSelectedRow();
+        if(a == -1) return -1;
         cards.removeRow(a);
+
         return a;
 
     }

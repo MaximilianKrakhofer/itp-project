@@ -18,14 +18,14 @@ public class KarteiKarten {
         }
     }
     public void removeKarte(int i) {
-        if(i >= 0 & i< karten.length) {
+        if(i >= 0 && i< karten.length) {
             KarteiKarte[] temp = karten;
             karten = new KarteiKarte[temp.length-1];
             for(int j = 0; j < i; j++) {
                 karten[j] = temp[j];
             }
-            for( int j = i+1;j< karten.length;j++) {
-                karten[j] = temp[j];
+            for( int j = i+1;j< temp.length;j++) {
+                karten[j-1] = temp[j];
             }
         }
     }
