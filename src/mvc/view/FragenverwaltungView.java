@@ -3,6 +3,8 @@ package mvc.view;
 import mvc.Karten.KarteiKarte;
 import mvc.control.FragenverwaltungControl;
 
+// import org.imgscalr.Scalr;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;

@@ -4,6 +4,7 @@ import mvc.Karten.KarteiKarten;
 import mvc.view.FragenverwaltungView;
 import mvc.view.MasterView;
 
+
 import javax.swing.*;
 
 public class MasterController {

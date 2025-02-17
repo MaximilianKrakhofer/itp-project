@@ -31,7 +31,7 @@ public class QuizControl implements ActionListener {
             case "start":
                 if(isLoaded()) {
                     KarteiKarte[] shuffled = model.startQuiz(cards);
-                    view.startQuiz(shuffled[currentCard].getFrage());
+                    view.startQuiz(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
                     view.addButtonListener(this);
                 }
                 else{
@@ -46,7 +46,7 @@ public class QuizControl implements ActionListener {
                         int[] affe = model.endQuiz();
                         view.endQuiz(affe[0], affe[1], affe[2], (double) affe[0] / affe[1]);
                     } else {
-                        view.nextCard(cards.getCardQuestion(currentCard));
+                        view.nextCard(cards.getCardQuestion(currentCard), cards.getCardType(currentCard));
                         currentCard += 2;
                     }
                 }
