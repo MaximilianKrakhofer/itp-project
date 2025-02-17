@@ -16,24 +16,22 @@ public class FragenverwaltungModel {
         return saveDirectory+File.separator + saveFileName;
     }
     public void setSaveDirectory(String saveDirectory) {
-        if(!saveDirectory.endsWith(File.separator))
-        this.saveDirectory = saveDirectory;
+        if(!saveDirectory.endsWith(File.separator)) this.saveDirectory = saveDirectory;
     }
     public void setSaveFileName(String saveFileName) {
         this.saveFileName = saveFileName;
     }
 
-    public boolean saveCards(KarteiKarte[] karten) {
-        String outputFolder = saveDirectory;
-        File folder = new File(outputFolder);
-        if (!folder.exists()) {
+    public boolean saveCards(KarteiKarte[] karten, String dir) {
+        File file = new File(dir);
+        File folder = file.getParentFile();
+        if(!folder.exists()) {
             folder.mkdirs();
         }
-        File file = new File(outputFolder + File.separator + saveFileName);
         System.out.println(file.getAbsolutePath());
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for(int i = 0; i < karten.length; i++) {
-                writer.write(karten[i].getFrage()+","+ karten[i].getAntwort() + System.lineSeparator());
+                writer.write(karten[i].getFrage()+";"+ karten[i].getAntwort() + ";" + karten[i].getFragentyp() + System.lineSeparator() );
             }
         }
         catch(Exception e) {
@@ -42,27 +40,34 @@ public class FragenverwaltungModel {
         }
         return true;
     }
-
+    public boolean saveCards(KarteiKarte[] karten) {
+        return saveCards(karten, saveDirectory + File.separator + saveFileName);
+    }
     public KarteiKarten getLoadCards()  {
        return getLoadCards(saveDirectory+File.separator+saveFileName);
     }
     public KarteiKarten getLoadCards(String directory)  {
-        File save = new File(directory);
-        if (!save.exists()) {
-            System.out.println("File does not exist.");
+        try {
+            File save = new File(directory);
+            if (!save.exists()) {
+                System.out.println("File does not exist.");
+                return null;
+            }
+            KarteiKarten karten = new KarteiKarten();
+            try (BufferedReader br = new BufferedReader(new FileReader(save))) {
+                String line;
+                for (int i = 0; (line = br.readLine()) != null; i++) {
+                    String[] daten = line.split(";");
+                    karten.addKarte(new KarteiKarte(daten[0], daten[1], Integer.parseInt(daten[2])));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return karten;
+        }
+        catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "Fehler beim Laden der KarteiKarten");
             return null;
         }
-        KarteiKarten karten = new KarteiKarten();
-        try (BufferedReader br = new BufferedReader(new FileReader(save))) {
-            String line;
-            for (int i = 0; (line = br.readLine()) != null; i++){
-                String[] daten = line.split(",");
-                karten.addKarte(new KarteiKarte(daten[0],daten[1]));
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return karten;
     }
 }

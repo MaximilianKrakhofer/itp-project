@@ -3,18 +3,26 @@ package mvc.Karten;
 public class KarteiKarte {
     private String frage;
     private String antwort;
+    private int fragentyp;
     public KarteiKarte(){}
-    public KarteiKarte(String frage, String antwort) {
+    public KarteiKarte(String frage, String antwort, int fragentyp) {
         if (frage != null && antwort != null) {
             setFrage(frage);
             setAntwort(antwort);
-
-
-
-            
+            setFragentyp(fragentyp);
         }
     }
-
+    public void setFragentyp(int fragentyp) {
+        if(fragentyp >=0 &&fragentyp <3) {
+            this.fragentyp = fragentyp;
+        }
+        else{
+            this.fragentyp = 0;
+        }
+    }
+    public int getFragentyp() {
+        return fragentyp;
+    }
     public String getFrage() {
         return frage;
     }

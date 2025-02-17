@@ -46,6 +46,12 @@ public class KarteiKarten {
             return null;
         }
     }
+    public int getCardType(int i) {
+        if(karten[i]!=null) {
+            return karten[i].getFragentyp();
+        }
+        return 0;
+    }
     public String getCardQuestion(int i) {
         if(karten[i]!=null) {
             return karten[i].getFrage();

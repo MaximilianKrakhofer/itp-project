@@ -40,6 +40,7 @@ public class FragenverwaltungView extends JPanel {
         cards = new DefaultTableModel();
         cards.addColumn("Frage");
         cards.addColumn("Antwort");
+        cards.addColumn("Fragentyp");
         table = new JTable(cards);
         table.setModel(cards);
         table.setRowHeight(35);
@@ -68,17 +69,22 @@ public class FragenverwaltungView extends JPanel {
 
 
         JTextField front = new JTextField(5);
-        JPanel panel = new JPanel(new GridLayout(2,2));
+        JPanel panel = new JPanel(new GridLayout(3,2));
         panel.add(new JLabel("Frage:"));
         panel.add(front);
 
         JTextField back = new JTextField(5);
         panel.add(new JLabel("Antwort"));
         panel.add(back);
+
+        JComboBox box = new JComboBox(new String[]{"Text","URL"});
+        panel.add(new JLabel("Fragentyp"));
+        panel.add(box);
         JOptionPane.showConfirmDialog(null, panel,
                 "Frage und Antwort eingeben:", JOptionPane.OK_CANCEL_OPTION);
 
-        return new KarteiKarte(front.getText(), back.getText());
+
+        return new KarteiKarte(front.getText(), back.getText(), box.getSelectedIndex());
     }
     public String getLoadLocation(String location) {
         File defaultLocation = new File(location);
@@ -100,7 +106,18 @@ public class FragenverwaltungView extends JPanel {
     }
 
     public void appendCard(KarteiKarte karte) {
-        cards.addRow(new Object[]{karte.getFrage(), karte.getAntwort()});
+        String fragentyp;
+        switch(karte.getFragentyp()) {
+            case 0:
+                fragentyp="Text";
+                break;
+            case 1:
+                fragentyp="Bild";
+                break;
+            default:
+                fragentyp="x";
+        }
+        cards.addRow(new Object[]{karte.getFrage(), karte.getAntwort(), fragentyp});
     }
     public int removeCard() {
         int a = table.getSelectedRow();
@@ -118,8 +135,9 @@ public class FragenverwaltungView extends JPanel {
 
             String front = cards.getValueAt(i, 0).toString();
             String back = cards.getValueAt(i, 1).toString();
+            int fragentyp = Integer.parseInt(cards.getValueAt(i,2).toString());
 
-            KarteiKarte karte = new KarteiKarte(front,back);
+            KarteiKarte karte = new KarteiKarte(front,back,fragentyp);
         }
         return wimma;
 

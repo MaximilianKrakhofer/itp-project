@@ -64,7 +64,7 @@ public class FragenverwaltungControl implements ActionListener
                     view.resetCards();
                     karten = new KarteiKarten();
                     for(int i = 0; i<cards.getCards().length;i++) {
-                        KarteiKarte karte = new KarteiKarte(cards.getCardQuestion(i),cards.getCardAnswer(i));
+                        KarteiKarte karte = new KarteiKarte(cards.getCardQuestion(i),cards.getCardAnswer(i), cards.getCardType(i));
                         view.appendCard(karte);
                         karten.addKarte(karte);
                     }
@@ -81,7 +81,7 @@ public class FragenverwaltungControl implements ActionListener
     public void setKarten(KarteiKarten karten ) {
         this.karten = karten;
         for(int i = 0; i< karten.getCards().length;i++) {
-            KarteiKarte karte = new KarteiKarte(karten.getCardQuestion(i),karten.getCardAnswer(i));
+            KarteiKarte karte = new KarteiKarte(karten.getCardQuestion(i),karten.getCardAnswer(i), karten.getCardType(i));
             view.appendCard(karte);
         }
     }
