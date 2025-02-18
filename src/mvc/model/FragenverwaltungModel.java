@@ -58,7 +58,7 @@ public class FragenverwaltungModel {
                 String line;
                 for (int i = 0; (line = br.readLine()) != null; i++) {
                     String[] daten = line.split(";");
-                    karten.addKarte(new KarteiKarte(daten[0], daten[1], Integer.parseInt(daten[2])));
+                    karten.addKarte(new KarteiKarte(daten[0], daten[1], Integer.parseInt(daten[2].trim())));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

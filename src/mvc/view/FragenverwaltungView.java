@@ -106,7 +106,9 @@ public class FragenverwaltungView extends JPanel {
     public void resetCards() {
         cards.setRowCount(0);
     }
-
+    public DefaultTableModel getTableModel () {
+        return cards;
+    }
     public void appendCard(KarteiKarte karte) {
         String fragentyp;
         switch(karte.getFragentyp()) {
@@ -117,7 +119,7 @@ public class FragenverwaltungView extends JPanel {
                 fragentyp="Bild";
                 break;
             default:
-                fragentyp="x";
+                fragentyp="Text";
         }
         cards.addRow(new Object[]{karte.getFrage(), karte.getAntwort(), fragentyp});
     }
@@ -137,9 +139,10 @@ public class FragenverwaltungView extends JPanel {
 
             String front = cards.getValueAt(i, 0).toString();
             String back = cards.getValueAt(i, 1).toString();
-            int fragentyp = Integer.parseInt(cards.getValueAt(i,2).toString());
+            int fragentyp = cards.getValueAt(i,2).toString().equals("Bild") ? 1:0;
 
             KarteiKarte karte = new KarteiKarte(front,back,fragentyp);
+            wimma[i] = karte;
         }
         return wimma;
 
