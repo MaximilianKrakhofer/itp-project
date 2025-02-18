@@ -6,6 +6,9 @@ import mvc.model.FragenverwaltungModel;
 import mvc.view.FragenverwaltungView;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,6 +24,7 @@ public class FragenverwaltungControl implements ActionListener
         this.masterController = masterController;
         this.model = new FragenverwaltungModel();
         this.view = new FragenverwaltungView();
+        addTableListener(view.getTableModel());
         view.addButtonListener(this);
         karten = new KarteiKarten();
     }
@@ -77,6 +81,21 @@ public class FragenverwaltungControl implements ActionListener
                 }
         }
 
+    }
+    public void addTableListener(DefaultTableModel model)  {
+        model.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if(e.getType() == TableModelEvent.UPDATE) {
+                    karten = new KarteiKarten();
+                    KarteiKarte[] cards = view.getCards();
+                    for(int i = 0; i<cards.length;i++) {
+                        karten.addKarte(cards[i]);
+                    }
+                    masterController.setCards(karten);
+                }
+            }
+        });
     }
     public void setKarten(KarteiKarten karten ) {
         this.karten = karten;
