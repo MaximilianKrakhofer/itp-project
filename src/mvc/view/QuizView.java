@@ -119,28 +119,31 @@ public class QuizView extends JPanel {
     public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
         this.removeAll();
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
-        JPanel griddy = new JPanel(new GridLayout(4,1));
+        JPanel moveTheBodyMoveTheFlow = new JPanel(new FlowLayout());
+        JPanel river = new JPanel(new FlowLayout());
         fragenbeantwortetLabel = new JLabel("Fragenbeantwortet:" + beantwortet);
         korrektLabel = new JLabel("Korrekt:" + korrekt);
         dauerLabel = new JLabel("Dauer:" + dauer);
         prozentLabel = new JLabel("Prozent:" + prozent);
-        griddy.add(fragenbeantwortetLabel);
-        griddy.add(korrektLabel);
-        griddy.add(dauerLabel);
-        griddy.add(prozentLabel);
+
+        moveTheBodyMoveTheFlow.add(fragenbeantwortetLabel);
+        moveTheBodyMoveTheFlow.add(korrektLabel);
+        river.add(dauerLabel);
+        river.add(prozentLabel);
 
         JPanel buttons = new JPanel(new GridLayout(1,2));
         buttons.add(mainMenu);
-        restart = new JButton("Restart");
         buttons.add(restart);
-        this.add(griddy, BorderLayout.CENTER);
+        restart = new JButton("Restart");
+        this.add(moveTheBodyMoveTheFlow );
+        this.add(river );
         this.add(buttons, BorderLayout.SOUTH);
         this.repaint();
         this.revalidate();
 
     }
-    public JTextField getAnswer() {
-        return answer;
+    public String getAnswer() {
+        return answer.getText();
     }
     public void addButtonListener(QuizControl l) {
 

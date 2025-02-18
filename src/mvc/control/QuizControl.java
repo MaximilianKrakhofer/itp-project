@@ -38,21 +38,21 @@ public class QuizControl implements ActionListener {
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
                 }
                 break;
-            case "Check":
+            case "End Quiz":
                 if(view.getAnswer()!= null) {
-                    model.check(view.getAnswer().getText());
-                    if (currentCard + 2 > cards.getCards().length) {
-                        System.out.println("endquizcheck");
-                        int[] affe = model.endQuiz();
-                        view.endQuiz(affe[0], affe[1], affe[2], (double) affe[0] / affe[1]);
-                    } else {
-                        view.nextCard(cards.getCardQuestion(currentCard), cards.getCardType(currentCard));
-                        currentCard += 2;
-                    }
+                    model.check(view.getAnswer());
+                    System.out.println("endquizcheck");
+                    int[] affe = model.endQuiz();
+                    view.endQuiz(affe[0], affe[1], affe[2], (double) affe[0] / affe[1]);
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Answer not entered");
                 }
+                break;
+            case "Check":
+                if(view.getAnswer().equals())
+                System.out.println(view.getAnswer());
+
                 break;
             case "Restart":
                 new QuizControl(controller);

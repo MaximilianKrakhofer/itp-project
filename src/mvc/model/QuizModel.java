@@ -12,7 +12,7 @@ public class QuizModel {
     private int questionscorrect;
     public KarteiKarte[] startQuiz(KarteiKarten cards) {
         startTime();
-        currentAnswer = 1;
+        currentAnswer = 0;
         this.cards = cards.shuffle();
         questions = 0;
         questionscorrect = 0;
