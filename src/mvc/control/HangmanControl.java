@@ -1,5 +1,6 @@
 package mvc.control;
 
+import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
 import mvc.model.HangmanModel;
 import mvc.view.HangmanView;
@@ -31,8 +32,8 @@ public class HangmanControl implements ActionListener {
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
                 }
                 else{
-                    KarteiKarten shuffled = model.startHangman(karten);
-                    view.startHangman(shuffled.getCard(currentCard).getFrage());
+                    KarteiKarte[] shuffled = model.startHangman(karten);
+                    view.startHangman(shuffled[currentCard].getFrage());
                 }
                 break;
             case "mainmenu":

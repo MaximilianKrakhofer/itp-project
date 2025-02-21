@@ -28,11 +28,18 @@ public class QuizControl implements ActionListener {
             case"mainmenu":
             controller.showMainMenu();
             break;
+            case "restart":
+                this.model = new QuizModel();
+                view.revalidate();
+                view.repaint();
+                view.addButtonListener(this);
             case "start":
                 if(isLoaded()) {
                     KarteiKarte[] shuffled = model.startQuiz(cards);
                     view.startQuiz(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
                     view.addButtonListener(this);
+                    view.repaint();
+                    view.revalidate();
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
@@ -44,18 +51,16 @@ public class QuizControl implements ActionListener {
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
                     view.endQuiz(affe[0], affe[1], affe[2], (double) affe[0] / affe[1]);
+                    view.addButtonListener(this);
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Answer not entered");
                 }
                 break;
             case "Check":
-                if(view.getAnswer().equals())
+                //if(view.getAnswer().equals(view.getAnswer))
                 System.out.println(view.getAnswer());
 
-                break;
-            case "Restart":
-                new QuizControl(controller);
                 break;
             case "stop":
                 if(currentCard > 0) {

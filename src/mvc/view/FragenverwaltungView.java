@@ -112,9 +112,6 @@ public class FragenverwaltungView extends JPanel {
     public void appendCard(KarteiKarte karte) {
         String fragentyp;
         switch(karte.getFragentyp()) {
-            case 0:
-                fragentyp="Text";
-                break;
             case 1:
                 fragentyp="Bild";
                 break;
