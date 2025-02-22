@@ -20,9 +20,9 @@ public class FragenverwaltungView extends JPanel {
     private JButton mainMenu;
     private DefaultTableModel cards;
     private JScrollPane cardsPane;
- // möglicher weise FlatLook später hinzufügen
-    public FragenverwaltungView( ) {
 
+    // möglicher weise FlatLook später hinzufügen
+    public FragenverwaltungView() {
 
 
         this.setLayout(new BorderLayout());
@@ -59,6 +59,7 @@ public class FragenverwaltungView extends JPanel {
         this.add(cardsPane, BorderLayout.CENTER);
 
     }
+
     public void addButtonListener(FragenverwaltungControl l) {  //  xD Boris kocht
         this.add.addActionListener(l);
         this.delete.addActionListener(l);
@@ -67,11 +68,12 @@ public class FragenverwaltungView extends JPanel {
         this.mainMenu.addActionListener(l);
 
     }
-    public KarteiKarte getCard(){
+
+    public KarteiKarte getCard() {
 
 
         JTextField front = new JTextField(5);
-        JPanel panel = new JPanel(new GridLayout(3,2));
+        JPanel panel = new JPanel(new GridLayout(3, 2));
         panel.add(new JLabel("Frage:"));
         panel.add(front);
 
@@ -79,7 +81,7 @@ public class FragenverwaltungView extends JPanel {
         panel.add(new JLabel("Antwort"));
         panel.add(back);
 
-        JComboBox box = new JComboBox(new String[]{"Text","URL"});
+        JComboBox box = new JComboBox(new String[]{"Text", "URL"});
         panel.add(new JLabel("Fragentyp"));
         panel.add(box);
         JOptionPane.showConfirmDialog(null, panel,
@@ -88,6 +90,7 @@ public class FragenverwaltungView extends JPanel {
 
         return new KarteiKarte(front.getText(), back.getText(), box.getSelectedIndex());
     }
+
     public String getLoadLocation(String location) {
         File defaultLocation = new File(location);
         JFileChooser chooser = new JFileChooser();
@@ -96,52 +99,54 @@ public class FragenverwaltungView extends JPanel {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt", "clv");
         chooser.setFileFilter(filter);
         int result = chooser.showOpenDialog(null);
-        if(result == JFileChooser.APPROVE_OPTION) {
+        if (result == JFileChooser.APPROVE_OPTION) {
             return chooser.getSelectedFile().getAbsolutePath();
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "Datei nicht gefunden");
             return null;
         }
     }
+
     public void resetCards() {
         cards.setRowCount(0);
     }
-    public DefaultTableModel getTableModel () {
+
+    public DefaultTableModel getTableModel() {
         return cards;
     }
+
     public void appendCard(KarteiKarte karte) {
         String fragentyp;
-        switch(karte.getFragentyp()) {
+        switch (karte.getFragentyp()) {
             case 1:
-                fragentyp="Bild";
+                fragentyp = "Bild";
                 break;
             default:
-                fragentyp="Text";
+                fragentyp = "Text";
         }
         cards.addRow(new Object[]{karte.getFrage(), karte.getAntwort(), fragentyp});
     }
+
     public int removeCard() {
         int a = table.getSelectedRow();
-        if(a == -1) return -1;
+        if (a == -1) return -1;
         cards.removeRow(a);
 
         return a;
 
     }
-    public KarteiKarte[] getCards() {
 
-        KarteiKarte[] wimma = new KarteiKarte[table.getRowCount()];
-        for(int i = 0; i< wimma.length;i++) {
+    public KarteiKarte getCardAt(int row) {
 
 
-            String front = cards.getValueAt(i, 0).toString();
-            String back = cards.getValueAt(i, 1).toString();
-            int fragentyp = cards.getValueAt(i,2).toString().equals("Bild") ? 1:0;
+        String front = cards.getValueAt(row, 0).toString();
+        String back = cards.getValueAt(row, 1).toString();
+        int fragentyp = cards.getValueAt(row, 2).toString().equals("Bild") ? 1 : 0;
 
-            KarteiKarte karte = new KarteiKarte(front,back,fragentyp);
-            wimma[i] = karte;
-        }
-        return wimma;
+        KarteiKarte karte = new KarteiKarte(front, back, fragentyp);
+
+
+        return karte;
 
     }
 

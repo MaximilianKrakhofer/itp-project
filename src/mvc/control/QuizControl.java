@@ -14,7 +14,7 @@ public class QuizControl implements ActionListener {
     private MasterController controller;
     private KarteiKarten cards;
     private int currentCard = 0;
-    public QuizContMessrol(MasterController controller) {
+    public QuizControl(MasterController controller) {
         System.out.println("quiz control");
         this.controller = controller;
         this.model = new QuizModel();
@@ -64,8 +64,6 @@ public class QuizControl implements ActionListener {
                 else {
                     view.setTextColor(false);
                 }
-                //if(view.getAnswer().equals(view.getAnswer))
-                System.out.println(view.getAnswer());
 
                 break;
             case "stop":

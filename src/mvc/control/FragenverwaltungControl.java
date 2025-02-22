@@ -87,10 +87,11 @@ public class FragenverwaltungControl implements ActionListener
             @Override
             public void tableChanged(TableModelEvent e) {
                 if(e.getType() == TableModelEvent.UPDATE) {
-                    karten = new KarteiKarten();
-                    KarteiKarte[] cards = view.getCards();
-                    for(int i = 0; i<cards.length;i++) {
-                        karten.addKarte(cards[i]);
+                    int a = e.getFirstRow();
+                    int b = e.getLastRow();
+                    for(int i = a; i<=b; i++) {
+                        KarteiKarte cards = view.getCardAt(i);
+                        karten.getCards()[a]=cards;
                     }
                     masterController.setCards(karten);
                 }
