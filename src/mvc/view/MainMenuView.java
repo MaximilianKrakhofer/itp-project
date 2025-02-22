@@ -7,26 +7,30 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuView extends JPanel {
-    private JButton fragenVerwaltung, quiz, hangman;
+    private JButton fragenVerwaltung, quiz, hangman, settings;
     public MainMenuView() {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        settings = createButton("Settings", "./src/images/settings.png");
         fragenVerwaltung = createButton("Fragenverwaltung", "./src/images/library-books.png");
         fragenVerwaltung.setActionCommand("Fragenverwaltung");
         quiz = createButton("Quiz", "./src/images/Quiz.png");
         quiz.setActionCommand("Quiz");
         hangman = createButton("Hangman", "./src/images/hangman.png");
         hangman.setActionCommand("Hangman");
+        settings.setActionCommand("Settings");
         this.add(fragenVerwaltung);
         this.add(quiz);
         this.add(hangman);
+        this.add(settings);
     }
     public void addButtonListener(MainMenuController l) {
 
         this.fragenVerwaltung.addActionListener(l);
         this.quiz.addActionListener(l);
         this.hangman.addActionListener(l);
+        this.settings.addActionListener(l);
 
     }
 

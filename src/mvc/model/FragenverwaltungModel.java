@@ -18,6 +18,11 @@ public class FragenverwaltungModel {
     public void setSaveDirectory(String saveDirectory) {
         if(!saveDirectory.endsWith(File.separator)) this.saveDirectory = saveDirectory;
     }
+
+    public String getSaveDirectory() {
+        return saveDirectory;
+    }
+
     public void setSaveFileName(String saveFileName) {
         this.saveFileName = saveFileName;
     }

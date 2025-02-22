@@ -108,4 +108,8 @@ public class FragenverwaltungControl implements ActionListener
     public JPanel getView() {
         return view;
     }
+
+    public FragenverwaltungModel getModel() {
+        return model;
+    }
 }

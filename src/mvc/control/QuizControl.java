@@ -26,7 +26,7 @@ public class QuizControl implements ActionListener {
         String command = e.getActionCommand();
         switch(command) {
             case"mainmenu":
-            controller.showMainMenu();
+                controller.showMainMenu();
             break;
             case "restart":
                 this.model = new QuizModel();

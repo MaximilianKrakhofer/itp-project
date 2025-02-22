@@ -24,15 +24,16 @@ public class QuizView extends JPanel {
     public QuizView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        mainMenu = createButton("Menu", "./src/images/return.png");
+        mainMenu = createButton("Menu", "./src/images/return.png", 75, 50, 20, 20);
         mainMenu.setActionCommand("mainmenu");
-        start = new JButton("Start");
+        start = createButton("Start", "./src/images/start.png", 90, 90, 140, 140);
+        start.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 45));
         this.isLoaded = isLoaded;
         start.setActionCommand("start");
         operations.add(mainMenu);
         System.out.println("Quizview");
         this.add(operations, BorderLayout.NORTH);
-        this.add(start, BorderLayout.SOUTH);
+        this.add(start, BorderLayout.CENTER);
         if (!isLoaded) {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
         }
@@ -77,7 +78,10 @@ public class QuizView extends JPanel {
             return;
         }
         this.removeAll();
+
         this.question = new JPanel();
+        double half = this.getHeight()/2.5;
+        this.question.setPreferredSize(new Dimension(80, (int) half));
         if(fragentyp == 1) {
             try {
                 imagePanel = new JPanel(new BorderLayout());
@@ -108,9 +112,10 @@ public class QuizView extends JPanel {
         answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
         this.add(this.question, BorderLayout.NORTH);
 
-        this.stop = createButton("Stop", "./src/images/end.png");
+        this.stop = createButton("Stop", "./src/images/end.png", 70, 70, 20, 20);
+        stop.setActionCommand("End Quiz");
         this.check = new JButton("Check");
-        this.check = createButton("Check", "./src/images/check.png");
+        this.check = createButton("Check", "./src/images/check.png", 70, 70, 20, 20);
         check.setActionCommand("Check");
         this.answer = new JTextPane();
         grid = new JPanel(new GridLayout(1,2));
@@ -136,6 +141,8 @@ public class QuizView extends JPanel {
     }
     public void nextCard(String question, int fragentyp) {
         this.question.removeAll();
+
+        this.answer.setText("");
 
         if(fragentyp == 1) {
             try {
@@ -175,7 +182,6 @@ public class QuizView extends JPanel {
 
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
 
-        this.answer.setText("");
         this.repaint();
         this.revalidate();
     }
@@ -262,10 +268,10 @@ public class QuizView extends JPanel {
 
     }
 
-    private static JButton createButton(String text, String imagePath) {
+    private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
         ImageIcon icon = new ImageIcon(imagePath);
 
-        Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        Image scaledImage = icon.getImage().getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
 
         JButton button = new JButton(text, icon);
@@ -274,7 +280,7 @@ public class QuizView extends JPanel {
 
         Font font = new Font("Roboto", Font.TRUETYPE_FONT, 10);
         button.setFont(font);
-        button.setPreferredSize(new Dimension(80, 50));
+        button.setPreferredSize(new Dimension(width, height));
         button.setFocusPainted(false);
         return button;
     }

@@ -165,7 +165,7 @@ public class FragenverwaltungView extends JPanel {
 
         Font font = new Font("Roboto", Font.TRUETYPE_FONT, 10);
         button.setFont(font);
-        button.setPreferredSize(new Dimension(60, 50));
+        button.setPreferredSize(new Dimension(75, 50));
         button.setFocusPainted(false);
         return button;
     }

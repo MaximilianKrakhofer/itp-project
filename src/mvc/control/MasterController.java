@@ -10,6 +10,7 @@ import javax.swing.*;
 public class MasterController {
     private MasterView view;
     private KarteiKarten karten = null;
+    private FragenverwaltungControl fragenverwaltungControl;
 
     public MasterController() {
 
@@ -21,7 +22,7 @@ public class MasterController {
         view.updateContent(mainMenuController.getView());
     }
     public void showFragenVerwaltung() {
-        FragenverwaltungControl fragenverwaltungControl = new FragenverwaltungControl(this);
+        fragenverwaltungControl = new FragenverwaltungControl(this);
         if(karten != null) {
             fragenverwaltungControl.setKarten(karten);
         }
@@ -36,6 +37,12 @@ public class MasterController {
         HangmanControl hangmanControl = new HangmanControl(this);
         view.updateContent(hangmanControl.getView());
     }
+    public void showSettings()
+    {
+        SettingsControl settingsControl = new SettingsControl(this);
+        view.updateContent(settingsControl.getView());
+
+    }
     public void setCards(KarteiKarten cards) {
         this.karten = cards;
     }
@@ -49,5 +56,9 @@ public class MasterController {
         MainMenuController  a = new MainMenuController(masterController);
 
 
+    }
+
+    public FragenverwaltungControl getFragenverwaltungControl() {
+        return fragenverwaltungControl;
     }
 }

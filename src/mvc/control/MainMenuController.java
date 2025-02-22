@@ -28,6 +28,9 @@ public class MainMenuController implements ActionListener {
             case "Hangman":
                 masterController.showHangman();
                 break;
+            case "Settings":
+                masterController.showSettings();
+                break;
         }
     }
     public JPanel getView() {
