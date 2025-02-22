@@ -4,6 +4,9 @@ import mvc.control.QuizControl;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -65,6 +68,9 @@ public class QuizView extends JPanel {
 
     }
     public void startQuiz(String question, int fragentyp) {
+
+        this.questionText = new JLabel();
+        this.answer = new JTextPane();
         if(!isLoaded) {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
             return;
@@ -84,14 +90,37 @@ public class QuizView extends JPanel {
             this.questionText.setEditable(false);
             this.question.add(questionText);
         }
+        int minFontSize = 10;
+        int maxFontSize = 100;
+        int textLength = questionText.getText().length();
+        int newFontSize = maxFontSize - textLength;
+        newFontSize = Math.max(newFontSize, minFontSize);
+        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+        answer.setAlignmentX(Component.CENTER_ALIGNMENT);
+        answer.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+        answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
         this.add(this.question, BorderLayout.NORTH);
 
-        this.stop = new JButton("End Quiz");
+        this.stop = createButton("Stop", "./src/images/end.png");
         this.check = new JButton("Check");
+        this.check = createButton("Check", "./src/images/check.png");
         check.setActionCommand("Check");
-        this.answer = new JTextArea();
+        this.answer = new JTextPane();
         grid = new JPanel(new GridLayout(1,2));
         grid.add(check);
+
+
+
+        answer = new JTextPane();
+
+
+
+        StyledDocument doc = answer.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setFontSize(center, 50);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
         grid.add(stop);
         this.add(answer, BorderLayout.CENTER);
@@ -101,6 +130,7 @@ public class QuizView extends JPanel {
     }
     public void nextCard(String question, int fragentyp) {
         this.question.removeAll();
+
         if(fragentyp == 1) {
             imagePanel = new JPanel(new BorderLayout());
             imageLabel = new JLabel();
@@ -114,6 +144,27 @@ public class QuizView extends JPanel {
             this.questionText.setEditable(false);
             this.question.add(questionText);
         }
+
+        int minFontSize = 10;
+        int maxFontSize = 100;
+        int textLength = questionText.getText().length();
+        int newFontSize = maxFontSize - textLength;
+        newFontSize = Math.max(newFontSize, minFontSize);
+
+
+        answer = new JTextPane();
+
+        answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
+
+        StyledDocument doc = answer.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setFontSize(center, 50);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+
+        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+
         this.answer.setText("");
         this.repaint();
         this.revalidate();
@@ -190,7 +241,7 @@ public class QuizView extends JPanel {
         grid.add(new JLabel("Your answer"));
         grid.add(new JLabel(answer.getText()));
         grid.add(new JLabel("Solution: "));
-        realAnswer = new JTextArea();
+        realAnswer = new JTextPane();
         realAnswer.setText(answerText);
 
         realAnswer.setEditable(false);
@@ -213,7 +264,7 @@ public class QuizView extends JPanel {
 
         Font font = new Font("Roboto", Font.TRUETYPE_FONT, 10);
         button.setFont(font);
-        button.setPreferredSize(new Dimension(60, 50));
+        button.setPreferredSize(new Dimension(80, 50));
         button.setFocusPainted(false);
         return button;
     }
