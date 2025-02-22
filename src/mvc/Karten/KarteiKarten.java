@@ -61,16 +61,16 @@ public class KarteiKarten {
         }
     }
     public KarteiKarte[] shuffle() {
-        KarteiKarte[] ausgabe = new KarteiKarte[karten.length];
+        KarteiKarte[] ausgabe = karten.clone();
         int currentIndex = karten.length;
         while (currentIndex != 0) {
-            int randomIndex = (int) Math.round( Math.floor(Math.random() * currentIndex));
+            int randomIndex = (int) (Math.random() * currentIndex);
             currentIndex--;
-            KarteiKarte karteTemp = karten[currentIndex];
-            ausgabe[currentIndex] = karten[randomIndex];
+            KarteiKarte karteTemp = ausgabe[currentIndex];
+            ausgabe[currentIndex] = ausgabe[randomIndex];
             ausgabe[randomIndex] = karteTemp;
 
-        } return karten;
+        } return ausgabe;
     }
 
 

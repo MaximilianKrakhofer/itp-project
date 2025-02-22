@@ -136,8 +136,9 @@ public class QuizView extends JPanel {
 
         JPanel buttons = new JPanel(new GridLayout(1,2));
         buttons.add(mainMenu);
+        restart = new JButton("restart");
+        restart.setActionCommand("restart");
         buttons.add(restart);
-        restart = new JButton("Restart");
         this.add(moveTheBodyMoveTheFlow );
         this.add(river );
         this.add(buttons, BorderLayout.SOUTH);
@@ -150,21 +151,21 @@ public class QuizView extends JPanel {
     }
     public void addButtonListener(QuizControl l) {
 
-        if(mainMenu!=null) {
+        if(mainMenu!=null && mainMenu.getActionListeners().length ==0) {
 
             this.mainMenu.addActionListener(l);
         }
-        if(check!=null) {
+        if(check!=null  && check.getActionListeners().length ==0) {
             this.check.addActionListener(l);
         }
-        if(restart!=null) {
+        if(restart!=null && restart.getActionListeners().length == 0) {
 
             this.restart.addActionListener(l); // kochen
         }
-        if(stop!=null) {
+        if(stop!=null  && stop.getActionListeners().length ==0) {
             this.stop.addActionListener(l);
         }
-        if(start!=null) {
+        if(start!=null &&  start.getActionListeners().length ==0) {
             this.start.addActionListener(l);
         }
 

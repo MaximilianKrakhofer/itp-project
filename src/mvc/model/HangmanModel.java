@@ -1,5 +1,6 @@
 package mvc.model;
 
+import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
 
 public class HangmanModel {
@@ -8,12 +9,10 @@ public class HangmanModel {
     private int questions;
     private int questionsfalse;
 
-    public KarteiKarten startHangman(KarteiKarten cards) {
-        currentAnswer = 1;
-        this.karten = cards;
+    public KarteiKarte[] startHangman(KarteiKarten cards) {
+        currentAnswer = 0;
         questions = 0;
-        questionsfalse = 0;
-        return shuffle();
+        return this.karten.shuffle();
     }
     public int[] endHangmanAndGetResults() {
         int[] results = new int[3];
@@ -25,14 +24,13 @@ public class HangmanModel {
     public void check(String answer) {
         questions++;
         System.out.println(currentAnswer);
-        if (!karten.getCard(currentAnswer).getAntwort().equalsIgnoreCase(answer)) {
-            questionsfalse++;
+        if(karten.getCard(currentAnswer).isAntwort(answer)) {
+            currentAnswer=currentAnswer+1;
         }
-        currentAnswer=currentAnswer+2;
+        else{
+            currentAnswer=currentAnswer+1;
+        }
 
-    }
-    public KarteiKarten shuffle() { // zu implementieren
-        return karten;
     }
 }
 
