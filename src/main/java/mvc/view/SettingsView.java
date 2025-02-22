@@ -1,13 +1,11 @@
 package mvc.view;
 
-import mvc.control.QuizControl;
 import mvc.control.SettingsControl;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
-import java.util.concurrent.Flow;
 
 public class SettingsView extends JPanel {
 

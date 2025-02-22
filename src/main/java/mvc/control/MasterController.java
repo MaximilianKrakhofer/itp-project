@@ -1,11 +1,16 @@
 package mvc.control;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import mvc.Karten.KarteiKarten;
 import mvc.view.FragenverwaltungView;
 import mvc.view.MasterView;
-
+import com.formdev.flatlaf.FlatLaf;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 public class MasterController {
     private MasterView view;
@@ -13,7 +18,12 @@ public class MasterController {
     private FragenverwaltungControl fragenverwaltungControl;
 
     public MasterController() {
-
+        try {
+            FlatIntelliJLaf.setup();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         view = new MasterView();
         showMainMenu();
     }

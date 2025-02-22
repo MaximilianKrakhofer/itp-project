@@ -1,10 +1,6 @@
 package mvc.control;
 
-import mvc.Karten.KarteiKarte;
-import mvc.Karten.KarteiKarten;
-import mvc.model.HangmanModel;
 import mvc.model.SettingsModel;
-import mvc.view.HangmanView;
 import mvc.view.SettingsView;
 
 import javax.swing.*;
