@@ -13,7 +13,7 @@ public class QuizView extends JPanel {
 
     private JButton mainMenu, check, restart, stop, start;
     private JPanel question;
-    private JTextField questionText, answer;
+    private JEditorPane questionText, answer;
     private JPanel grid, imagePanel;
     private JLabel imageLabel;
     private boolean isLoaded;
@@ -79,7 +79,9 @@ public class QuizView extends JPanel {
             this.question.add(imagePanel);
         }
         else{
-            this.questionText = new JTextField(question);
+            this.questionText = new JEditorPane();
+            questionText.setContentType("text/html");
+            questionText.setText(question);
             this.questionText.setEditable(false);
             this.question.add(questionText);
         }
@@ -88,7 +90,7 @@ public class QuizView extends JPanel {
         this.stop = new JButton("End Quiz");
         this.check = new JButton("Check");
         check.setActionCommand("Check");
-        this.answer = new JTextField();
+        this.answer = new JEditorPane();
         grid = new JPanel(new GridLayout(1,2));
         grid.add(check);
 
@@ -108,7 +110,8 @@ public class QuizView extends JPanel {
             this.question.add(imagePanel);
         }
         else{
-            this.questionText = new JTextField(question);
+            this.questionText = new JEditorPane();
+            this.questionText.setText(question);
             this.questionText.setEditable(false);
             this.question.add(questionText);
         }
@@ -163,6 +166,20 @@ public class QuizView extends JPanel {
         }
         if(start!=null) {
             this.start.addActionListener(l);
+        }
+
+    }
+    public void setTextColor(boolean truth){
+        this.answer.setContentType("text/html");
+        if(truth){
+            this.answer.setText("<html> <font color='green'>"+ getAnswer() +"</font></html>");
+        }
+        else{
+            for (int i = 0; i < 1; i++) {
+
+            }
+            this.answer.setText("<html>Text color: <font color='red'>red</font></html>");
+
         }
 
     }

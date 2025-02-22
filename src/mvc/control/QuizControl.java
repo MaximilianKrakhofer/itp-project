@@ -50,7 +50,12 @@ public class QuizControl implements ActionListener {
                 }
                 break;
             case "Check":
-                if(view.getAnswer().equals())
+                if(view.getAnswer().equals(cards.getCardAnswer(currentCard))) {
+                     view.setTextColor(true);
+                }
+                else {
+                    view.setTextColor(false);
+                }
                 System.out.println(view.getAnswer());
 
                 break;
@@ -80,4 +85,5 @@ public class QuizControl implements ActionListener {
     public JPanel getView() {
         return view;
     }
+
 }
