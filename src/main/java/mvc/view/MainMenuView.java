@@ -1,7 +1,6 @@
 package mvc.view;
 
 import mvc.control.MainMenuController;
-import mvc.control.QuizControl;
 
 import javax.swing.*;
 import java.awt.*;

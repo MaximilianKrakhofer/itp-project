@@ -2,10 +2,8 @@ package mvc.model;
 
 import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
-import mvc.control.MasterController;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 
 public class FragenverwaltungModel {

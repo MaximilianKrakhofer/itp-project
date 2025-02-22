@@ -3,8 +3,6 @@ package mvc.model;
 import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
 
-import javax.swing.*;
-
 
 public class QuizModel {
     private KarteiKarte[] cards;

@@ -3,34 +3,43 @@ package mvc.model;
 import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
 
+
 public class HangmanModel {
-    private KarteiKarten karten;
+    private KarteiKarte[] cards;
     private int currentAnswer;
     private int questions;
-    private int questionsfalse;
+    private int questionscorrect;
+    private long startTime,endTime;
 
-    public KarteiKarte[] startHangman(KarteiKarten cards) {
+    public KarteiKarte[] startQuiz(KarteiKarten cards) {
+        startTime = System.currentTimeMillis();
         currentAnswer = 0;
+        this.cards = cards.shuffle();
         questions = 0;
-        return this.karten.shuffle();
+        questionscorrect = 0;
+        return this.cards;
     }
-    public int[] endHangmanAndGetResults() {
+
+    public int[] endQuiz() {
+        endTime = System.currentTimeMillis();
         int[] results = new int[3];
         results[0] = questions;
-        results[1] = questionsfalse;
-        results[2] = questions+questionsfalse;
+        results[1] = questionscorrect;
+        results[2] = (int) (endTime-startTime)/1000;
         return results;
     }
-    public void check(String answer) {
+    public boolean check(String answer) {
         questions++;
         System.out.println(currentAnswer);
-        if(karten.getCard(currentAnswer).isAntwort(answer)) {
-            currentAnswer=currentAnswer+1;
+        if( cards[currentAnswer].isAntwort(answer)) {
+            this.questionscorrect++;
+            this.currentAnswer++;
+            return true;
         }
         else{
-            currentAnswer=currentAnswer+1;
+            this.currentAnswer++;
+            return false;
         }
 
     }
 }
-
