@@ -10,15 +10,16 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class QuizView extends JPanel {
 
     private JButton mainMenu, check, restart, stop, start;
     private JPanel question;
-    private JTextArea questionText, answer, realAnswer;
+    private JTextPane answer, realAnswer;
     private JPanel grid, imagePanel;
-    private JLabel imageLabel;
+    private JLabel imageLabel, questionText;
     private boolean isLoaded;
     public QuizView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
@@ -39,7 +40,7 @@ public class QuizView extends JPanel {
     public void showSolution(String answer) {
         JOptionPane.showMessageDialog(null, this.questionText.getText()+ "\nAntwort:" + answer);
     }
-    public void loadImage(String url) {
+    public void loadImage(String url) throws MalformedURLException {
         try{
             File file = new File(url);
             if(file.exists()) {
@@ -62,7 +63,7 @@ public class QuizView extends JPanel {
                 imageLabel.setIcon(new ImageIcon(scaledImg));
             }
             catch (Exception e2) {
-                JOptionPane.showMessageDialog(null, "Message could not load");
+                throw new MalformedURLException();
             }
         }
 
@@ -78,16 +79,21 @@ public class QuizView extends JPanel {
         this.removeAll();
         this.question = new JPanel();
         if(fragentyp == 1) {
-            imagePanel = new JPanel(new BorderLayout());
-            imageLabel = new JLabel();
-            imagePanel.add(imageLabel, BorderLayout.CENTER);
-            loadImage(question);
-            this.question.add(imagePanel);
+            try {
+                imagePanel = new JPanel(new BorderLayout());
+                imageLabel = new JLabel();
+                imagePanel.add(imageLabel, BorderLayout.CENTER);
+                loadImage(question);
+                this.question.add(imagePanel);
+            }
+            catch (MalformedURLException e) {
+                this.questionText = new JLabel("Fehler beim Laden des Bildes");
+            }
         }
+
+
         else{
-            this.questionText = new JTextArea();
             questionText.setText(question);
-            this.questionText.setEditable(false);
             this.question.add(questionText);
         }
         int minFontSize = 10;
@@ -132,16 +138,20 @@ public class QuizView extends JPanel {
         this.question.removeAll();
 
         if(fragentyp == 1) {
-            imagePanel = new JPanel(new BorderLayout());
-            imageLabel = new JLabel();
-            imagePanel.add(imageLabel, BorderLayout.CENTER);
-            loadImage(question);
-            this.question.add(imagePanel);
+            try {
+                imagePanel = new JPanel(new BorderLayout());
+                imageLabel = new JLabel();
+                imagePanel.add(imageLabel, BorderLayout.CENTER);
+                loadImage(question);
+                this.question.add(imagePanel);
+            }
+            catch (MalformedURLException e) {
+                this.questionText = new JLabel("Fehler beim Laden des Bildes");
+            }
         }
         else{
-            this.questionText = new JTextArea();
+            this.questionText = new JLabel();
             this.questionText.setText(question);
-            this.questionText.setEditable(false);
             this.question.add(questionText);
         }
 

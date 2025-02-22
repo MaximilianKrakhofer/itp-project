@@ -60,14 +60,15 @@ public class QuizControl implements ActionListener {
             case "Check":
 
                 view.setCheck(model.check(view.getAnswer()), cards.getCardAnswer(currentCard)); // checkt ob korrekt
-                if(currentCard +1 > cards.getCards().length) {
+                if(currentCard +1 >= cards.getCards().length) {
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
                     view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
+                    view.addButtonListener(this);
                 }
                 else{
-                    view.nextCard(cards.getCards()[currentCard].getFrage(),cards.getCards()[currentCard].getFragentyp());
                     currentCard+=1;
+                    view.nextCard(cards.getCards()[currentCard].getFrage(),cards.getCards()[currentCard].getFragentyp());
                 }
 
 

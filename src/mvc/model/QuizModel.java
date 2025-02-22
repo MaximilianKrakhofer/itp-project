@@ -3,6 +3,7 @@ package mvc.model;
 import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
 
+import javax.swing.*;
 
 
 public class QuizModel {
@@ -10,8 +11,9 @@ public class QuizModel {
     private int currentAnswer;
     private int questions;
     private int questionscorrect;
+    private long startTime,endTime;
     public KarteiKarte[] startQuiz(KarteiKarten cards) {
-        startTime();
+        startTime = System.currentTimeMillis();
         currentAnswer = 0;
         this.cards = cards.shuffle();
         questions = 0;
@@ -20,16 +22,16 @@ public class QuizModel {
     }
 
     public int[] endQuiz() {
+        endTime = System.currentTimeMillis();
         int[] results = new int[3];
         results[0] = questions;
         results[1] = questionscorrect;
-        results[2] = endTime();
+        results[2] = (int) (endTime-startTime)/1000;
         return results;
     }
     public boolean check(String answer) {
         questions++;
         System.out.println(currentAnswer);
-        currentAnswer++;
         if( cards[currentAnswer].isAntwort(answer)) {
             this.questionscorrect++;
             this.currentAnswer++;
@@ -40,11 +42,5 @@ public class QuizModel {
             return false;
         }
 
-    }
-    public void startTime() {
-
-    }
-    public int endTime() {
-        return 0;
     }
 }
