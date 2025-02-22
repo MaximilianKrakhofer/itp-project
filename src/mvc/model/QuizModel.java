@@ -26,15 +26,18 @@ public class QuizModel {
         results[2] = endTime();
         return results;
     }
-    public void check(String answer) {
+    public boolean check(String answer) {
         questions++;
         System.out.println(currentAnswer);
-        if(cards[currentAnswer].isAntwort(answer)) {
-            questionscorrect++;
-            currentAnswer=currentAnswer+1;
+        currentAnswer++;
+        if( cards[currentAnswer].isAntwort(answer)) {
+            this.questionscorrect++;
+            this.currentAnswer++;
+            return true;
         }
         else{
-            currentAnswer=currentAnswer+1;
+            this.currentAnswer++;
+            return false;
         }
 
     }

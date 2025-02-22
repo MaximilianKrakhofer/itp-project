@@ -9,18 +9,18 @@ import java.awt.*;
 public class MainMenuView extends JPanel {
     private JButton fragenVerwaltung, quiz, hangman;
     public MainMenuView() {
-        this.setLayout(new BorderLayout());
-        JPanel operations = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        fragenVerwaltung = new JButton("FragenVerwaltung");
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        fragenVerwaltung = createButton("Fragenverwaltung", "./src/images/library-books.png");
         fragenVerwaltung.setActionCommand("Fragenverwaltung");
-        quiz = new JButton("Quiz");
+        quiz = createButton("Quiz", "./src/images/Quiz.png");
         quiz.setActionCommand("Quiz");
-        hangman = new JButton("Hangman");
+        hangman = createButton("Hangman", "./src/images/hangman.png");
         hangman.setActionCommand("Hangman");
-        operations.add(fragenVerwaltung);
-        operations.add(quiz);
-        operations.add(hangman);
-        this.add(operations, BorderLayout.CENTER);
+        this.add(fragenVerwaltung);
+        this.add(quiz);
+        this.add(hangman);
     }
     public void addButtonListener(MainMenuController l) {
 
@@ -28,6 +28,26 @@ public class MainMenuView extends JPanel {
         this.quiz.addActionListener(l);
         this.hangman.addActionListener(l);
 
+    }
+
+    private static JButton createButton(String text, String imagePath) {
+        ImageIcon icon = new ImageIcon(imagePath);
+
+        Image scaledImage = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(scaledImage);
+
+
+        JButton button = new JButton(text, icon);
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+        button.setIconTextGap(10);
+        Font font = new Font("Arial", Font.TRUETYPE_FONT, 30);
+        button.setFont(font);
+
+        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+        button.setPreferredSize(new Dimension(400, 140));
+        button.setFocusPainted(false);
+
+        return button;
     }
 
     public JButton getFragenverwaltung() {

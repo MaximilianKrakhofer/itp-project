@@ -13,14 +13,14 @@ public class QuizView extends JPanel {
 
     private JButton mainMenu, check, restart, stop, start;
     private JPanel question;
-    private JEditorPane questionText, answer;
+    private JTextArea questionText, answer, realAnswer;
     private JPanel grid, imagePanel;
     private JLabel imageLabel;
     private boolean isLoaded;
     public QuizView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        mainMenu = new JButton("Main Menu");
+        mainMenu = createButton("Menu", "./src/images/return.png");
         mainMenu.setActionCommand("mainmenu");
         start = new JButton("Start");
         this.isLoaded = isLoaded;
@@ -79,8 +79,7 @@ public class QuizView extends JPanel {
             this.question.add(imagePanel);
         }
         else{
-            this.questionText = new JEditorPane();
-            questionText.setContentType("text/html");
+            this.questionText = new JTextArea();
             questionText.setText(question);
             this.questionText.setEditable(false);
             this.question.add(questionText);
@@ -90,7 +89,7 @@ public class QuizView extends JPanel {
         this.stop = new JButton("End Quiz");
         this.check = new JButton("Check");
         check.setActionCommand("Check");
-        this.answer = new JEditorPane();
+        this.answer = new JTextArea();
         grid = new JPanel(new GridLayout(1,2));
         grid.add(check);
 
@@ -110,7 +109,7 @@ public class QuizView extends JPanel {
             this.question.add(imagePanel);
         }
         else{
-            this.questionText = new JEditorPane();
+            this.questionText = new JTextArea();
             this.questionText.setText(question);
             this.questionText.setEditable(false);
             this.question.add(questionText);
@@ -170,18 +169,53 @@ public class QuizView extends JPanel {
         }
 
     }
-    public void setTextColor(boolean truth){
-        this.answer.setContentType("text/html");
+    public void setCheck(boolean truth, String answerText){
+
+
+        JPanel main = new JPanel( new GridLayout(2, 1));
+        JPanel grid = new JPanel( new GridLayout(3, 2));
+        JEditorPane correct =  new JEditorPane();
+        correct.setContentType("text/html");
         if(truth){
-            this.answer.setText("<html> <font color='green'>"+ getAnswer() +"</font></html>");
+            correct.setText("<html><font color=green>CORRECT</font></html>");
         }
         else{
-            for (int i = 0; i < 1; i++) {
-
-            }
-            this.answer.setText("<html>Text color: <font color='red'>red</font></html>");
-
+            correct.setText("<html><font color=red>WRONG</font></html>");
         }
+        main.add(correct);
+
+        grid.add(new JLabel("Question"));
+        grid.add(new JLabel(questionText.getText()));
+
+        grid.add(new JLabel("Your answer"));
+        grid.add(new JLabel(answer.getText()));
+        grid.add(new JLabel("Solution: "));
+        realAnswer = new JTextArea();
+        realAnswer.setText(answerText);
+
+        realAnswer.setEditable(false);
+        grid.add(realAnswer);
+        main.add(grid);
+        JOptionPane.showConfirmDialog(null, main,
+                "Solution", JOptionPane.OK_CANCEL_OPTION);
 
     }
+
+    private static JButton createButton(String text, String imagePath) {
+        ImageIcon icon = new ImageIcon(imagePath);
+
+        Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(scaledImage);
+
+        JButton button = new JButton(text, icon);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        Font font = new Font("Roboto", Font.TRUETYPE_FONT, 10);
+        button.setFont(font);
+        button.setPreferredSize(new Dimension(60, 50));
+        button.setFocusPainted(false);
+        return button;
+    }
+
 }

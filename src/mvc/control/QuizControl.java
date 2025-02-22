@@ -14,7 +14,7 @@ public class QuizControl implements ActionListener {
     private MasterController controller;
     private KarteiKarten cards;
     private int currentCard = 0;
-    public QuizContMessrol(MasterController controller) {
+    public QuizControl(MasterController controller) {
         System.out.println("quiz control");
         this.controller = controller;
         this.model = new QuizModel();
@@ -58,14 +58,18 @@ public class QuizControl implements ActionListener {
                 }
                 break;
             case "Check":
-                if(view.getAnswer().equals(cards.getCardAnswer(currentCard))) {
-                     view.setTextColor(true);
+
+                view.setCheck(model.check(view.getAnswer()), cards.getCardAnswer(currentCard)); // checkt ob korrekt
+                if(currentCard +1 > cards.getCards().length) {
+                    System.out.println("endquizcheck");
+                    int[] affe = model.endQuiz();
+                    view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
                 }
-                else {
-                    view.setTextColor(false);
+                else{
+                    view.nextCard(cards.getCards()[currentCard].getFrage(),cards.getCards()[currentCard].getFragentyp());
+                    currentCard+=1;
                 }
-                //if(view.getAnswer().equals(view.getAnswer))
-                System.out.println(view.getAnswer());
+
 
                 break;
             case "stop":

@@ -36,7 +36,7 @@ public class FragenverwaltungView extends JPanel {
         save.setActionCommand("save");
         load = new JButton("Laden");
         load.setActionCommand("load");
-        mainMenu = new JButton("Main Menu");
+        mainMenu = createButton("Menu", "./src/images/return.png");
 
         mainMenu.setActionCommand("main");
         cards = new DefaultTableModel();
@@ -147,5 +147,21 @@ public class FragenverwaltungView extends JPanel {
 
     public JButton getMainMenu() {
         return mainMenu;
+    }
+    private static JButton createButton(String text, String imagePath) {
+        ImageIcon icon = new ImageIcon(imagePath);
+
+        Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(scaledImage);
+
+        JButton button = new JButton(text, icon);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        Font font = new Font("Roboto", Font.TRUETYPE_FONT, 10);
+        button.setFont(font);
+        button.setPreferredSize(new Dimension(60, 50));
+        button.setFocusPainted(false);
+        return button;
     }
 }

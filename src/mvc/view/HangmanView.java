@@ -13,7 +13,7 @@ public class HangmanView extends JPanel {
     public HangmanView() {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        mainMenu = new JButton("Main Menu");
+        mainMenu = createButton("Menu", "./src/images/return.png");
         mainMenu.setActionCommand("mainMenu");
         start = new JButton("Start");
         start.setActionCommand("start");
@@ -67,5 +67,21 @@ public class HangmanView extends JPanel {
 
         this.mainMenu.addActionListener(l);
 
+    }
+    private static JButton createButton(String text, String imagePath) {
+        ImageIcon icon = new ImageIcon(imagePath);
+
+        Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(scaledImage);
+
+        JButton button = new JButton(text, icon);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        Font font = new Font("Roboto", Font.TRUETYPE_FONT, 10);
+        button.setFont(font);
+        button.setPreferredSize(new Dimension(60, 50));
+        button.setFocusPainted(false);
+        return button;
     }
 }
