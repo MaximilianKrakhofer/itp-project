@@ -219,7 +219,7 @@ public class QuizView extends JPanel {
         this.repaint();
         this.revalidate();
     }
-        public String getAnswer() {
+    public String getAnswer() {
         return answer.getText();
     }
     public void addButtonListener(QuizControl l) {

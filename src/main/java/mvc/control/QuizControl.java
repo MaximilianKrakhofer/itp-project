@@ -28,7 +28,7 @@ public class QuizControl implements ActionListener {
         switch(command) {
             case"mainmenu":
                 controller.showMainMenu();
-            break;
+                break;
             case "restart":
                 this.model = new QuizModel();
                 view.revalidate();
