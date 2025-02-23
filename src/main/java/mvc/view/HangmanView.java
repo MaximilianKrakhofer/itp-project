@@ -249,28 +249,37 @@ public class HangmanView extends JPanel {
         return a.getText();
     }
 
-    public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
+    public void endQuiz(int beantwortet, int failedChars, int failedWords, int[] hangmanCompletions, int dauer, double prozent) {
         this.removeAll();
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
-        JPanel moveTheBodyMoveTheFlow = new JPanel(new FlowLayout());
-        JPanel river = new JPanel(new FlowLayout());
+
         fragenbeantwortetLabel = new JLabel("Fragenbeantwortet:" + beantwortet);
-        korrektLabel = new JLabel("Korrekt:" + korrekt);
+        StringBuilder hangmanCompletionsString = new StringBuilder();
+
+        for (int i = 0; i < hangmanCompletions.length; i++) {
+            hangmanCompletionsString.append(hangmanCompletions[i] +"/7; " );
+        }
+        JLabel hangmanCompletionsLabel = new JLabel(hangmanCompletionsString.toString());
+        JLabel failedWordsLabel = new JLabel("Failed Words: " + failedWords);
+        JLabel charWrongLabel = new JLabel("Buchstaben Falsch erraten:" + failedChars);
         dauerLabel = new JLabel("Dauer:" + dauer);
         prozentLabel = new JLabel("Prozent:" + prozent);
 
-        moveTheBodyMoveTheFlow.add(fragenbeantwortetLabel);
-        moveTheBodyMoveTheFlow.add(korrektLabel);
-        river.add(dauerLabel);
-        river.add(prozentLabel);
+        JPanel box = new JPanel();
+        box.setLayout(new BoxLayout(box,BoxLayout.PAGE_AXIS));
+        box.add(fragenbeantwortetLabel);
+        box.add(hangmanCompletionsLabel);
+        box.add(failedWordsLabel);
+        box.add(charWrongLabel);
+        box.add(dauerLabel);
+        box.add(prozentLabel);
 
         JPanel buttons = new JPanel(new GridLayout(1,2));
         buttons.add(mainMenu);
         restart = new JButton("restart");
         restart.setActionCommand("restart");
         buttons.add(restart);
-        this.add(moveTheBodyMoveTheFlow );
-        this.add(river );
+        this.add(box );
         this.add(buttons, BorderLayout.SOUTH);
         this.repaint();
         this.revalidate();

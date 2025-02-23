@@ -6,12 +6,11 @@ import mvc.Karten.KarteiKarten;
 
 public class HangmanModel {
     private KarteiKarte[] cards;
-    private int currentAnswer;
-    private int questions;
-    private int questionscorrect;
+    private int questionscorrect, counter, questions, currentAnswer, failedChars, failedWords, currentHangman;
     private long startTime,endTime;
     private boolean atleastOne;
-    private int counter;
+    private int[] hangmanCompletions;
+
 
     public KarteiKarte[] startQuiz(KarteiKarten cards) {
         startTime = System.currentTimeMillis();
@@ -19,6 +18,7 @@ public class HangmanModel {
         this.cards = cards.shuffle();
         questions = 0;
         questionscorrect = 0;
+        hangmanCompletions = new int [cards.getCards().length];
         return this.cards;
     }
 
@@ -59,6 +59,7 @@ public class HangmanModel {
     }
     public String increaseCounter(){
         counter ++;
+        hangmanCompletions[currentHangman] ++;
         String hangman ="";
         switch (counter){
 
@@ -128,7 +129,33 @@ public class HangmanModel {
         return hangman;
     }
 
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCurrentHangman(int currentHangman) {
+        this.currentHangman = currentHangman;
+    }
+
     public void setAtleastOne(boolean atleastOne) {
         this.atleastOne = atleastOne;
+    }
+    public void increaseFailedChars(){
+        failedChars ++;
+    }
+    public void increaseFailedWords(){
+        failedWords++;
+    }
+
+    public int getFailedChars() {
+        return failedChars;
+    }
+
+    public int getFailedWords() {
+        return failedWords;
+    }
+
+    public int[] getHangmanCompletions() {
+        return hangmanCompletions;
     }
 }
