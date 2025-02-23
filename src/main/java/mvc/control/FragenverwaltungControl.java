@@ -100,6 +100,7 @@ public class FragenverwaltungControl implements ActionListener
     }
     public void setKarten(KarteiKarten karten ) {
         this.karten = karten;
+        view.resetCards();
         for(int i = 0; i< karten.getCards().length;i++) {
             KarteiKarte karte = new KarteiKarte(karten.getCardQuestion(i),karten.getCardAnswer(i), karten.getCardType(i));
             view.appendCard(karte);
