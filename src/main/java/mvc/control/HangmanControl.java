@@ -13,6 +13,7 @@ public class HangmanControl implements ActionListener {
     private HangmanView view;
     private MasterController controller;
     private KarteiKarten cards;
+    private KarteiKarte[] shuffled;
     private int currentCard = 0;
     public HangmanControl(MasterController controller) {
         System.out.println("quiz control");
@@ -35,7 +36,7 @@ public class HangmanControl implements ActionListener {
                 view.addButtonListener(this);
             case "start":
                 if(isLoaded()) {
-                    KarteiKarte[] shuffled = model.startQuiz(cards);
+                    this.shuffled = model.startQuiz(cards);
                     view.startQuiz(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
                     view.addButtonListener(this);
                     view.repaint();
@@ -60,7 +61,7 @@ public class HangmanControl implements ActionListener {
                 }
                 break;
             case "Check":
-                int [] correctChars = model.compareChars(view.getAnswer().charAt(0),cards.getCardAnswer(currentCard));
+                int [] correctChars = model.compareChars(view.getAnswer().charAt(0),shuffled[currentCard].getAntwort());
 
                 if(model.getAtleastOne()){
                     view.setCheckedChars(correctChars, view.getAnswer().charAt(0));
@@ -83,11 +84,12 @@ public class HangmanControl implements ActionListener {
             case "CheckWord":
                 String a = "";
                 a =  view.checkWord();
-                if(a!=null && a.equals(cards.getCardAnswer(currentCard +1))) {
+                if(a!=null && a.equals(shuffled[currentCard].getAntwort())) {
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
                     view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
                     view.addButtonListener(this);
+                    currentCard++;
                 }
 
                 else{

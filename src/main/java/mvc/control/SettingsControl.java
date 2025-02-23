@@ -17,7 +17,7 @@ public class SettingsControl implements ActionListener {
     public SettingsControl(MasterController controller) {
         this.controller = controller;
         this.model = new SettingsModel();
-        this.view = new SettingsView();
+        this.view = new SettingsView(SettingsModel.getConfig("theme"));
         view.addButtonListener(this);
     }
 
@@ -46,6 +46,7 @@ public class SettingsControl implements ActionListener {
                 break;
             case "autosave":
                 SettingsModel.saveSetting("autosave", String.valueOf(view.autoSaveIsChecked()));
+                System.out.println("autosave");
                 break;
             case "autoload":
                 SettingsModel.saveSetting("autoload", String.valueOf(view.autoSaveIsChecked()));

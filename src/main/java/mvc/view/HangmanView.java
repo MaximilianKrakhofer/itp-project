@@ -25,9 +25,9 @@ public class HangmanView extends JPanel {
     public HangmanView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        mainMenu = createButton("Menu", "./src/images/return.png", 75, 50, 20, 20);
+        mainMenu = createButton("Menu", "/images/return.png", 75, 50, 20, 20);
         mainMenu.setActionCommand("mainmenu");
-        start = createButton("Start", "./src/images/start.png", 90, 90, 140, 140);
+        start = createButton("Start", "/images/start.png", 90, 90, 140, 140);
         start.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 45));
         this.isLoaded = isLoaded;
         start.setActionCommand("start");
@@ -124,10 +124,10 @@ public class HangmanView extends JPanel {
 
         this.add(this.question, BorderLayout.NORTH);
 
-        this.stop = createButton("Stop", "./src/images/end.png", 80, 70, 20, 20);
+        this.stop = createButton("Stop", "/images/end.png", 80, 70, 20, 20);
         stop.setActionCommand("End Quiz");
         this.check = new JButton("Check");
-        this.check = createButton("Check", "./src/images/check.png", 80, 70, 20, 20);
+        this.check = createButton("Check", "/images/check.png", 80, 70, 20, 20);
         check.setActionCommand("Check");
         grid = new JPanel(new GridLayout(1,3));
         grid.add(check);
@@ -164,7 +164,7 @@ public class HangmanView extends JPanel {
         hangmanePane.add(hangmanAscii);
         JPanel answerPanel = new JPanel(new FlowLayout());
         answerPanel.add(answer);
-        this.checkWord = createButton("Wort Eingabe", "./src/images/fullword.png", 70, 80, 40, 40);
+        this.checkWord = createButton("Wort Eingabe", "/images/fullword.png", 70, 80, 40, 40);
         checkWord.setActionCommand("CheckWord");
         grid.add(checkWord);
         grid.add(stop);
@@ -337,7 +337,7 @@ public class HangmanView extends JPanel {
     }
 
     private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
-        ImageIcon icon = new ImageIcon(imagePath);
+        ImageIcon icon = new ImageIcon(HangmanView.class.getResource(imagePath));
 
         Image scaledImage = icon.getImage().getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);

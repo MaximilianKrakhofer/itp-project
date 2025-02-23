@@ -1,9 +1,11 @@
 package mvc.view;
 
 import mvc.control.MainMenuController;
+import net.coobird.thumbnailator.Thumbnails;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class MainMenuView extends JPanel {
     private JButton fragenVerwaltung, quiz, hangman, settings;
@@ -11,12 +13,12 @@ public class MainMenuView extends JPanel {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        settings = createButton("Settings", "./src/images/settings.png");
-        fragenVerwaltung = createButton("Fragenverwaltung", "./src/images/library-books.png");
+        settings = createButton("Settings", "/images/settings.png");
+        fragenVerwaltung = createButton("Fragenverwaltung", "/images/library-books.png");
         fragenVerwaltung.setActionCommand("Fragenverwaltung");
-        quiz = createButton("Quiz", "./src/images/Quiz.png");
+        quiz = createButton("Quiz", "/images/Quiz.png");
         quiz.setActionCommand("Quiz");
-        hangman = createButton("Hangman", "./src/images/hangman.png");
+        hangman = createButton("Hangman", "/images/hangman.png");
         hangman.setActionCommand("Hangman");
         settings.setActionCommand("Settings");
         this.add(fragenVerwaltung);
@@ -34,23 +36,25 @@ public class MainMenuView extends JPanel {
     }
 
     private static JButton createButton(String text, String imagePath) {
-        ImageIcon icon = new ImageIcon(imagePath);
+        try {
+            BufferedImage image = Thumbnails.of(SettingsView.class.getResource(imagePath).getPath()).size(80, 80).asBufferedImage();
+            ImageIcon icon = new ImageIcon(image);
+            JButton button = new JButton(text, icon);
+            button.setHorizontalAlignment(SwingConstants.LEFT);
+            button.setIconTextGap(10);
+            Font font = new Font("Arial", Font.TRUETYPE_FONT, 30);
+            button.setFont(font);
 
-        Image scaledImage = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(scaledImage);
+            button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+            button.setPreferredSize(new Dimension(400, 140));
+            button.setFocusPainted(false);
 
-
-        JButton button = new JButton(text, icon);
-        button.setHorizontalAlignment(SwingConstants.LEFT);
-        button.setIconTextGap(10);
-        Font font = new Font("Arial", Font.TRUETYPE_FONT, 30);
-        button.setFont(font);
-
-        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
-        button.setPreferredSize(new Dimension(400, 140));
-        button.setFocusPainted(false);
-
-        return button;
+            return button;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public JButton getFragenverwaltung() {

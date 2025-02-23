@@ -13,6 +13,7 @@ public class QuizControl implements ActionListener {
     private QuizView view;
     private MasterController controller;
     private KarteiKarten cards;
+    private KarteiKarte[] shuffled;
     private int currentCard = 0;
     public QuizControl(MasterController controller) {
         System.out.println("quiz control");
@@ -36,6 +37,7 @@ public class QuizControl implements ActionListener {
             case "start":
                 if(isLoaded()) {
                     KarteiKarte[] shuffled = model.startQuiz(cards);
+                    this.shuffled = shuffled;
                     view.startQuiz(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
                     view.addButtonListener(this);
                     view.repaint();
@@ -48,6 +50,7 @@ public class QuizControl implements ActionListener {
                 break;
             case "End Quiz":
                 if(view.getAnswer()!= null) {
+                    currentCard = 0;
                     model.check(view.getAnswer());
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
@@ -60,16 +63,17 @@ public class QuizControl implements ActionListener {
                 break;
             case "Check":
 
-                view.setCheck(model.check(view.getAnswer()), cards.getCardAnswer(currentCard)); // checkt ob korrekt
+                view.setCheck(model.check(view.getAnswer()), shuffled[currentCard].getAntwort()); // checkt ob korrekt
                 if(currentCard +1 >= cards.getCards().length) {
                     System.out.println("endquizcheck");
+                    currentCard = 0;
                     int[] affe = model.endQuiz();
                     view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
                     view.addButtonListener(this);
                 }
                 else{
                     currentCard+=1;
-                    view.nextCard(cards.getCards()[currentCard].getFrage(),cards.getCards()[currentCard].getFragentyp());
+                    view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
                 }
 
 

@@ -2,6 +2,7 @@ package mvc.view;
 
 import mvc.Karten.KarteiKarte;
 import mvc.control.FragenverwaltungControl;
+import net.coobird.thumbnailator.Thumbnails;
 
 // import org.imgscalr.Scalr;
 
@@ -9,6 +10,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class FragenverwaltungView extends JPanel {
@@ -36,7 +38,7 @@ public class FragenverwaltungView extends JPanel {
         save.setActionCommand("save");
         load = new JButton("Laden");
         load.setActionCommand("load");
-        mainMenu = createButton("Menu", "./src/images/return.png");
+        mainMenu = createButton("Menu", "/images/return.png");
 
         mainMenu.setActionCommand("main");
         cards = new DefaultTableModel();
@@ -154,19 +156,20 @@ public class FragenverwaltungView extends JPanel {
         return mainMenu;
     }
     private static JButton createButton(String text, String imagePath) {
-        ImageIcon icon = new ImageIcon(imagePath);
+        try {
+            BufferedImage image = Thumbnails.of(SettingsView.class.getResource(imagePath).getPath()).size(25, 25).asBufferedImage();
+            ImageIcon icon = new ImageIcon(image);
+            JButton button = new JButton(text, icon);
+            button.setVerticalTextPosition(SwingConstants.BOTTOM);
+            button.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(scaledImage);
-
-        JButton button = new JButton(text, icon);
-        button.setVerticalTextPosition(SwingConstants.BOTTOM);
-        button.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        Font font = new Font("Roboto", Font.TRUETYPE_FONT, 10);
-        button.setFont(font);
-        button.setPreferredSize(new Dimension(75, 50));
-        button.setFocusPainted(false);
-        return button;
+            Font font = new Font("Roboto", Font.TRUETYPE_FONT, 10);
+            button.setFont(font);
+            button.setFocusPainted(false);
+            return button;
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 }
