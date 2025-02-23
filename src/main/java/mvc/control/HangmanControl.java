@@ -65,6 +65,9 @@ public class HangmanControl implements ActionListener {
                 if(model.getAtleastOne()){
                     view.setCheckedChars(correctChars, view.getAnswer().charAt(0));
                 }
+                else{
+                    view.setHangmanAscii(model.increaseCounter());
+                }
 
                     if(model.check(view.getSolutionPreview()))
                     {
@@ -73,9 +76,8 @@ public class HangmanControl implements ActionListener {
                         view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
                         view.addButtonListener(this);
                     }
-                else{
-                    view.setHangmanAscii(model.increaseCounter());
-                }
+
+                model.setAtleastOne(false);
 
                 break;
             case "CheckWord":

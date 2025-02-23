@@ -45,8 +45,7 @@ public class HangmanModel {
         atleastOne = false;
         for (int i = 0; i < solution.length(); i++) {
             if(solution.charAt(i) == character){
-                correctChars[j] = i;
-                j ++;
+                correctChars[i] = i;
                 atleastOne =true;
             }
             else {
@@ -129,4 +128,7 @@ public class HangmanModel {
         return hangman;
     }
 
+    public void setAtleastOne(boolean atleastOne) {
+        this.atleastOne = atleastOne;
+    }
 }
