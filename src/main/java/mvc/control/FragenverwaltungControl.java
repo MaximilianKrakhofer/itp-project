@@ -33,7 +33,10 @@ public class FragenverwaltungControl implements ActionListener
         String action = e.getActionCommand();
         switch (action) {
             case "main":
-                masterController.setCards(karten);
+                if(karten != null&& karten.getCards() != null) {
+
+                    masterController.setCards(karten);
+                }
                 masterController.showMainMenu();
                 break;
             case "add":

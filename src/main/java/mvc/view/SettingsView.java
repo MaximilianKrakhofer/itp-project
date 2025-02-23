@@ -9,8 +9,15 @@ import java.io.File;
 
 public class SettingsView extends JPanel {
 
-
+    private JLabel path;
     private JButton mainMenu, savePath;
+    private JCheckBox autosave, autoload;
+    private JComboBox<String> themeBox;
+    private String[] themes= { "FlatIntelliJLaf", "FlatDarculaLaf","FlatMacLightLaf", "FlatMacDarkLaf", "FlatCarbonIJTheme",
+            "FlatHiberbeeDarkIJTheme", "FlatDraculaIJTheme", "FlatMonokaiProIJTheme","FlatNordIJTheme","FlatOneDarkIJTheme",
+            "FlatGitHubIJTheme","FlatGitHubDarkIJTheme","FlatMoonlightIJTheme","FlatMaterialPalenightIJTheme",
+            "FlatMaterialDeepOceanIJTheme","FlatMaterialOceanicIJTheme","FlatNightOwlIJTheme"};
+
     public SettingsView(){
         this.setLayout(new BorderLayout());
 
@@ -27,17 +34,61 @@ public class SettingsView extends JPanel {
         this.add(operations, BorderLayout.NORTH);
         JPanel settingsGrid = new JPanel(new GridLayout(8,1));
 
-        JPanel saving = new JPanel(new GridLayout(1,3));
-        saving.add(new JLabel("Kartei Speicher-Pfad"));
-        savePath = new JButton("SpeicherPfad");
-        savePath.setActionCommand("path");
-        savePath.add(new JPanel());
+        JPanel saving = new JPanel();
+        saving.setLayout(new BoxLayout(saving, BoxLayout.X_AXIS));
+        saving.add(new JLabel("Kartei Speicher-Pfad:"));
+        savePath = new JButton("Default-Pfad auswählen");
+        path = new JLabel("");
+        saving.add(Box.createRigidArea(new Dimension(10, 0)));
         saving.add(savePath);
+        saving.add(Box.createRigidArea(new Dimension(10, 0)));
+        saving.add(path);
+
+
+        savePath.setActionCommand("path");
 
         settingsGrid.add(saving);
+
+        JPanel autosave = new JPanel();
+        autosave.setLayout(new BoxLayout(autosave, BoxLayout.X_AXIS));
+        autosave.add(new JLabel("Auto Save"));
+        this.autosave = new JCheckBox("");
+        this.autosave.setActionCommand("autosave");
+        autosave.add(this.autosave);
+        settingsGrid.add(autosave);
+        JPanel autoload = new JPanel();
+        autoload.setLayout(new BoxLayout(autoload, BoxLayout.X_AXIS));
+        autoload.add(new JLabel("Auto Load"));
+        this.autoload = new JCheckBox("");
+        this.autoload.setActionCommand("autoload");
+        autoload.add(this.autoload);
+        settingsGrid.add(autoload);
+        JPanel theme = new JPanel();
+        theme.setLayout(new BoxLayout(theme, BoxLayout.X_AXIS));
+        theme.add(new JLabel("Theme:"));
+        this.themeBox = new JComboBox<>(themes);
+        theme.add(this.themeBox);
+        this.themeBox.setActionCommand("theme");
+        settingsGrid.add(theme);
+
         this.add(settingsGrid, BorderLayout.CENTER);
 
 
+    }
+    public String getTheme(){
+        System.out.println((String)this.themeBox.getSelectedItem());
+        return (String)this.themeBox.getSelectedItem();
+    }
+    public boolean autoSaveIsChecked() {
+        return this.autosave.isSelected();
+    }
+    public boolean autoLoadIsChecked() {
+        return this.autoload.isSelected();
+    }
+    public void setPath(String path){
+        this.path.setText(path);
+        this.repaint();
+        this.revalidate();
     }
     private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
         ImageIcon icon = new ImageIcon(imagePath);
@@ -72,7 +123,9 @@ public class SettingsView extends JPanel {
     }
     public void addButtonListener(SettingsControl l) {
         if(mainMenu!=null && mainMenu.getActionListeners().length ==0) {
-
+            this.autosave.addActionListener(l);
+            this.autoload.addActionListener(l);
+            this.themeBox.addActionListener(l);
             this.mainMenu.addActionListener(l);
             this.savePath.addActionListener(l);
         }

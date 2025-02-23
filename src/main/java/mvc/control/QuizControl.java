@@ -51,7 +51,7 @@ public class QuizControl implements ActionListener {
                     model.check(view.getAnswer());
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
-                    view.endQuiz(affe[0], affe[1], affe[2], (double) affe[0] / affe[1]);
+                    view.endQuiz(affe[0], affe[1], affe[2], (double) (affe[0] / affe[1])*100);
                     view.addButtonListener(this);
                 }
                 else{
