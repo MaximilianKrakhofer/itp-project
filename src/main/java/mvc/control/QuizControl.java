@@ -54,7 +54,9 @@ public class QuizControl implements ActionListener {
                     model.check(view.getAnswer());
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
-                    view.endQuiz(affe[0], affe[1], affe[2], (double) (affe[0] / affe[1])*100);
+                    double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
+
+                    view.endQuiz(affe[0],affe[1],affe[2],prozent);
                     view.addButtonListener(this);
                 }
                 else{
@@ -62,13 +64,14 @@ public class QuizControl implements ActionListener {
                 }
                 break;
             case "Check":
-
-                view.setCheck(model.check(view.getAnswer()), shuffled[currentCard].getAntwort()); // checkt ob korrekt
+                System.out.println("check"+ currentCard);
+                view.setCheck(model.check(view.getAnswer()), shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp()); // checkt ob korrekt
                 if(currentCard +1 >= cards.getCards().length) {
                     System.out.println("endquizcheck");
                     currentCard = 0;
                     int[] affe = model.endQuiz();
-                    view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
+                    double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
+                    view.endQuiz(affe[0],affe[1],affe[2],prozent);
                     view.addButtonListener(this);
                 }
                 else{

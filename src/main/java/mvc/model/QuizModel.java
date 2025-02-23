@@ -29,8 +29,10 @@ public class QuizModel {
     }
     public boolean check(String answer) {
         questions++;
-        System.out.println(currentAnswer);
+        System.out.println("checkmet" +cards[currentAnswer].getAntwort() +"answ"+ answer + cards[currentAnswer].isAntwort(answer));
+
         if( cards[currentAnswer].isAntwort(answer)) {
+            System.out.println(cards[currentAnswer].getAntwort() +"answ"+ answer + cards[currentAnswer].isAntwort(answer));
             this.questionscorrect++;
             this.currentAnswer++;
             return true;

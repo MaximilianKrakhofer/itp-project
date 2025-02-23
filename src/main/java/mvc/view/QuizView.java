@@ -84,7 +84,7 @@ public class QuizView extends JPanel {
         this.removeAll();
 
         this.question = new JPanel();
-        double half = this.getHeight()/2.5;
+        double half = this.getHeight()/2.0;
         this.question.setPreferredSize(new Dimension(80, (int) half));
         if(fragentyp == 1) {
             try {
@@ -121,14 +121,8 @@ public class QuizView extends JPanel {
         this.check = new JButton("Check");
         this.check = createButton("Check", "/images/check.png", 70, 70, 20, 20);
         check.setActionCommand("Check");
-        this.answer = new JTextPane();
         grid = new JPanel(new GridLayout(1,2));
         grid.add(check);
-
-
-
-        answer = new JTextPane();
-
 
 
         StyledDocument doc = answer.getStyledDocument();
@@ -151,7 +145,7 @@ public class QuizView extends JPanel {
         if(fragentyp == 1) {
             try {
                 imagePanel = new JPanel(new BorderLayout());
-                imageLabel = new JLabel();
+                imageLabel = new JLabel(question);
                 imagePanel.add(imageLabel, BorderLayout.CENTER);
                 loadImage(question);
                 this.question.add(imagePanel);
@@ -161,7 +155,6 @@ public class QuizView extends JPanel {
             }
         }
         else{
-            this.questionText = new JLabel();
             this.questionText.setText(question);
             this.question.add(questionText);
         }
@@ -172,8 +165,6 @@ public class QuizView extends JPanel {
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
 
-
-        answer = new JTextPane();
 
         answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
 
@@ -192,31 +183,43 @@ public class QuizView extends JPanel {
     public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
         this.removeAll();
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
-        JPanel moveTheBodyMoveTheFlow = new JPanel(new FlowLayout());
-        JPanel river = new JPanel(new FlowLayout());
-        fragenbeantwortetLabel = new JLabel("Fragenbeantwortet:" + beantwortet);
-        korrektLabel = new JLabel("Korrekt:" + korrekt);
-        dauerLabel = new JLabel("Dauer:" + dauer);
-        prozentLabel = new JLabel("Prozent:" + prozent);
+        Font labelFont = new Font("Arial", Font.PLAIN, 30);
+        fragenbeantwortetLabel = new JLabel("Fragenbeantwortet: " + beantwortet);
+        fragenbeantwortetLabel.setFont(labelFont);
+        fragenbeantwortetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        moveTheBodyMoveTheFlow.add(fragenbeantwortetLabel);
-        moveTheBodyMoveTheFlow.add(korrektLabel);
-        river.add(dauerLabel);
-        river.add(prozentLabel);
+        korrektLabel = new JLabel("Korrekt: " + korrekt);
+        korrektLabel.setFont(labelFont);
+        korrektLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPanel buttons = new JPanel(new GridLayout(1,2));
+        dauerLabel = new JLabel("Dauer: " + dauer);
+        dauerLabel.setFont(labelFont);
+        dauerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        prozentLabel = new JLabel("Prozent: " + prozent);
+        prozentLabel.setFont(labelFont);
+        prozentLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel box = new JPanel();
+        box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
+        box.add(Box.createVerticalGlue());
+        box.add(fragenbeantwortetLabel);
+        box.add(korrektLabel);
+        box.add(dauerLabel);
+        box.add(prozentLabel);
+
+
+        box.add(Box.createVerticalGlue());
+        JPanel buttons = new JPanel(new GridLayout(1, 2));
         buttons.add(mainMenu);
         restart = new JButton("restart");
         restart.setActionCommand("restart");
         buttons.add(restart);
-        this.add(moveTheBodyMoveTheFlow );
-        this.add(river );
+        this.add(box, BorderLayout.CENTER);
         this.add(buttons, BorderLayout.SOUTH);
         this.repaint();
         this.revalidate();
-
     }
-    public String getAnswer() {
+        public String getAnswer() {
         return answer.getText();
     }
     public void addButtonListener(QuizControl l) {
@@ -240,8 +243,7 @@ public class QuizView extends JPanel {
         }
 
     }
-    public void setCheck(boolean truth, String answerText){
-
+    public void setCheck(boolean truth, String answerText, int fragentyp){
 
         JPanel main = new JPanel( new GridLayout(2, 1));
         JPanel grid = new JPanel( new GridLayout(3, 2));
@@ -256,8 +258,12 @@ public class QuizView extends JPanel {
         main.add(correct);
 
         grid.add(new JLabel("Question"));
-        grid.add(new JLabel(questionText.getText()));
-
+        if(fragentyp == 0) {
+            grid.add(new JLabel(questionText.getText()));
+        }
+        else{
+            grid.add(new JLabel(imageLabel.getText()));
+        }
         grid.add(new JLabel("Your answer"));
         grid.add(new JLabel(answer.getText()));
         grid.add(new JLabel("Solution: "));
