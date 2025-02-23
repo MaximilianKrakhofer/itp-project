@@ -3,9 +3,13 @@ package mvc.view;
 import mvc.control.SettingsControl;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import net.coobird.thumbnailator.*;
+
 
 public class SettingsView extends JPanel {
 
@@ -18,11 +22,11 @@ public class SettingsView extends JPanel {
             "FlatGitHubIJTheme","FlatGitHubDarkIJTheme","FlatMoonlightIJTheme","FlatMaterialPalenightIJTheme",
             "FlatMaterialDeepOceanIJTheme","FlatMaterialOceanicIJTheme","FlatNightOwlIJTheme"};
 
-    public SettingsView(){
+    public SettingsView(String selected){
         this.setLayout(new BorderLayout());
 
         JPanel operations = new JPanel(new BorderLayout());
-        mainMenu = createButton("Menu", "./src/images/return.png", 75, 50, 20, 20);
+        mainMenu = createButton("Menu", "/images/return.png", 75, 50, 20, 20);
         mainMenu.setActionCommand("mainmenu");
 
         operations.add(mainMenu, BorderLayout.EAST);
@@ -63,6 +67,7 @@ public class SettingsView extends JPanel {
         this.autoload.setActionCommand("autoload");
         autoload.add(this.autoload);
         settingsGrid.add(autoload);
+
         JPanel theme = new JPanel();
         theme.setLayout(new BoxLayout(theme, BoxLayout.X_AXIS));
         theme.add(new JLabel("Theme:"));
@@ -70,7 +75,10 @@ public class SettingsView extends JPanel {
         theme.add(this.themeBox);
         this.themeBox.setActionCommand("theme");
         settingsGrid.add(theme);
-
+        if(!(selected == null || selected.isEmpty())){
+            this.themeBox.setSelectedItem(selected);
+        }
+        this.setBorder(new EmptyBorder(10,10,10,10));
         this.add(settingsGrid, BorderLayout.CENTER);
 
 
@@ -91,8 +99,7 @@ public class SettingsView extends JPanel {
         this.revalidate();
     }
     private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
-        ImageIcon icon = new ImageIcon(imagePath);
-
+        ImageIcon icon = new ImageIcon(SettingsView.class.getResource(imagePath));
         Image scaledImage = icon.getImage().getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
 

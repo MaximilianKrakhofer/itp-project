@@ -1,9 +1,13 @@
 package mvc.view;
 
 import mvc.control.QuizControl;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Position;
+import net.coobird.thumbnailator.geometry.Positions;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -12,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.Buffer;
 
 public class QuizView extends JPanel {
 
@@ -24,9 +29,9 @@ public class QuizView extends JPanel {
     public QuizView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        mainMenu = createButton("Menu", "./src/images/return.png", 75, 50, 20, 20);
+        mainMenu = createButton("Menu", "/images/return.png", 75, 50, 20, 20);
         mainMenu.setActionCommand("mainmenu");
-        start = createButton("Start", "./src/images/start.png", 90, 90, 140, 140);
+        start = createButton("Start", "/images/start.png", 90, 90, 140, 140);
         start.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 45));
         this.isLoaded = isLoaded;
         start.setActionCommand("start");
@@ -50,8 +55,8 @@ public class QuizView extends JPanel {
             else{
                 throw new RuntimeException();
             }
-            BufferedImage img = ImageIO.read(file);
-            Image scaledImg = img.getScaledInstance(400,300, Image.SCALE_DEFAULT);
+            BufferedImage scaledImg = Thumbnails.of(file.getAbsolutePath()).size(300,400).asBufferedImage();
+            //Image scaledImg = img.getScaledInstance(400,300, Image.SCALE_DEFAULT);
             // Library Benötigt Gradle/Maven, also wird das später esetzt
             // BufferedImage resizedImage = Scalr.resize(originalImage, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC, 400, 300);
             imageLabel.setIcon(new ImageIcon(scaledImg));
@@ -59,9 +64,8 @@ public class QuizView extends JPanel {
         catch(Exception e) {
             try{
                 URL loc = new URL(url);
-                BufferedImage img = ImageIO.read(loc);
-                Image scaledImg = img.getScaledInstance(400,300, Image.SCALE_REPLICATE);
-                imageLabel.setIcon(new ImageIcon(scaledImg));
+                BufferedImage img = Thumbnails.of(loc).size(300,400).asBufferedImage();;
+                imageLabel.setIcon(new ImageIcon(img));
             }
             catch (Exception e2) {
                 throw new MalformedURLException();
@@ -112,10 +116,10 @@ public class QuizView extends JPanel {
         answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
         this.add(this.question, BorderLayout.NORTH);
 
-        this.stop = createButton("Stop", "./src/images/end.png", 70, 70, 20, 20);
+        this.stop = createButton("Stop", "/images/end.png", 70, 70, 20, 20);
         stop.setActionCommand("End Quiz");
         this.check = new JButton("Check");
-        this.check = createButton("Check", "./src/images/check.png", 70, 70, 20, 20);
+        this.check = createButton("Check", "/images/check.png", 70, 70, 20, 20);
         check.setActionCommand("Check");
         this.answer = new JTextPane();
         grid = new JPanel(new GridLayout(1,2));
@@ -269,7 +273,7 @@ public class QuizView extends JPanel {
     }
 
     private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
-        ImageIcon icon = new ImageIcon(imagePath);
+        ImageIcon icon = new ImageIcon(QuizView.class.getResource(imagePath));
 
         Image scaledImage = icon.getImage().getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);

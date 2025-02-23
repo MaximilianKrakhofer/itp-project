@@ -1,5 +1,7 @@
 package mvc.Karten;
 
+import java.lang.reflect.Array;
+
 public class KarteiKarten {
     private KarteiKarte[] karten = new KarteiKarte[0];
 
@@ -62,15 +64,19 @@ public class KarteiKarten {
     }
     public KarteiKarte[] shuffle() {
         KarteiKarte[] ausgabe = karten.clone();
-        int currentIndex = karten.length;
+        int currentIndex = karten.length-1;
         while (currentIndex != 0) {
-            int randomIndex = (int) (Math.random() * currentIndex);
+            int randomIndex = (int) (Math.random() * (currentIndex+1));
             currentIndex--;
-            KarteiKarte karteTemp = ausgabe[currentIndex];
-            ausgabe[currentIndex] = ausgabe[randomIndex];
-            ausgabe[randomIndex] = karteTemp;
+            KarteiKarte karteTemp = ausgabe[randomIndex];
+            ausgabe[randomIndex] = ausgabe[currentIndex];
+            ausgabe[currentIndex] = karteTemp;
 
-        } return ausgabe;
+        }
+        for(int i = 0; i < karten.length; i++) {
+            System.out.println(karten[i].getFrage());
+        }
+        return ausgabe;
     }
 
 
