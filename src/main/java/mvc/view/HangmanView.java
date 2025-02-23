@@ -236,6 +236,19 @@ public class HangmanView extends JPanel {
         this.repaint();
         this.revalidate();
     }
+    public String checkWord(){
+
+        JPanel main = new JPanel( new GridLayout(1, 2, 20,0));
+        JLabel q = new JLabel("Your Answer?");
+        JTextField a = new JTextField();
+        main.add(q);
+        main.add(a);
+
+        JOptionPane.showConfirmDialog(null, main,
+                "Solution", JOptionPane.OK_CANCEL_OPTION);
+        return a.getText();
+    }
+
     public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
         this.removeAll();
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
@@ -360,15 +373,40 @@ public class HangmanView extends JPanel {
     public void setCheckedChars(int[] correctChars, char correct){
 
         for (int i = 0; i < correctChars.length; i++) {
-                underscore.setCharAt(correctChars[i] *2 , correct);
+            if(correctChars[i] != -1){
+                if(underscore.charAt(correctChars[i] *2) == '_'){
+                    underscore.setCharAt(correctChars[i] *2 , correct);
+                }
+            }
+
         }
         solutionPreview.removeAll();
 
         question.remove(solutionPreview);
         solutionPreview = new JLabel(underscore.toString());
+        int minFontSize = 10;
+        int maxFontSize = 60;
+        int textLength = questionText.getText().length();
+        int newFontSize = maxFontSize - textLength;
+        newFontSize = Math.max(newFontSize, minFontSize);
+
+        solutionPreview.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+
+        solutionPreview.setHorizontalAlignment(SwingConstants.CENTER);
+
+
         question.add(solutionPreview);
 
         this.repaint();
         this.revalidate();
+    }
+
+    public void setHangmanAscii(String hangmanAscii) {
+
+        this.hangmanAscii.setText(hangmanAscii);
+    }
+
+    public String getSolutionPreview() {
+        return solutionPreview.getText();
     }
 }

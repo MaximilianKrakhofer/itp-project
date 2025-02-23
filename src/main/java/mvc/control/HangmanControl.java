@@ -47,6 +47,7 @@ public class HangmanControl implements ActionListener {
                 }
                 break;
             case "End Quiz":
+
                 if(view.getAnswer()!= null) {
                     model.check(view.getAnswer());
                     System.out.println("endquizcheck");
@@ -60,20 +61,35 @@ public class HangmanControl implements ActionListener {
                 break;
             case "Check":
                 int [] correctChars = model.compareChars(view.getAnswer().charAt(0),cards.getCardAnswer(currentCard));
-                view.setCheckedChars(correctChars, view.getAnswer().charAt(0));
+
+                if(model.getAtleastOne()){
+                    view.setCheckedChars(correctChars, view.getAnswer().charAt(0));
+                }
+
+                    if(model.check(view.getSolutionPreview()))
+                    {
+                        System.out.println("endquizcheck");
+                        int[] affe = model.endQuiz();
+                        view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
+                        view.addButtonListener(this);
+                    }
+                else{
+                    view.setHangmanAscii(model.increaseCounter());
+                }
+
                 break;
             case "CheckWord":
-
-                view.setCheck(model.check(view.getAnswer()), cards.getCardAnswer(currentCard)); // checkt ob korrekt
-                if(currentCard +1 >= cards.getCards().length) {
+                String a = "";
+                a =  view.checkWord();
+                if(a!=null && a.equals(cards.getCardAnswer(currentCard +1))) {
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
                     view.endQuiz(affe[0],affe[1],affe[2],(double)affe[0]/affe[1]);
                     view.addButtonListener(this);
                 }
+
                 else{
-                    currentCard+=1;
-                    view.nextCard(cards.getCards()[currentCard].getFrage(),cards.getCards()[currentCard].getFragentyp());
+
                 }
 
 
