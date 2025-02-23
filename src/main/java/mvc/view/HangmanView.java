@@ -15,11 +15,11 @@ import java.net.URL;
 
 public class HangmanView extends JPanel {
 
-    private JButton mainMenu, check, restart, stop, start;
+    private JButton mainMenu, check, restart, stop, start, checkWord;
     private JPanel question;
     private JTextPane answer, realAnswer;
     private JPanel grid, imagePanel;
-    private JLabel imageLabel, questionText;
+    private JLabel imageLabel, questionText, solutionPreview;
     private boolean isLoaded;
     public HangmanView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
@@ -79,7 +79,7 @@ public class HangmanView extends JPanel {
         }
         this.removeAll();
 
-        this.question = new JPanel();
+        this.question = new JPanel(new GridLayout(2, 1));
         double half = this.getHeight()/2.5;
         this.question.setPreferredSize(new Dimension(80, (int) half));
         if(fragentyp == 1) {
@@ -95,10 +95,18 @@ public class HangmanView extends JPanel {
             }
         }
 
-
         else{
             questionText.setText(question);
-            this.question.add(questionText);
+            this.question.add(questionText, BorderLayout.CENTER);
+
+            StringBuilder underscore = new StringBuilder();
+            for (int i = 0; i < questionText.getText().length() -1; i++) {
+                underscore.append("_ ");
+            }
+            underscore.append("_");
+            solutionPreview = new JLabel(underscore.toString());
+            this.question.add(solutionPreview, BorderLayout.CENTER);
+
         }
         int minFontSize = 10;
         int maxFontSize = 100;
@@ -106,10 +114,17 @@ public class HangmanView extends JPanel {
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+
+        solutionPreview.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
         answer.setAlignmentX(Component.CENTER_ALIGNMENT);
         answer.setAlignmentY(Component.CENTER_ALIGNMENT);
 
         answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
+
+
+        questionText.setHorizontalAlignment(SwingConstants.CENTER);
+        solutionPreview.setHorizontalAlignment(SwingConstants.CENTER);
+
         this.add(this.question, BorderLayout.NORTH);
 
         this.stop = createButton("Stop", "./src/images/end.png", 70, 70, 20, 20);
@@ -118,7 +133,7 @@ public class HangmanView extends JPanel {
         this.check = createButton("Check", "./src/images/check.png", 70, 70, 20, 20);
         check.setActionCommand("Check");
         this.answer = new JTextPane();
-        grid = new JPanel(new GridLayout(1,2));
+        grid = new JPanel(new GridLayout(1,3));
         grid.add(check);
 
 
@@ -132,6 +147,10 @@ public class HangmanView extends JPanel {
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         StyleConstants.setFontSize(center, 50);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+
+        this.check = createButton("WortEingabe", "./src/images/check.png", 70, 70, 20, 20);
+        grid.add(checkWord);
 
         grid.add(stop);
         this.add(answer, BorderLayout.CENTER);
@@ -253,6 +272,7 @@ public class HangmanView extends JPanel {
 
         grid.add(new JLabel("Question"));
         grid.add(new JLabel(questionText.getText()));
+
 
         grid.add(new JLabel("Your answer"));
         grid.add(new JLabel(answer.getText()));
