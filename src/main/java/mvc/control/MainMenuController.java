@@ -28,6 +28,8 @@ public class MainMenuController implements ActionListener {
             case "Hangman":
                 masterController.showHangman();
                 break;
+            case "Wordle":
+
             case "Settings":
                 masterController.showSettings();
                 break;
