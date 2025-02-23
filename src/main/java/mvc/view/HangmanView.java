@@ -12,15 +12,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import javax.swing.text.*;
 public class HangmanView extends JPanel {
 
     private JButton mainMenu, check, restart, stop, start, checkWord;
     private JPanel question;
-    private JTextPane answer, realAnswer;
+    private JTextPane answer, realAnswer, hangmanAscii;
     private JPanel grid, imagePanel;
     private JLabel imageLabel, questionText, solutionPreview;
     private boolean isLoaded;
+    private StringBuilder underscore;
     public HangmanView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -79,8 +80,8 @@ public class HangmanView extends JPanel {
         }
         this.removeAll();
 
-        this.question = new JPanel(new GridLayout(2, 1));
-        double half = this.getHeight()/2.5;
+        this.question = new JPanel(new GridLayout(2, 1, 0, -80));
+        double half = this.getHeight()/3;
         this.question.setPreferredSize(new Dimension(80, (int) half));
         if(fragentyp == 1) {
             try {
@@ -99,7 +100,7 @@ public class HangmanView extends JPanel {
             questionText.setText(question);
             this.question.add(questionText, BorderLayout.CENTER);
 
-            StringBuilder underscore = new StringBuilder();
+             underscore = new StringBuilder();
             for (int i = 0; i < questionText.getText().length() -1; i++) {
                 underscore.append("_ ");
             }
@@ -108,53 +109,72 @@ public class HangmanView extends JPanel {
             this.question.add(solutionPreview, BorderLayout.CENTER);
 
         }
+
         int minFontSize = 10;
-        int maxFontSize = 100;
+        int maxFontSize = 60;
         int textLength = questionText.getText().length();
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
 
         solutionPreview.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
-        answer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        answer.setAlignmentY(Component.CENTER_ALIGNMENT);
-
-        answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
-
 
         questionText.setHorizontalAlignment(SwingConstants.CENTER);
         solutionPreview.setHorizontalAlignment(SwingConstants.CENTER);
 
         this.add(this.question, BorderLayout.NORTH);
 
-        this.stop = createButton("Stop", "./src/images/end.png", 70, 70, 20, 20);
+        this.stop = createButton("Stop", "./src/images/end.png", 80, 70, 20, 20);
         stop.setActionCommand("End Quiz");
         this.check = new JButton("Check");
-        this.check = createButton("Check", "./src/images/check.png", 70, 70, 20, 20);
+        this.check = createButton("Check", "./src/images/check.png", 80, 70, 20, 20);
         check.setActionCommand("Check");
-        this.answer = new JTextPane();
         grid = new JPanel(new GridLayout(1,3));
         grid.add(check);
-
-
-
-        answer = new JTextPane();
-
-
-
-        StyledDocument doc = answer.getStyledDocument();
+        StyledDocument styledDoc = answer.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         StyleConstants.setFontSize(center, 50);
-        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+        styledDoc.setParagraphAttributes(0, styledDoc.getLength(), center, false);
 
+        answer.setSize(10, 10);
+        answer.setMaximumSize(new Dimension(10, 10));
 
-        this.check = createButton("WortEingabe", "./src/images/check.png", 70, 70, 20, 20);
+        if (styledDoc instanceof AbstractDocument) {
+            AbstractDocument doc = (AbstractDocument) styledDoc;
+            doc.setDocumentFilter(oneCharFilter);
+        }
+
+        JPanel hangmanePane = new JPanel(new BorderLayout(0, 30));
+        hangmanAscii = new JTextPane();
+        StyledDocument doc2 = hangmanAscii.getStyledDocument();
+        SimpleAttributeSet centerAttr = new SimpleAttributeSet();
+        StyleConstants.setAlignment(centerAttr, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setFontSize(centerAttr, 20);
+        doc2.setParagraphAttributes(0, doc2.getLength(), centerAttr, false);
+        hangmanAscii.setEditable(false);
+        hangmanAscii.setText(" +---+\n" +
+                        "  |   |\n" +
+                        "      |\n" +
+                        "      |\n" +
+                        "      |\n" +
+                        "      |\n" +
+                        "=========''', ''' ");
+
+        hangmanePane.add(hangmanAscii);
+        JPanel answerPanel = new JPanel(new FlowLayout());
+        answerPanel.add(answer);
+        this.checkWord = createButton("Wort Eingabe", "./src/images/fullword.png", 70, 80, 40, 40);
+        checkWord.setActionCommand("CheckWord");
         grid.add(checkWord);
-
         grid.add(stop);
-        this.add(answer, BorderLayout.CENTER);
-        this.add(grid, BorderLayout.SOUTH);
+
+
+        JPanel southGrid = new JPanel(new GridLayout(2,1));
+        southGrid.add(answerPanel);
+        southGrid.add(grid);
+        this.add(southGrid, BorderLayout.SOUTH);
+        this.add(hangmanePane, BorderLayout.CENTER);
         this.repaint();
         this.revalidate();
     }
@@ -178,7 +198,16 @@ public class HangmanView extends JPanel {
         else{
             this.questionText = new JLabel();
             this.questionText.setText(question);
-            this.question.add(questionText);
+            this.question.add(questionText, BorderLayout.CENTER);
+
+            StringBuilder underscore = new StringBuilder();
+            for (int i = 0; i < questionText.getText().length() -1; i++) {
+                underscore.append("_ ");
+            }
+            underscore.append("_");
+            solutionPreview = new JLabel(underscore.toString());
+            this.question.add(solutionPreview, BorderLayout.CENTER);
+
         }
 
         int minFontSize = 10;
@@ -186,11 +215,11 @@ public class HangmanView extends JPanel {
         int textLength = questionText.getText().length();
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
-
-
+        solutionPreview.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
         answer = new JTextPane();
 
         answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
+        answer.setPreferredSize(new Dimension(40, 40));
 
         StyledDocument doc = answer.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -200,6 +229,9 @@ public class HangmanView extends JPanel {
 
 
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+        questionText.setHorizontalAlignment(SwingConstants.CENTER);
+        solutionPreview.setHorizontalAlignment(SwingConstants.CENTER);
+
 
         this.repaint();
         this.revalidate();
@@ -253,7 +285,10 @@ public class HangmanView extends JPanel {
         if(start!=null &&  start.getActionListeners().length ==0) {
             this.start.addActionListener(l);
         }
+        if(checkWord != null && checkWord.getActionListeners().length == 0){
+            this.checkWord.addActionListener(l);
 
+        }
     }
     public void setCheck(boolean truth, String answerText){
 
@@ -305,4 +340,35 @@ public class HangmanView extends JPanel {
         return button;
     }
 
+    DocumentFilter oneCharFilter = new DocumentFilter() {
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (fb.getDocument().getLength() + string.length() <= 1) {
+                super.insertString(fb, offset, string, attr);
+            }
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int currentLength = fb.getDocument().getLength();
+            int newLength = currentLength - length + (text != null ? text.length() : 0);
+            if (newLength <= 1) {
+                super.replace(fb, offset, length, text, attrs);
+            }
+        }
+    };
+    public void setCheckedChars(int[] correctChars, char correct){
+
+        for (int i = 0; i < correctChars.length; i++) {
+                underscore.setCharAt(correctChars[i] *2 , correct);
+        }
+        solutionPreview.removeAll();
+
+        question.remove(solutionPreview);
+        solutionPreview = new JLabel(underscore.toString());
+        question.add(solutionPreview);
+
+        this.repaint();
+        this.revalidate();
+    }
 }

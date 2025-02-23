@@ -42,4 +42,17 @@ public class HangmanModel {
         }
 
     }
+    public int[] compareChars(char character, String solution){
+        int[] correctChars = new int[solution.length()];
+        int j= 0;
+        for (int i = 0; i < solution.length(); i++) {
+            if(solution.charAt(i) == character){
+                correctChars[j] = i;
+                j ++;
+            }
+        }
+        return correctChars;
+    }
+
+
 }

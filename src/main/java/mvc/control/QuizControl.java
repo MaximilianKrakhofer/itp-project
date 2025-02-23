@@ -43,6 +43,7 @@ public class QuizControl implements ActionListener {
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
+                    controller.showMainMenu();
                 }
                 break;
             case "End Quiz":

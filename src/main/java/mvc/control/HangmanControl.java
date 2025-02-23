@@ -43,6 +43,7 @@ public class HangmanControl implements ActionListener {
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
+                    controller.showMainMenu();
                 }
                 break;
             case "End Quiz":
@@ -58,6 +59,10 @@ public class HangmanControl implements ActionListener {
                 }
                 break;
             case "Check":
+                int [] correctChars = model.compareChars(view.getAnswer().charAt(0),cards.getCardAnswer(currentCard));
+                view.setCheckedChars(correctChars, view.getAnswer().charAt(0));
+                break;
+            case "CheckWord":
 
                 view.setCheck(model.check(view.getAnswer()), cards.getCardAnswer(currentCard)); // checkt ob korrekt
                 if(currentCard +1 >= cards.getCards().length) {
