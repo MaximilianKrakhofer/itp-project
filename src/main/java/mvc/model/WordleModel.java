@@ -36,7 +36,6 @@ public class WordleModel {
             return true;
         }
         else{
-            this.currentAnswer++;
             return false;
         }
 

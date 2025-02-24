@@ -1,6 +1,5 @@
 package mvc.view;
 
-import mvc.control.QuizControl;
 import mvc.control.WordleControl;
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -14,7 +13,7 @@ import java.net.URL;
 
 public class WordleView extends JPanel {
 
-    private JButton mainMenu, check, restart, stop, start;
+    private JButton mainMenu, check,restart, stop, start;
     private JPanel question, answersGrid;
     private JTextPane answer, realAnswer;
     private JPanel grid, imagePanel;
@@ -162,6 +161,7 @@ public class WordleView extends JPanel {
             for (int j = 0; j < answers[i].length; j++) {
                 if (answers[i][j] != null && answers[i][j].getText() !=null) {
                     answers[i][j].setText("");
+                    answers[i][j].setForeground(Color.BLACK);
                     if (i < 1) {
                         answers[i][j].setEditable(true);
                     }
@@ -311,7 +311,8 @@ public class WordleView extends JPanel {
     }
     public void activateNewFields(){
         for (int i = 0; i < questionText.getText().length()  ; i++) {
-
+            answers[rowCounter][i].setEditable(false);
+            answers[rowCounter +1 ][i].setEditable(true);
         }
         rowCounter ++;
 

@@ -2,9 +2,7 @@ package mvc.control;
 
 import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
-import mvc.model.QuizModel;
 import mvc.model.WordleModel;
-import mvc.view.QuizView;
 import mvc.view.WordleView;
 
 import javax.swing.*;
