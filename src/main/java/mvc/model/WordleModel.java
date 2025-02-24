@@ -43,4 +43,17 @@ public class WordleModel {
         }
 
     }
+    public int[] compareChars(String attempt, String solution){
+        int[] correctChars = new int[solution.length()];
+        int j= 0;
+        for (int i = 0; i < solution.length(); i++) {
+            if(solution.charAt(i) == attempt.charAt(i)){
+                correctChars[i] = i;
+            }
+            else {
+                correctChars[i] = -1;
+            }
+        }
+        return correctChars;
+    }
 }
