@@ -40,17 +40,33 @@ public class WordleModel {
         }
 
     }
-    public int[] compareChars(String attempt, String solution){
+    public int[] compareChars(String attempt, String solution) {
         int[] correctChars = new int[solution.length()];
-        int j= 0;
+        boolean[] used = new boolean[solution.length()];
+
         for (int i = 0; i < solution.length(); i++) {
-            if(solution.charAt(i) == attempt.charAt(i)){
-                correctChars[i] = i;
-            }
-            else {
+            if (solution.charAt(i) == attempt.charAt(i)) {
+                correctChars[i] = 1;
+                used[i] = true;
+            } else {
                 correctChars[i] = -1;
             }
         }
+        for (int i = 0; i < attempt.length(); i++) {
+            if (correctChars[i] == 1) {
+                continue;
+            }
+
+            for (int j = 0; j < solution.length(); j++) {
+                if (!used[j] && attempt.charAt(i) == solution.charAt(j)) {
+                    correctChars[i] = 2;
+                    used[j] = true;
+                    break;
+                }
+            }
+        }
+
         return correctChars;
     }
+
 }
