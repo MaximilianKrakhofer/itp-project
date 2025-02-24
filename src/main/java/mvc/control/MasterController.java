@@ -54,6 +54,10 @@ public class MasterController {
         HangmanControl hangmanControl = new HangmanControl(this);
         view.updateContent(hangmanControl.getView());
     }
+    public void showWordle(){
+        WordleControl wordleControl = new WordleControl(this);
+        view.updateContent(wordleControl.getView());
+    }
     public void showSettings()
     {
         SettingsControl settingsControl = new SettingsControl(this);
