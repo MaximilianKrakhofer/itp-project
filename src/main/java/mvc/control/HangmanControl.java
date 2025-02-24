@@ -87,13 +87,21 @@ public class HangmanControl implements ActionListener {
                 }
 
 
+
                 if(model.check(view.getSolutionPreview()))
                 {
-                    System.out.println("endquizcheck");
-                    int[] affe = model.endQuiz();
 
-                    view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
-                    view.addButtonListener(this);
+                    if(currentCard +1 >= cards.getCards().length) {
+                        System.out.println("endquizcheck");
+                        int[] affe = model.endQuiz();
+
+                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+                        view.addButtonListener(this);
+                    }
+                    else{
+                        currentCard+=1;
+                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
+                    }
                 }
 
                 model.setAtleastOne(false);
@@ -104,12 +112,17 @@ public class HangmanControl implements ActionListener {
                 String a = "";
                 a =  view.checkWord();
 
-                if(currentCard +1 >= cards.getCards().length) {
-                    if ((a != null && a.equals(shuffled[currentCard].getAntwort()))) {
+
+                if ((a != null && a.equals(shuffled[currentCard].getAntwort()))) {
+                    if(currentCard +1 >= cards.getCards().length) {
                         System.out.println("endquizcheck");
                         int[] affe = model.endQuiz();
                         view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
                         view.addButtonListener(this);
+                    }
+                    else{
+                        currentCard+=1;
+                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
                     }
                 }
                 else{

@@ -72,6 +72,7 @@ public class HangmanView extends JPanel {
     }
     public void startQuiz(String question, int fragentyp) {
 
+        this.answer = new JTextPane();
         this.questionText = new JLabel();
         if(!isLoaded) {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
@@ -178,7 +179,6 @@ public class HangmanView extends JPanel {
         this.revalidate();
     }
     public void nextCard(String question, int fragentyp) {
-        this.question.removeAll();
 
         this.answer.setText("");
 
@@ -195,17 +195,14 @@ public class HangmanView extends JPanel {
             }
         }
         else{
-            this.questionText = new JLabel();
             this.questionText.setText(question);
-            this.question.add(questionText, BorderLayout.CENTER);
 
             StringBuilder underscore = new StringBuilder();
             for (int i = 0; i < questionText.getText().length() -1; i++) {
                 underscore.append("_ ");
             }
             underscore.append("_");
-            solutionPreview = new JLabel(underscore.toString());
-            this.question.add(solutionPreview, BorderLayout.CENTER);
+            solutionPreview.setText(underscore.toString());
 
         }
 
@@ -214,11 +211,6 @@ public class HangmanView extends JPanel {
         int textLength = questionText.getText().length();
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
-        solutionPreview.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
-        answer = new JTextPane();
-
-        answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
-        answer.setPreferredSize(new Dimension(40, 40));
 
         StyledDocument doc = answer.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -226,14 +218,8 @@ public class HangmanView extends JPanel {
         StyleConstants.setFontSize(center, 50);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
-
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
-        questionText.setHorizontalAlignment(SwingConstants.CENTER);
-        solutionPreview.setHorizontalAlignment(SwingConstants.CENTER);
 
-
-        this.repaint();
-        this.revalidate();
     }
     public String checkWord(){
 
