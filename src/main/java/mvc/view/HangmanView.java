@@ -73,7 +73,6 @@ public class HangmanView extends JPanel {
     public void startQuiz(String question, int fragentyp) {
 
         this.questionText = new JLabel();
-        this.answer = new JTextPane();
         if(!isLoaded) {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
             return;

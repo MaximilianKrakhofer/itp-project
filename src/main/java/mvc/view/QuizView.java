@@ -2,12 +2,8 @@ package mvc.view;
 
 import mvc.control.QuizControl;
 import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Position;
-import net.coobird.thumbnailator.geometry.Positions;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -16,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.Buffer;
 
 public class QuizView extends JPanel {
 

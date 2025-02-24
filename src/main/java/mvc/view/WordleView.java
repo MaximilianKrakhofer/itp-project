@@ -5,9 +5,7 @@ import mvc.control.WordleControl;
 import net.coobird.thumbnailator.Thumbnails;
 
 import javax.swing.*;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -116,21 +114,31 @@ public class WordleView extends JPanel {
         check.setActionCommand("Check");
         grid = new JPanel(new GridLayout(1,2));
         grid.add(check);
+        JPanel[] answerPanel = new JPanel[questionText.getText().length() + 1];
 
-        answers = new JTextPane[questionText.getText().length()];
-        answersGrid = new JPanel(new GridLayout(5, questionText.getText().length()));
-        for (int i = 1; i < 5; i++) {
-            for (int j = 0; j < questionText.getText().length(); j++) {
+        answers = new JTextPane[questionText.getText().length() + 1];
+        answersGrid = new JPanel(new GridLayout(5, questionText.getText().length() +2, 10, 20));
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j <= questionText.getText().length(); j++) {
                 this.answers[j] = new JTextPane();
-                StyledDocument doc = answers[j].getStyledDocument();
+                StyledDocument styledDoc = answers[j].getStyledDocument();
                 SimpleAttributeSet center = new SimpleAttributeSet();
                 StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
                 StyleConstants.setFontSize(center, 50);
-                doc.setParagraphAttributes(0, doc.getLength(), center, false);
-                JPanel answerPanel = new JPanel(new FlowLayout());
-                answerPanel.add(answers[j]);
-                this.add(answerPanel);
+                styledDoc.setParagraphAttributes(0, styledDoc.getLength(), center, false);
+                for (int k = 0; k < answerPanel.length; k++) {
+                    answerPanel[k] = new JPanel(new FlowLayout());
+                }
+                if(i>=1){
+                    answers[j].setEditable(false);
+                }
+                answerPanel[j].add(answers[j]);
+                this.add(answerPanel[j]);
                 answersGrid.add(answers[j]);
+                if (styledDoc instanceof AbstractDocument) {
+                    AbstractDocument doc = (AbstractDocument) styledDoc;
+                    doc.setDocumentFilter(oneCharFilter);
+                }
 
                 answers[j].setAlignmentX(Component.CENTER_ALIGNMENT);
                 answers[j].setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -140,6 +148,7 @@ public class WordleView extends JPanel {
 
             }
         }
+        this.add(answersGrid, BorderLayout.CENTER);
         grid.add(stop);
         this.add(grid, BorderLayout.SOUTH);
         this.repaint();
@@ -229,8 +238,12 @@ public class WordleView extends JPanel {
         this.repaint();
         this.revalidate();
     }
-    public String getAnswer() {
-        return answer.getText();
+    public char[] getAnswers() {
+        String elements = "";
+        for (int i = 0; i < answers.length; i++) {
+            elements += answers[i].getText();
+        }
+        return elements.toCharArray();
     }
     public void addButtonListener(WordleControl l) {
 
@@ -287,6 +300,23 @@ public class WordleView extends JPanel {
                 "Solution", JOptionPane.OK_CANCEL_OPTION);
 
     }
+    DocumentFilter oneCharFilter = new DocumentFilter() {
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (fb.getDocument().getLength() + string.length() <= 1) {
+                super.insertString(fb, offset, string, attr);
+            }
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int currentLength = fb.getDocument().getLength();
+            int newLength = currentLength - length + (text != null ? text.length() : 0);
+            if (newLength <= 1) {
+                super.replace(fb, offset, length, text, attrs);
+            }
+        }
+    };
 
     private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
         ImageIcon icon = new ImageIcon(QuizView.class.getResource(imagePath));
