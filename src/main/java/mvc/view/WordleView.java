@@ -20,7 +20,7 @@ public class WordleView extends JPanel {
     private JPanel grid, imagePanel;
     private JLabel imageLabel, questionText;
     private boolean isLoaded;
-    private JTextPane[] answers;
+    private JTextPane[][] answers;
     private int rowCounter;
     public WordleView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
@@ -117,13 +117,12 @@ public class WordleView extends JPanel {
         grid.add(check);
         JPanel[] answerPanel = new JPanel[questionText.getText().length() + 1];
 
-        answers = new JTextPane[questionText.getText().length() + 1];
+        answers = new JTextPane[5][questionText.getText().length() + 1];
         answersGrid = new JPanel(new GridLayout(5, questionText.getText().length() +2, 10, 20));
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < questionText.getText().length(); j++) {
-                this.answers[j] = new JTextPane();
-                this.answers[j].setContentType("text/html");
-                StyledDocument styledDoc = answers[j].getStyledDocument();
+                this.answers[i][j] = new JTextPane();
+                StyledDocument styledDoc = answers[i][j].getStyledDocument();
                 SimpleAttributeSet center = new SimpleAttributeSet();
                 StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
                 StyleConstants.setFontSize(center, 30);
@@ -132,21 +131,21 @@ public class WordleView extends JPanel {
                     answerPanel[k] = new JPanel(new FlowLayout());
                 }
                 if(i>=1){
-                    answers[j].setEditable(false);
+                    answers[i][j].setEditable(false);
                 }
-                answerPanel[j].add(answers[j]);
+                answerPanel[j].add(answers[i][j]);
                 this.add(answerPanel[j]);
-                answersGrid.add(answers[j]);
+                answersGrid.add(answers[i][j]);
                 if (styledDoc instanceof AbstractDocument) {
                     AbstractDocument doc = (AbstractDocument) styledDoc;
                     doc.setDocumentFilter(oneCharFilter);
                 }
 
-                answers[j].setAlignmentX(Component.CENTER_ALIGNMENT);
-                answers[j].setAlignmentY(Component.CENTER_ALIGNMENT);
-                answers[j].setSize(10, 10);
-                answers[j].setMaximumSize(new Dimension(10, 10));
-                answers[j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20 ));
+                answers[i][j].setAlignmentX(Component.CENTER_ALIGNMENT);
+                answers[i][j].setAlignmentY(Component.CENTER_ALIGNMENT);
+                answers[i][j].setSize(10, 10);
+                answers[i][j].setMaximumSize(new Dimension(10, 10));
+                answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20 ));
 
             }
         }
@@ -231,11 +230,11 @@ public class WordleView extends JPanel {
         this.revalidate();
     }
     public char[] getAnswers() {
-        char[] answersChar = new char[answers.length];
-        for (int i = 0; answers !=null && i < answers.length; i++) {
-            if(answers[i]!= null)
+        char[] answersChar = new char[questionText.getText().length()];
+        for (int i = 0; answers !=null && i < questionText.getText().length(); i++) {
+            if(answers[rowCounter][i].getText()!= null)
             {
-                answersChar[i] = answers[i].getText().charAt(0);
+                answersChar[i] = answers[rowCounter][i].getText().charAt(0);
             }
         }
         return answersChar;
@@ -300,7 +299,7 @@ public class WordleView extends JPanel {
         for (int i = 0; i < characters.length; i++) {
             if (characters[i] != -1)
             {
-                answers[characters[i]].setText( "<html><font color=green>" + answers[characters[i]].getText() + "</font></html>");
+                answers[rowCounter][characters [i]].setForeground(Color.GREEN);
             }
         }
     }
