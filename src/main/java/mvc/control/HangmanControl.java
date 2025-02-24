@@ -40,7 +40,7 @@ public class HangmanControl implements ActionListener {
 
                     model.setCurrentHangman(currentCard);
                     this.shuffled = model.startQuiz(cards);
-                    view.startQuiz(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
+                    view.startQuiz(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
                     view.addButtonListener(this);
                     view.repaint();
                     view.revalidate();

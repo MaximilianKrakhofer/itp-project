@@ -21,6 +21,7 @@ public class HangmanView extends JPanel {
     private JPanel grid, imagePanel;
     private JLabel imageLabel, questionText, solutionPreview;
     private boolean isLoaded;
+    private int answerlength;
     private StringBuilder underscore;
     public HangmanView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
@@ -70,7 +71,7 @@ public class HangmanView extends JPanel {
         }
 
     }
-    public void startQuiz(String question, int fragentyp) {
+    public void startQuiz(String question, int answerlength,int fragentyp) {
 
         this.answer = new JTextPane();
         this.questionText = new JLabel();
@@ -83,6 +84,7 @@ public class HangmanView extends JPanel {
         this.question = new JPanel(new GridLayout(2, 1, 0, -80));
         double half = this.getHeight()/3;
         this.question.setPreferredSize(new Dimension(80, (int) half));
+        this.answerlength = answerlength;
         if(fragentyp == 1) {
             try {
                 imagePanel = new JPanel(new BorderLayout());
@@ -101,7 +103,7 @@ public class HangmanView extends JPanel {
             this.question.add(questionText, BorderLayout.CENTER);
 
              underscore = new StringBuilder();
-            for (int i = 0; i < questionText.getText().length() -1; i++) {
+            for (int i = 0; i < answerlength -1; i++) {
                 underscore.append("_ ");
             }
             underscore.append("_");
@@ -112,7 +114,7 @@ public class HangmanView extends JPanel {
 
         int minFontSize = 10;
         int maxFontSize = 60;
-        int textLength = questionText.getText().length();
+        int textLength = answerlength;
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
@@ -201,7 +203,7 @@ public class HangmanView extends JPanel {
         this.questionText.setText(question);
 
         underscore = new StringBuilder();
-        for (int i = 0; i < questionText.getText().length() -1; i++) {
+        for (int i = 0; i < answerlength -1; i++) {
             underscore.append("_ ");
         }
         underscore.append("_");
@@ -209,7 +211,7 @@ public class HangmanView extends JPanel {
         solutionPreview.setText(underscore.toString());
         int minFontSize = 10;
         int maxFontSize = 60;
-        int textLength = questionText.getText().length();
+        int textLength = answerlength;
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
 
@@ -399,7 +401,7 @@ public class HangmanView extends JPanel {
         solutionPreview.setText(underscore.toString());
         int minFontSize = 10;
         int maxFontSize = 60;
-        int textLength = questionText.getText().length();
+        int textLength = answerlength;
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
 
