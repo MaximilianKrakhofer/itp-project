@@ -27,12 +27,12 @@ public class WordleModel {
         results[2] = (int) (endTime-startTime)/1000;
         return results;
     }
-    public boolean check(String answer) {
+    public boolean check(char[] answer) {
         questions++;
-        System.out.println("checkmet" +cards[currentAnswer].getAntwort() +"answ"+ answer + cards[currentAnswer].isAntwort(answer));
+        System.out.println("checkmet" +cards[currentAnswer].getAntwort() +"answ"+ answer + cards[currentAnswer].isAntwort(answer.toString()));
 
-        if( cards[currentAnswer].isAntwort(answer)) {
-            System.out.println(cards[currentAnswer].getAntwort() +"answ"+ answer + cards[currentAnswer].isAntwort(answer));
+        if( cards[currentAnswer].isAntwort(answer.toString())) {
+            System.out.println(cards[currentAnswer].getAntwort() +"answ"+ answer + cards[currentAnswer].isAntwort(answer.toString()));
             this.questionscorrect++;
             this.currentAnswer++;
             return true;
