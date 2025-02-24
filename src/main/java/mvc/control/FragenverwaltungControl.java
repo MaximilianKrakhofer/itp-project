@@ -80,6 +80,10 @@ public class FragenverwaltungControl implements ActionListener
                 try {
                     System.out.println("Load");
                     String location = view.getLoadLocation(model.saveLocation());
+                    if(location == null || location.isEmpty()) {
+                        JOptionPane.showMessageDialog(null,"Cards not Found");
+                        return;
+                    }
                     KarteiKarten cards = model.getLoadCards(location);
                     masterController.setCards(cards);
                     view.resetCards();

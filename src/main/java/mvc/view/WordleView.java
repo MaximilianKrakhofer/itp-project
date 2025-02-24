@@ -21,6 +21,7 @@ public class WordleView extends JPanel {
     private boolean isLoaded;
     private JTextPane[][] answers;
     private int rowCounter;
+    private int textLength;
     public WordleView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -37,9 +38,6 @@ public class WordleView extends JPanel {
         if (!isLoaded) {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
         }
-    }
-    public void showSolution(String answer) {
-        JOptionPane.showMessageDialog(null, this.questionText.getText()+ "\nAntwort:" + answer);
     }
     public void loadImage(String url) throws MalformedURLException {
         try{
@@ -68,7 +66,7 @@ public class WordleView extends JPanel {
         }
 
     }
-    public void startQuiz(String question, int fragentyp) {
+    public void startQuiz(String question,int answerlength, int fragentyp) {
         rowCounter = 0;
         this.questionText = new JLabel();
 
@@ -101,7 +99,7 @@ public class WordleView extends JPanel {
         }
         int minFontSize = 10;
         int maxFontSize = 60;
-        int textLength = questionText.getText().length();
+        textLength = answerlength;
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
@@ -114,12 +112,12 @@ public class WordleView extends JPanel {
         check.setActionCommand("Check");
         grid = new JPanel(new GridLayout(1,2));
         grid.add(check);
-        JPanel[] answerPanel = new JPanel[questionText.getText().length() + 1];
+        JPanel[] answerPanel = new JPanel[textLength];
 
-        answers = new JTextPane[5][questionText.getText().length() + 1];
-        answersGrid = new JPanel(new GridLayout(5, questionText.getText().length() +2, 10, 20));
+        answers = new JTextPane[5][textLength + 1];
+        answersGrid = new JPanel(new GridLayout(5, textLength, 10, 20));
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < questionText.getText().length(); j++) {
+            for (int j = 0; j < textLength; j++) {
                 this.answers[i][j] = new JTextPane();
                 StyledDocument styledDoc = answers[i][j].getStyledDocument();
                 SimpleAttributeSet center = new SimpleAttributeSet();
@@ -155,7 +153,7 @@ public class WordleView extends JPanel {
         this.revalidate();
 
     }
-    public void nextCard(String question, int fragentyp) {
+    public void nextCard(String question,int answerlength, int fragentyp) {
         rowCounter = 0;
         for (int i = 0; i < answers.length; i++) {
             for (int j = 0; j < answers[i].length; j++) {
@@ -188,7 +186,7 @@ public class WordleView extends JPanel {
             this.questionText.setText(question);
             int minFontSize = 10;
             int maxFontSize = 60;
-            int textLength = questionText.getText().length();
+            textLength = answerlength;
             int newFontSize = maxFontSize - textLength;
             newFontSize = Math.max(newFontSize, minFontSize);
 
@@ -236,8 +234,8 @@ public class WordleView extends JPanel {
         this.revalidate();
     }
     public String getAnswers() {
-        char[] answersChar = new char[questionText.getText().length()];
-        for (int i = 0; answers !=null && i < questionText.getText().length(); i++) {
+        char[] answersChar = new char[textLength];
+        for (int i = 0; answers !=null && i < textLength; i++) {
             if(answers[rowCounter][i].getText()!= null)
             {
                 if(!answers[rowCounter][i].getText().isBlank()){

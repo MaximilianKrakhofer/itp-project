@@ -6,6 +6,9 @@ public class SettingsModel {
     private String[] settings = new String[4];
     private static final Preferences prefs = Preferences.userNodeForPackage(SettingsModel.class);
     public static void saveSetting(String key, String value) {
+        if(key == null || value == null || key.isEmpty() || value.isEmpty()) {
+            return;
+        }
         prefs.put(key, value);
     }
     public static String getConfig(String key, String def) {
