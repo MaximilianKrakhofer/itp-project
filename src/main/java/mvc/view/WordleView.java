@@ -98,7 +98,7 @@ public class WordleView extends JPanel {
             this.question.add(questionText);
         }
         int minFontSize = 10;
-        int maxFontSize = 80;
+        int maxFontSize = 60;
         textLength = answerlength;
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
@@ -185,7 +185,7 @@ public class WordleView extends JPanel {
 
             this.questionText.setText(question);
             int minFontSize = 10;
-            int maxFontSize = 100;
+            int maxFontSize = 60;
             textLength = answerlength;
             int newFontSize = maxFontSize - textLength;
             newFontSize = Math.max(newFontSize, minFontSize);
