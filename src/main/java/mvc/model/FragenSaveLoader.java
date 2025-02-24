@@ -63,7 +63,7 @@ public class FragenSaveLoader {
         return true;
     }
     public boolean saveCards(KarteiKarte[] karten) {
-        return saveCards(karten, configPath== null?configPath:saveDirectory + File.separator + saveFileName);
+        return saveCards(karten, configPath== null?saveDirectory + File.separator + saveFileName:configPath);
     }
     public KarteiKarten getLoadCards()  {
        return getLoadCards(saveDirectory+File.separator+saveFileName);
