@@ -118,7 +118,7 @@ public class HangmanControl implements ActionListener {
                     }
                     else{
                         currentCard+=1;
-                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
+                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
                     }
                 }
 
@@ -146,7 +146,7 @@ public class HangmanControl implements ActionListener {
                     }
                     else{
                         currentCard+=1;
-                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
+                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
                     }
                 }
                 else{

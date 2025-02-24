@@ -180,11 +180,11 @@ public class HangmanView extends JPanel {
         this.repaint();
         this.revalidate();
     }
-    public void nextCard(String question, int fragentyp) {
+    public void nextCard(String question, int answerlength, int fragentyp) {
 
         underscore = new StringBuilder();
         this.answer.setText("");
-
+        this.answerlength = answerlength;
         if(fragentyp == 1) {
             try {
                 imagePanel = new JPanel(new BorderLayout());
