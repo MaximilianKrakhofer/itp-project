@@ -80,12 +80,11 @@ public class FragenverwaltungControl implements ActionListener
                     masterController.setCards(cards);
                     view.resetCards();
                     karten = new KarteiKarten();
-                    for(int i = 0; i<cards.getCards().length;i++) {
+                    for(int i = 0; cards != null && i<cards.getCards().length;i++) {
                         KarteiKarte karte = new KarteiKarte(cards.getCardQuestion(i),cards.getCardAnswer(i), cards.getCardType(i));
                         view.appendCard(karte);
                         karten.addKarte(karte);
                     }
-                    model.saveCards(karten.getCards());
                 }
                 catch(Exception exc) {
                     JOptionPane.showMessageDialog(null,"Cards not Found");

@@ -95,7 +95,7 @@ public class QuizControl implements ActionListener {
     }
 
     public boolean isLoaded() {
-        if(controller.getCards() != null) {
+        if(controller.getCards().getCard(0) != null) {
             cards = controller.getCards();
             return true;
         }

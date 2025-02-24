@@ -35,7 +35,7 @@ public class KarteiKarten {
         return karten;
     }
     public KarteiKarte getCard(int i) {
-        if(karten[i] != null) {
+        if(karten !=null &&( karten.length !=0 && karten[i] != null)) {
             return karten[i];
         }
         return null;
