@@ -157,9 +157,20 @@ public class WordleView extends JPanel {
 
     }
     public void nextCard(String question, int fragentyp) {
-
-        this.answer.setText("");
-
+        rowCounter = 0;
+        for (int i = 0; i < answers.length; i++) {
+            for (int j = 0; j < answers[i].length; j++) {
+                if (answers[i][j] != null && answers[i][j].getText() !=null) {
+                    answers[i][j].setText("");
+                    if (i < 1) {
+                        answers[i][j].setEditable(true);
+                    }
+                    else{
+                        answers[i][j].setEditable(false);
+                    }
+                }
+            }
+        }
         if(fragentyp == 1) {
             try {
                 imagePanel = new JPanel(new BorderLayout());
@@ -174,17 +185,12 @@ public class WordleView extends JPanel {
         }
         else {
 
+            this.questionText.setText(question);
             int minFontSize = 10;
             int maxFontSize = 100;
             int textLength = questionText.getText().length();
             int newFontSize = maxFontSize - textLength;
             newFontSize = Math.max(newFontSize, minFontSize);
-
-            StyledDocument doc = answer.getStyledDocument();
-            SimpleAttributeSet center = new SimpleAttributeSet();
-            StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-            StyleConstants.setFontSize(center, 50);
-            doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
             questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
 
@@ -229,7 +235,7 @@ public class WordleView extends JPanel {
         this.repaint();
         this.revalidate();
     }
-    public char[] getAnswers() {
+    public String getAnswers() {
         char[] answersChar = new char[questionText.getText().length()];
         for (int i = 0; answers !=null && i < questionText.getText().length(); i++) {
             if(answers[rowCounter][i].getText()!= null)
@@ -237,7 +243,7 @@ public class WordleView extends JPanel {
                 answersChar[i] = answers[rowCounter][i].getText().charAt(0);
             }
         }
-        return answersChar;
+        return new String(answersChar);
     }
     public void addButtonListener(WordleControl l) {
 

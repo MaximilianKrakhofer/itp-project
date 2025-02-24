@@ -53,7 +53,7 @@ public class WordleControl implements ActionListener {
             case "End Quiz":
                 if(view.getAnswers()!= null) {
                     currentCard = 0;
-                    model.check(view.getAnswers());
+                    model.check(new String(view.getAnswers()));
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
                     double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
@@ -66,7 +66,7 @@ public class WordleControl implements ActionListener {
                 }
                 break;
             case "Check":
-                if(model.check(view.getAnswers())){
+                if(model.check(new String(view.getAnswers()))){
                     if(currentCard +1 >= cards.getCards().length) {
                         System.out.println("endquizcheck");
                         currentCard = 0;
@@ -82,18 +82,14 @@ public class WordleControl implements ActionListener {
                 }
                 else{
                     if(view.getRowCounter()> 4){
-                        if(currentCard +1 >= cards.getCards().length) {
-                            System.out.println("endquizcheck");
-                            currentCard = 0;
-                            int[] affe = model.endQuiz();
-                            double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
-                            view.endQuiz(affe[0],affe[1],affe[2],prozent);
-                            view.addButtonListener(this);
-                        }
-                        else{
-                            currentCard+=1;
-                            view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
-                        }
+                        System.out.println("endquizcheck");
+                        currentCard = 0;
+                        int[] affe = model.endQuiz();
+                        double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
+                        view.endQuiz(affe[0],affe[1],affe[2],prozent);
+                        view.addButtonListener(this);
+                        currentCard+=1;
+                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
                     }
                     else{
                         view.setColors(model.compareChars(new String(view.getAnswers()), shuffled[currentCard].getAntwort()));
