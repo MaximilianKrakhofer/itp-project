@@ -51,9 +51,9 @@ public class WordleControl implements ActionListener {
                 }
                 break;
             case "End Quiz":
-                if(view.getAnswer()!= null) {
+                if(view.getAnswers()!= null) {
                     currentCard = 0;
-                    model.check(view.getAnswer());
+                    model.check(view.getAnswers());
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
                     double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
@@ -67,7 +67,7 @@ public class WordleControl implements ActionListener {
                 break;
             case "Check":
                 System.out.println("check"+ currentCard);
-                view.setCheck(model.check(view.getAnswer()), shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp()); // checkt ob korrekt
+                view.setCheck(model.check(view.getAnswers()), shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp()); // checkt ob korrekt
                 if(currentCard +1 >= cards.getCards().length) {
                     System.out.println("endquizcheck");
                     currentCard = 0;
