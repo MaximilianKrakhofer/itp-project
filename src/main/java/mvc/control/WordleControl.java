@@ -38,7 +38,7 @@ public class WordleControl implements ActionListener {
                 if(isLoaded()) {
                     KarteiKarte[] shuffled = model.startQuiz(cards);
                     this.shuffled = shuffled;
-                    view.startQuiz(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
+                    view.startQuiz(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
                     view.addButtonListener(this);
                     view.repaint();
                     view.revalidate();
@@ -75,7 +75,7 @@ public class WordleControl implements ActionListener {
                     }
                     else{
                         currentCard+=1;
-                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
+                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
                     }
                 }
                 else{
@@ -87,7 +87,7 @@ public class WordleControl implements ActionListener {
                         view.endQuiz(affe[0],affe[1],affe[2],prozent);
                         view.addButtonListener(this);
                         currentCard+=1;
-                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
+                        view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
                     }
                     else{
                         if(!view.getAnswers().isBlank()){
