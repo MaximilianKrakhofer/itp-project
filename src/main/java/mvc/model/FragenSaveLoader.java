@@ -66,7 +66,7 @@ public class FragenSaveLoader {
         return saveCards(karten, configPath== null?saveDirectory + File.separator + saveFileName:configPath);
     }
     public KarteiKarten getLoadCards()  {
-       return getLoadCards(saveDirectory+File.separator+saveFileName);
+       return getLoadCards(configPath==null?saveDirectory+File.separator+saveFileName:configPath);
     }
     public KarteiKarten getLoadCards(String directory)  {
         try {

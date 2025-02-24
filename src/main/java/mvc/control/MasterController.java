@@ -11,7 +11,6 @@ public class MasterController {
     private KarteiKarten karten = null;
     private mvc.control.FragenverwaltungControl fragenverwaltungControl;
     private String configPath = null;
-    private boolean autosave,autoload;
 
 
     public MasterController() {
@@ -19,8 +18,8 @@ public class MasterController {
         view = new MasterView();
         showMainMenu();
         try {
-            autoload = Boolean.parseBoolean(SettingsModel.getConfig("autoload", "false"));
-            autosave = Boolean.parseBoolean(SettingsModel.getConfig("autosave", "false"));
+            boolean autoload = Boolean.parseBoolean(SettingsModel.getConfig("autoload", "false"));
+            boolean autosave = Boolean.parseBoolean(SettingsModel.getConfig("autosave", "false"));
             configPath = SettingsModel.getConfig("saveLocation", null);
             if (autoload) {
                 System.out.println("WIMMER");
@@ -56,6 +55,8 @@ public class MasterController {
             fragenverwaltungControl = new FragenverwaltungControl(this);
             fragenverwaltungControl.setKarten(karten);
         }
+        boolean autosave = Boolean.parseBoolean(SettingsModel.getConfig("autosave", "false"));
+        configPath = SettingsModel.getConfig("saveLocation", null);
         fragenverwaltungControl.setAutoSavePathConfig(autosave,configPath);
         view.updateContent(fragenverwaltungControl.getView());
     }

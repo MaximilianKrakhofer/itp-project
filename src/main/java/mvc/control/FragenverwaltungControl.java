@@ -22,6 +22,7 @@ public class FragenverwaltungControl implements ActionListener
     private String pathConfig = null;
     public void setAutoSavePathConfig(boolean autosave, String pathConfig) {
         this.autosave =(autosave);
+        this.pathConfig = pathConfig;
         model.setConfigPath(pathConfig);
     }
     public FragenverwaltungControl(MasterController masterController)  {
@@ -38,7 +39,7 @@ public class FragenverwaltungControl implements ActionListener
         String action = e.getActionCommand();
         switch (action) {
             case "main":
-                if(karten != null&& karten.getCards() != null) {
+                if(karten != null&& karten.getCards() != null && karten.getCards().length != 0) {
 
                     masterController.setCards(karten);
                 }
@@ -46,6 +47,10 @@ public class FragenverwaltungControl implements ActionListener
                 break;
             case "add":
                 KarteiKarte card = view.getCard();
+                if(card.getFrage() == null || card.getFrage().isEmpty() || card.getAntwort() == null || card.getAntwort().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,"Leere Fragen oder Antworten sind nicht erlaubt");
+                    break;
+                }
                 view.appendCard(card);
                 karten.addKarte(card);
                 if(autosave) model.saveCards(karten.getCards());
