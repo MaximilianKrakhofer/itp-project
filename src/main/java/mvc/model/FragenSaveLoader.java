@@ -44,13 +44,11 @@ public class FragenSaveLoader {
     }
 
     public boolean saveCards(KarteiKarte[] karten, String dir) {
-        System.out.println(dir);
         File file = new File(dir);
         File folder = file.getParentFile();
         if(!folder.exists()) {
             folder.mkdirs();
         }
-        System.out.println(file.getAbsolutePath());
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for(int i = 0; i < karten.length; i++) {
                 writer.write(karten[i].getFrage()+";"+ karten[i].getAntwort() + ";" + karten[i].getFragentyp() + System.lineSeparator() );

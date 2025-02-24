@@ -56,8 +56,9 @@ public class MasterController {
             fragenverwaltungControl.setKarten(karten);
         }
         boolean autosave = Boolean.parseBoolean(SettingsModel.getConfig("autosave", "false"));
+        boolean autoload = Boolean.parseBoolean(SettingsModel.getConfig("autoload", "false"));
         configPath = SettingsModel.getConfig("saveLocation", null);
-        fragenverwaltungControl.setAutoSavePathConfig(autosave,configPath);
+        fragenverwaltungControl.setAutoSaveLoadPathConfig(autosave,autoload,configPath);
         view.updateContent(fragenverwaltungControl.getView());
     }
     public void showQuiz() {

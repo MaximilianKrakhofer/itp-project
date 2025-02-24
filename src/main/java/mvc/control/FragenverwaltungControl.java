@@ -19,10 +19,9 @@ public class FragenverwaltungControl implements ActionListener
     private MasterController masterController;
     private KarteiKarten karten;
     private boolean autosave;
-    private String pathConfig = null;
-    public void setAutoSavePathConfig(boolean autosave, String pathConfig) {
+    private boolean autoload;
+    public void setAutoSaveLoadPathConfig(boolean autosave,boolean autoload, String pathConfig) {
         this.autosave =(autosave);
-        this.pathConfig = pathConfig;
         model.setConfigPath(pathConfig);
     }
     public FragenverwaltungControl(MasterController masterController)  {
