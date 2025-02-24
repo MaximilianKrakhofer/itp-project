@@ -28,16 +28,15 @@ public class WordleModel {
         return results;
     }
     public boolean check(String answer) {
-        questions++;
-
         if( cards[currentAnswer].getAntwort().equals (answer)) {
-            this.questionscorrect++;
-            this.currentAnswer++;
+
+            currentAnswer ++;
             return true;
         }
         else{
             return false;
         }
+
 
     }
     public int[] compareChars(String attempt, String solution) {
@@ -67,6 +66,12 @@ public class WordleModel {
         }
 
         return correctChars;
+    }
+    public void increaseQuestionsCorrect(){
+        this.questionscorrect++;
+    }
+    public void increaseQustions(){
+        this.questions++;
     }
 
 }

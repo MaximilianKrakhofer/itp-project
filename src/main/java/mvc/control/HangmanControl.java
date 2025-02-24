@@ -90,7 +90,9 @@ public class HangmanControl implements ActionListener {
                             int[] affe = model.endQuiz();
 
 
-                            view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+
+                            double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
+                            view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
                             view.addButtonListener(this);
                         }
 
@@ -109,7 +111,8 @@ public class HangmanControl implements ActionListener {
                         view.setCheck(true, cards.getCardAnswer(currentCard) );
                         int[] affe = model.endQuiz();
 
-                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+                        double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
+                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
                         view.addButtonListener(this);
 
                     }
@@ -136,7 +139,8 @@ public class HangmanControl implements ActionListener {
 
                         view.setCheck(true, cards.getCardAnswer(currentCard) );
                         int[] affe = model.endQuiz();
-                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+                        double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
+                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
                         view.addButtonListener(this);
 
                     }
@@ -157,7 +161,9 @@ public class HangmanControl implements ActionListener {
 
                             view.setCheck(true, cards.getCardAnswer(currentCard));
                             int[] affe = model.endQuiz();
-                            view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+
+                            double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
+                            view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
                             view.addButtonListener(this);
 
                         }

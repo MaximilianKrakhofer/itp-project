@@ -159,7 +159,7 @@ public class WordleView extends JPanel {
             for (int j = 0; j < answers[i].length; j++) {
                 if (answers[i][j] != null && answers[i][j].getText() !=null) {
                     answers[i][j].setText("");
-                    answers[i][j].setForeground(Color.BLACK);
+                    answers[i][j].setForeground(Color.WHITE);
                     if (i < 1) {
                         answers[i][j].setEditable(true);
                     }

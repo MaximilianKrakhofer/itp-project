@@ -42,6 +42,7 @@ public class WordleControl implements ActionListener {
                     view.addButtonListener(this);
                     view.repaint();
                     view.revalidate();
+                    model.increaseQustions();
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
@@ -72,10 +73,13 @@ public class WordleControl implements ActionListener {
                         double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
                         view.endQuiz(affe[0],affe[1],affe[2],prozent);
                         view.addButtonListener(this);
+                        model.increaseQuestionsCorrect();
                     }
                     else{
                         currentCard+=1;
                         view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
+                        model.increaseQuestionsCorrect();
+                        model.increaseQustions();
                     }
                 }
                 else{

@@ -237,6 +237,7 @@ public class HangmanView extends JPanel {
 
     public void endQuiz(int beantwortet, int failedChars, int failedWords, int[] hangmanCompletions, int dauer, double prozent) {
         this.removeAll();
+
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
 
         fragenbeantwortetLabel = new JLabel("Fragenbeantwortet:" + beantwortet);
@@ -245,11 +246,26 @@ public class HangmanView extends JPanel {
         for (int i = 0; i < hangmanCompletions.length; i++) {
             hangmanCompletionsString.append(hangmanCompletions[i] +"/7; " );
         }
+
+        Font labelFont = new Font("Arial", Font.PLAIN, 30);
+
+        fragenbeantwortetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        fragenbeantwortetLabel.setFont(labelFont);
         JLabel hangmanCompletionsLabel = new JLabel(hangmanCompletionsString.toString());
+        hangmanCompletionsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        hangmanCompletionsLabel.setFont(labelFont);
         JLabel failedWordsLabel = new JLabel("Failed Words: " + failedWords);
+        failedWordsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        failedWordsLabel.setFont(labelFont);
         JLabel charWrongLabel = new JLabel("Buchstaben Falsch erraten:" + failedChars);
+        charWrongLabel.setFont(labelFont);
+        charWrongLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         dauerLabel = new JLabel("Dauer:" + dauer);
+        dauerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        dauerLabel.setFont(labelFont);
         prozentLabel = new JLabel("Prozent:" + prozent);
+        prozentLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        prozentLabel.setFont(labelFont);
 
         JPanel box = new JPanel();
         box.setLayout(new BoxLayout(box,BoxLayout.PAGE_AXIS));
