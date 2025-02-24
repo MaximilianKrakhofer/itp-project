@@ -79,7 +79,7 @@ public class WordleControl implements ActionListener {
                     }
                 }
                 else{
-                    if(view.getRowCounter()> 4){
+                    if(view.getRowCounter()>= 4){
                         System.out.println("endquizcheck");
                         currentCard = 0;
                         int[] affe = model.endQuiz();

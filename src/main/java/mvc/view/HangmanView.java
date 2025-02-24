@@ -208,7 +208,7 @@ public class HangmanView extends JPanel {
 
         solutionPreview.setText(underscore.toString());
         int minFontSize = 10;
-        int maxFontSize = 100;
+        int maxFontSize = 60;
         int textLength = questionText.getText().length();
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
@@ -275,8 +275,8 @@ public class HangmanView extends JPanel {
         return answer.getText();
     }
 
-    public void setAnswer(JTextPane answer) {
-        this.answer = answer;
+    public void setAnswer(String answerString) {
+        this.answer.setText(answerString);
     }
 
     public void addButtonListener(HangmanControl l) {
@@ -305,7 +305,6 @@ public class HangmanView extends JPanel {
     }
     public void setCheck(boolean truth, String answerText){
 
-
         JPanel main = new JPanel( new GridLayout(2, 1));
         JPanel grid = new JPanel( new GridLayout(3, 2));
         JEditorPane correct =  new JEditorPane();
@@ -323,7 +322,7 @@ public class HangmanView extends JPanel {
 
 
         grid.add(new JLabel("Your answer"));
-        grid.add(new JLabel(answer.getText()));
+        grid.add(new JLabel(solutionPreview.getText()));
         grid.add(new JLabel("Solution: "));
         realAnswer = new JTextPane();
         realAnswer.setText(answerText);
