@@ -1,0 +1,23 @@
+Ein detaillierter Plan, der die Ziele, den Zeitrahmen, die Ressourcen und die Aufgaben eines IT-Projekts beschreibt.;Projektplan;0
+Personen oder Gruppen, die ein Interesse am IT-Projekt haben oder davon betroffen sind.;Stakeholder;0
+Ein bedeutendes Ereignis oder eine Etappe im IT-Projekt, das als Fortschrittsindikator dient.;Meilenstein;0
+Der Prozess der Identifikation, Bewertung und Minimierung von Risiken in einem IT-Projekt.;Risikomanagement;0
+Die Planung und Steuerung von Entwicklern, Infrastruktur, Software-Tools und Budget in einem IT-Projekt.;Ressourcenmanagement;0
+Ein flexibler Softwareentwicklungsansatz, der iterative Entwicklung und Kundenfeedback nutzt.;Agiles-Projektmanagement;0
+Ein traditionelles, sequentielles Entwicklungsmodell mit festen Phasen wie Anforderungsanalyse, Design, Implementierung und Test.;Wasserfallmodell;0
+Ein kurzer, festgelegter Entwicklungszeitraum in agilen IT-Projekten, in dem bestimmte Features umgesetzt werden.;Sprint;0
+Eine visuelle Darstellung der IT-Projektzeitachse mit Aufgaben, Meilensteinen und Abhängigkeiten.;Gantt-Diagramm;0
+Die Abschätzung des Zeit- und Ressourcenbedarfs für die Umsetzung eines Softwareprojekts.;Aufwandsschätzung;0
+Die Person, die für die Planung, Durchführung und den erfolgreichen Abschluss eines IT-Projekts verantwortlich ist.;Projektmanager;0
+Ein formales Dokument, das die Ziele, Anforderungen und Stakeholder eines IT-Projekts definiert.;Projektauftrag;0
+Das voraussichtliche Enddatum eines IT-Projekts, um den Zeitplan zu steuern und Verzögerungen zu vermeiden.;Deadline;0
+Die kontinuierliche Überwachung des Fortschritts eines IT-Projekts, um Abweichungen frühzeitig zu erkennen.;Projektcontrolling;0
+Eine Technik zur Identifikation, Bewertung und Priorisierung von Risiken in Softwareentwicklungsprojekten.;Risikoanalyse;0
+Eine agile Methode, die eine kontinuierliche Integration, Lieferung und Verbesserung von Software ermöglicht.;DevOps;0
+Ein System zur Verwaltung von Softwareanforderungen, das Use Cases, User Stories und technische Spezifikationen umfasst.;Anforderungsmanagement;0
+Ein System zur Verwaltung von Quellcode, Versionierung und Zusammenarbeit in Softwareprojekten.;Versionskontrolle;0
+Ein Sicherheitskonzept, das potenzielle Schwachstellen in IT-Projekten frühzeitig erkennt und minimiert.;Security-by-Design;0
+Eine visuelle Darstellung von Arbeitsabläufen zur Identifikation von Engpässen und Optimierungspotenzialen in IT-Projekten.;Kanban;0
+Ein entwicklungsbegleitender Prozess zur Sicherstellung der Qualität von Software durch Tests und Code-Reviews.;Qualitätsmanagement;0
+Ein standardisiertes Dokument, das alle technischen Details, Schnittstellen und Architektur eines IT-Projekts beschreibt.;Technische-Spezifikation;0
+Ein Dokument, das beschreibt, wie Benutzer mit einer Software interagieren und welche Anforderungen sie erfüllt.;User-Story;0
