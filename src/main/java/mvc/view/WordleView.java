@@ -240,7 +240,9 @@ public class WordleView extends JPanel {
         for (int i = 0; answers !=null && i < questionText.getText().length(); i++) {
             if(answers[rowCounter][i].getText()!= null)
             {
-                answersChar[i] = answers[rowCounter][i].getText().charAt(0);
+                if(!answers[rowCounter][i].getText().isBlank()){
+                    answersChar[i] = answers[rowCounter][i].getText().charAt(0);
+                }
             }
         }
         return new String(answersChar);

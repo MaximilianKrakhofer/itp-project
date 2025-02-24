@@ -67,22 +67,30 @@ public class HangmanControl implements ActionListener {
             case "Check":
 
                 model.setCurrentHangman(currentCard);
-                model.setCurrentHangman(currentCard);
-                int [] correctChars = model.compareChars(view.getAnswer().charAt(0),shuffled[currentCard].getAntwort());
+
+                int [] correctChars = {-1};
+                if(view.getAnswer() != null && !view.getAnswer().isBlank()){
+                    correctChars = model.compareChars(view.getAnswer().charAt(0),shuffled[currentCard].getAntwort());
+                }
 
                 if(model.getAtleastOne()){
                     view.setCheckedChars(correctChars, view.getAnswer().charAt(0));
                 }
                 else{
-                    view.setHangmanAscii(model.increaseCounter());
-                    model.increaseFailedChars();
-                    if(model.getCounter() >7){
-                        model.check(view.getAnswer());
-                        System.out.println("endquizcheck");
-                        int[] affe = model.endQuiz();
 
-                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
-                        view.addButtonListener(this);
+                    if(view.getAnswer() != null && !view.getAnswer().isBlank()){
+
+                        view.setHangmanAscii(model.increaseCounter());
+                        model.increaseFailedChars();
+                        if(model.getCounter() >7){
+                            model.check(view.getAnswer());
+                            System.out.println("endquizcheck");
+                            int[] affe = model.endQuiz();
+
+                            view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+                            view.addButtonListener(this);
+                        }
+
                     }
                 }
 
@@ -126,16 +134,18 @@ public class HangmanControl implements ActionListener {
                     }
                 }
                 else{
-                    currentCard++;
-                    model.increaseFailedWords();
-                    view.setHangmanAscii(model.increaseCounter());
-                    if(model.getCounter() > 7)
-                    {
-                        model.check(view.getAnswer());
-                        System.out.println("endquizcheck");
-                        int[] affe = model.endQuiz();
-                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
-                        view.addButtonListener(this);
+
+                    if(view.getAnswer() != null && !view.getAnswer().isBlank()) {
+                        currentCard++;
+                        model.increaseFailedWords();
+                        view.setHangmanAscii(model.increaseCounter());
+                        if (model.getCounter() > 7) {
+                            model.check(view.getAnswer());
+                            System.out.println("endquizcheck");
+                            int[] affe = model.endQuiz();
+                            view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+                            view.addButtonListener(this);
+                        }
                     }
                 }
 

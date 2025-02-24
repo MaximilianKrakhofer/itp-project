@@ -90,8 +90,10 @@ public class WordleControl implements ActionListener {
                         view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getFragentyp());
                     }
                     else{
-                        view.setColors(model.compareChars(new String(view.getAnswers()), shuffled[currentCard].getAntwort()));
-                        view.activateNewFields();
+                        if(!view.getAnswers().isBlank()){
+                            view.setColors(model.compareChars(new String(view.getAnswers()), shuffled[currentCard].getAntwort()));
+                            view.activateNewFields();
+                        }
                     }
                 }
                 break;

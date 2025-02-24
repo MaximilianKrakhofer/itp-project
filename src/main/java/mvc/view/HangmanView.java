@@ -180,6 +180,7 @@ public class HangmanView extends JPanel {
     }
     public void nextCard(String question, int fragentyp) {
 
+        underscore = new StringBuilder();
         this.answer.setText("");
 
         if(fragentyp == 1) {
@@ -195,17 +196,17 @@ public class HangmanView extends JPanel {
             }
         }
         else{
-            this.questionText.setText(question);
-
-            StringBuilder underscore = new StringBuilder();
-            for (int i = 0; i < questionText.getText().length() -1; i++) {
-                underscore.append("_ ");
-            }
-            underscore.append("_");
-            solutionPreview.setText(underscore.toString());
 
         }
+        this.questionText.setText(question);
 
+        underscore = new StringBuilder();
+        for (int i = 0; i < questionText.getText().length() -1; i++) {
+            underscore.append("_ ");
+        }
+        underscore.append("_");
+
+        solutionPreview.setText(underscore.toString());
         int minFontSize = 10;
         int maxFontSize = 100;
         int textLength = questionText.getText().length();
@@ -273,6 +274,11 @@ public class HangmanView extends JPanel {
     public String getAnswer() {
         return answer.getText();
     }
+
+    public void setAnswer(JTextPane answer) {
+        this.answer = answer;
+    }
+
     public void addButtonListener(HangmanControl l) {
 
         if(mainMenu!=null && mainMenu.getActionListeners().length ==0) {
@@ -374,10 +380,8 @@ public class HangmanView extends JPanel {
             }
 
         }
-        solutionPreview.removeAll();
 
-        question.remove(solutionPreview);
-        solutionPreview = new JLabel(underscore.toString());
+        solutionPreview.setText(underscore.toString());
         int minFontSize = 10;
         int maxFontSize = 60;
         int textLength = questionText.getText().length();
@@ -386,13 +390,8 @@ public class HangmanView extends JPanel {
 
         solutionPreview.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
 
-        solutionPreview.setHorizontalAlignment(SwingConstants.CENTER);
 
 
-        question.add(solutionPreview);
-
-        this.repaint();
-        this.revalidate();
     }
 
     public void setHangmanAscii(String hangmanAscii) {
