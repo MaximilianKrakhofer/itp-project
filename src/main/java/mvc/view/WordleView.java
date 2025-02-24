@@ -301,19 +301,16 @@ public class WordleView extends JPanel {
         button.setFocusPainted(false);
         return button;
     }
-    public void setColors(int[] characters) {
+    public void setColors(int[] characters){
         for (int i = 0; i < characters.length; i++) {
-            if (characters[i] == 1) {
-                answers[rowCounter][i].setForeground(Color.GREEN);
-            } else if (characters[i] == 2) {
-                answers[rowCounter][i].setForeground(Color.YELLOW);
-            } else {
-                answers[rowCounter][i].setForeground(Color.GRAY);
+            if (characters[i] != -1)
+            {
+                answers[rowCounter][characters [i]].setForeground(Color.GREEN);
             }
         }
     }
     public void activateNewFields(){
-        for (int i = 0; i < textLength  ; i++) {
+        for (int i = 0; i < questionText.getText().length()  ; i++) {
             answers[rowCounter][i].setEditable(false);
             answers[rowCounter +1 ][i].setEditable(true);
         }
