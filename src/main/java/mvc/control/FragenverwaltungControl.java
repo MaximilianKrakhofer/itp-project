@@ -2,7 +2,7 @@ package mvc.control;
 
 import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
-import mvc.model.FragenverwaltungModel;
+import mvc.model.FragenverwaltungsModel;
 import mvc.view.FragenverwaltungView;
 
 import javax.swing.*;
@@ -15,14 +15,19 @@ import java.awt.event.ActionListener;
 public class FragenverwaltungControl implements ActionListener
 {
     private FragenverwaltungView view;
-    private FragenverwaltungModel model;
+    private FragenverwaltungsModel model;
     private MasterController masterController;
     private KarteiKarten karten;
-
+    private boolean autosave;
+    private String pathConfig = null;
+    public void setAutoSavePathConfig(boolean autosave, String pathConfig) {
+        this.autosave =(autosave);
+        model.setConfigPath(pathConfig);
+    }
     public FragenverwaltungControl(MasterController masterController)  {
         System.out.println("FragenverwaltungControl");
         this.masterController = masterController;
-        this.model = new FragenverwaltungModel();
+        this.model = new FragenverwaltungsModel();
         this.view = new FragenverwaltungView();
         addTableListener(view.getTableModel());
         view.addButtonListener(this);
@@ -43,12 +48,16 @@ public class FragenverwaltungControl implements ActionListener
                 KarteiKarte card = view.getCard();
                 view.appendCard(card);
                 karten.addKarte(card);
+                if(autosave) model.saveCards(karten.getCards());
                 break;
             case "delete":
                 try {
                     int row = view.removeCard();
                     if(row != -1) {
                         karten.removeKarte(row);
+                    }
+                    if(autosave) {
+                        model.saveCards(karten.getCards());
                     }
                 }
                 catch (Exception ex) {
@@ -65,6 +74,7 @@ public class FragenverwaltungControl implements ActionListener
                 break;
             case "load":
                 try {
+                    System.out.println("Load");
                     String location = view.getLoadLocation(model.saveLocation());
                     KarteiKarten cards = model.getLoadCards(location);
                     masterController.setCards(cards);
@@ -85,8 +95,8 @@ public class FragenverwaltungControl implements ActionListener
         }
 
     }
-    public void addTableListener(DefaultTableModel model)  {
-        model.addTableModelListener(new TableModelListener() {
+    public void addTableListener(DefaultTableModel modele)  {
+        modele.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
                 if(e.getType() == TableModelEvent.UPDATE) {
@@ -97,6 +107,9 @@ public class FragenverwaltungControl implements ActionListener
                         karten.getCards()[a]=cards;
                     }
                     masterController.setCards(karten);
+                    if(autosave) {
+                        model.saveCards(karten.getCards());
+                    }
                 }
             }
         });
@@ -113,7 +126,7 @@ public class FragenverwaltungControl implements ActionListener
         return view;
     }
 
-    public FragenverwaltungModel getModel() {
+    public FragenverwaltungsModel getModel() {
         return model;
     }
 }

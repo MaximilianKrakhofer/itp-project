@@ -1,30 +1,39 @@
 package mvc.control;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import mvc.Karten.KarteiKarten;
+import mvc.model.FragenSaveLoader;
 import mvc.model.SettingsModel;
 import mvc.view.MasterView;
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.themes.*;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
-import com.formdev.flatlaf.intellijthemes.*;
 
 
 public class MasterController {
     private MasterView view;
     private KarteiKarten karten = null;
     private mvc.control.FragenverwaltungControl fragenverwaltungControl;
-    private String loadLocation = null;
+    private String configPath = null;
+    private boolean autosave,autoload;
 
 
     public MasterController() {
         MasterView.setupTheme();
         view = new MasterView();
         showMainMenu();
+        try {
+            autoload = Boolean.parseBoolean(SettingsModel.getConfig("autoload", "false"));
+            autosave = Boolean.parseBoolean(SettingsModel.getConfig("autosave", "false"));
+            configPath = SettingsModel.getConfig("saveLocation", null);
+            if (autoload) {
+                System.out.println("WIMMER");
+                FragenSaveLoader loada = new FragenSaveLoader();
+                if (configPath != null) {
+                    loada.setConfigPath(configPath);
+                }
+                karten =loada.getLoadCards();
+                System.out.println(""+ karten== null);
+            }
+        }catch (Exception e) {
+
+        }
     }
     public static void setupTheme() {
         MasterView.setupTheme();
@@ -39,10 +48,15 @@ public class MasterController {
     public void showFragenVerwaltung() {
         if(fragenverwaltungControl == null){
             fragenverwaltungControl = new FragenverwaltungControl(this);
+            if(karten != null) {
+                fragenverwaltungControl.setKarten(karten);
+            }
         }
         if(karten != null && karten.getCards()!= null) {
+            fragenverwaltungControl = new FragenverwaltungControl(this);
             fragenverwaltungControl.setKarten(karten);
         }
+        fragenverwaltungControl.setAutoSavePathConfig(autosave,configPath);
         view.updateContent(fragenverwaltungControl.getView());
     }
     public void showQuiz() {

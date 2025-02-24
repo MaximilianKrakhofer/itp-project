@@ -8,6 +8,9 @@ public class SettingsModel {
     public static void saveSetting(String key, String value) {
         prefs.put(key, value);
     }
+    public static String getConfig(String key, String def) {
+        return prefs.get(key,def);
+    }
     public static String getConfig(String key) {
         return prefs.get(key, null);
     }

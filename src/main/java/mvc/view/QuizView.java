@@ -53,7 +53,7 @@ public class QuizView extends JPanel {
             BufferedImage scaledImg = Thumbnails.of(file.getAbsolutePath()).size(300,400).asBufferedImage();
             //Image scaledImg = img.getScaledInstance(400,300, Image.SCALE_DEFAULT);
             // Library Benötigt Gradle/Maven, also wird das später esetzt
-            // BufferedImage resizedImage = Scalr.resize(originalImage, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC, 400, 300);
+            //
             imageLabel.setIcon(new ImageIcon(scaledImg));
         }
         catch(Exception e) {

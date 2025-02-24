@@ -6,15 +6,33 @@ import mvc.Karten.KarteiKarten;
 import javax.swing.*;
 import java.io.*;
 
-public class FragenverwaltungModel {
+public class FragenSaveLoader {
+    private String configPath= null;
     private String saveDirectory ="."+File.separator + "LearnITP-saves";
     private String saveFileName = "LearnITP-save.txt" ;
+    private boolean autoLoad;
+    private boolean autoSave;
+
+    public void setAutoLoad(boolean bool) {
+        this.autoLoad = bool;
+    }
+
+    public void setAutoSave(boolean autoSave) {
+        this.autoSave = autoSave;
+    }
 
     public String saveLocation() {
-        return saveDirectory+File.separator + saveFileName;
+        return configPath == null ? saveDirectory+File.separator + saveFileName:configPath;
     }
     public void setSaveDirectory(String saveDirectory) {
         if(!saveDirectory.endsWith(File.separator)) this.saveDirectory = saveDirectory;
+    }
+
+    public void setConfigPath(String configPath) {
+        this.configPath = configPath;
+    }
+    public String getConfigPath() {
+        return configPath;
     }
 
     public String getSaveDirectory() {
@@ -26,6 +44,7 @@ public class FragenverwaltungModel {
     }
 
     public boolean saveCards(KarteiKarte[] karten, String dir) {
+        System.out.println(dir);
         File file = new File(dir);
         File folder = file.getParentFile();
         if(!folder.exists()) {
@@ -44,13 +63,14 @@ public class FragenverwaltungModel {
         return true;
     }
     public boolean saveCards(KarteiKarte[] karten) {
-        return saveCards(karten, saveDirectory + File.separator + saveFileName);
+        return saveCards(karten, configPath== null?configPath:saveDirectory + File.separator + saveFileName);
     }
     public KarteiKarten getLoadCards()  {
        return getLoadCards(saveDirectory+File.separator+saveFileName);
     }
     public KarteiKarten getLoadCards(String directory)  {
         try {
+            System.out.println(directory +"was ist loos");
             File save = new File(directory);
             if (!save.exists()) {
                 System.out.println("File does not exist.");

@@ -22,7 +22,7 @@ public class SettingsView extends JPanel {
             "FlatGitHubIJTheme","FlatGitHubDarkIJTheme","FlatMoonlightIJTheme","FlatMaterialPalenightIJTheme",
             "FlatMaterialDeepOceanIJTheme","FlatMaterialOceanicIJTheme","FlatNightOwlIJTheme"};
 
-    public SettingsView(String selected){
+    public SettingsView(String selectedTheme,boolean autoSave,boolean autoLoad, String filedir){
         this.setLayout(new BorderLayout());
 
         JPanel operations = new JPanel(new BorderLayout());
@@ -42,7 +42,8 @@ public class SettingsView extends JPanel {
         saving.setLayout(new BoxLayout(saving, BoxLayout.X_AXIS));
         saving.add(new JLabel("Kartei Speicher-Pfad:"));
         savePath = new JButton("Default-Pfad auswählen");
-        path = new JLabel("");
+        System.out.println(filedir);
+        path = new JLabel(filedir == null?"":filedir);
         saving.add(Box.createRigidArea(new Dimension(10, 0)));
         saving.add(savePath);
         saving.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -58,6 +59,7 @@ public class SettingsView extends JPanel {
         autosave.add(new JLabel("Auto Save"));
         this.autosave = new JCheckBox("");
         this.autosave.setActionCommand("autosave");
+        this.autosave.setSelected(autoSave);
         autosave.add(this.autosave);
         settingsGrid.add(autosave);
         JPanel autoload = new JPanel();
@@ -65,6 +67,7 @@ public class SettingsView extends JPanel {
         autoload.add(new JLabel("Auto Load"));
         this.autoload = new JCheckBox("");
         this.autoload.setActionCommand("autoload");
+        this.autoload.setSelected(autoLoad);
         autoload.add(this.autoload);
         settingsGrid.add(autoload);
 
@@ -75,8 +78,8 @@ public class SettingsView extends JPanel {
         theme.add(this.themeBox);
         this.themeBox.setActionCommand("theme");
         settingsGrid.add(theme);
-        if(!(selected == null || selected.isEmpty())){
-            this.themeBox.setSelectedItem(selected);
+        if(!(selectedTheme == null || selectedTheme.isEmpty())){
+            this.themeBox.setSelectedItem(selectedTheme);
         }
         this.setBorder(new EmptyBorder(10,10,10,10));
         this.add(settingsGrid, BorderLayout.CENTER);

@@ -17,7 +17,7 @@ public class SettingsControl implements ActionListener {
     public SettingsControl(MasterController controller) {
         this.controller = controller;
         this.model = new SettingsModel();
-        this.view = new SettingsView(SettingsModel.getConfig("theme"));
+        this.view = new SettingsView(SettingsModel.getConfig("theme"),Boolean.parseBoolean(SettingsModel.getConfig("autosave")),Boolean.parseBoolean(SettingsModel.getConfig("autoload")),SettingsModel.getConfig("saveLocation"));
         view.addButtonListener(this);
     }
 
