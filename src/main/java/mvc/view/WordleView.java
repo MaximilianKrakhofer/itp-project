@@ -70,30 +70,26 @@ public class WordleView extends JPanel {
         rowCounter = 0;
         this.questionText = new JLabel();
 
-        if(!isLoaded) {
+        if (!isLoaded) {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
             return;
         }
         this.removeAll();
 
         this.question = new JPanel();
-        double half = this.getHeight()/6.0;
+        double half = this.getHeight() / 6.0;
         this.question.setPreferredSize(new Dimension(80, (int) half));
-        if(fragentyp == 1) {
+        if (fragentyp == 1) {
             try {
                 imagePanel = new JPanel(new BorderLayout());
                 imageLabel = new JLabel();
                 imagePanel.add(imageLabel, BorderLayout.CENTER);
                 loadImage(question);
                 this.question.add(imagePanel);
-            }
-            catch (MalformedURLException e) {
+            } catch (MalformedURLException e) {
                 this.questionText = new JLabel("Fehler beim Laden des Bildes");
             }
-        }
-
-
-        else{
+        } else {
             questionText.setText(question);
             this.question.add(questionText);
         }
@@ -102,7 +98,7 @@ public class WordleView extends JPanel {
         textLength = answerlength;
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
-        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
         this.add(this.question, BorderLayout.NORTH);
 
         this.stop = createButton("Stop", "/images/end.png", 70, 70, 20, 20);
@@ -110,7 +106,7 @@ public class WordleView extends JPanel {
         this.check = new JButton("Check");
         this.check = createButton("Check", "/images/check.png", 70, 70, 20, 20);
         check.setActionCommand("Check");
-        grid = new JPanel(new GridLayout(1,2));
+        grid = new JPanel(new GridLayout(1, 2));
         grid.add(check);
         JPanel[] answerPanel = new JPanel[textLength];
 
@@ -127,7 +123,7 @@ public class WordleView extends JPanel {
                 for (int k = 0; k < answerPanel.length; k++) {
                     answerPanel[k] = new JPanel(new FlowLayout());
                 }
-                if(i>=1){
+                if (i >= 1) {
                     answers[i][j].setEditable(false);
                 }
                 answerPanel[j].add(answers[i][j]);
@@ -142,7 +138,7 @@ public class WordleView extends JPanel {
                 answers[i][j].setAlignmentY(Component.CENTER_ALIGNMENT);
                 answers[i][j].setSize(10, 10);
                 answers[i][j].setMaximumSize(new Dimension(10, 10));
-                answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20 ));
+                answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20));
 
             }
         }
@@ -153,46 +149,57 @@ public class WordleView extends JPanel {
         this.revalidate();
 
     }
-    public void nextCard(String question,int answerlength, int fragentyp) {
+    public void nextCard(String question, int answerlength, int fragentyp) {
         rowCounter = 0;
-        for (int i = 0; i < answers.length; i++) {
-            for (int j = 0; j < answers[i].length; j++) {
-                if (answers[i][j] != null && answers[i][j].getText() !=null) {
-                    answers[i][j].setText("");
-                    answers[i][j].setForeground(Color.WHITE);
-                    if (i < 1) {
-                        answers[i][j].setEditable(true);
-                    }
-                    else{
-                        answers[i][j].setEditable(false);
-                    }
+        textLength = answerlength; // Update the textLength to the new answer length
+        answersGrid.removeAll(); // Clear the existing answer grid
+
+        // Recreate the answer grid with the new text length
+        answers = new JTextPane[5][textLength];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < textLength; j++) {
+                answers[i][j] = new JTextPane();
+                StyledDocument styledDoc = answers[i][j].getStyledDocument();
+                SimpleAttributeSet center = new SimpleAttributeSet();
+                StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+                StyleConstants.setFontSize(center, 30);
+                styledDoc.setParagraphAttributes(0, styledDoc.getLength(), center, false);
+                if (i >= 1) {
+                    answers[i][j].setEditable(false);
                 }
+                answersGrid.add(answers[i][j]);
+                if (styledDoc instanceof AbstractDocument) {
+                    AbstractDocument doc = (AbstractDocument) styledDoc;
+                    doc.setDocumentFilter(oneCharFilter);
+                }
+                answers[i][j].setAlignmentX(Component.CENTER_ALIGNMENT);
+                answers[i][j].setAlignmentY(Component.CENTER_ALIGNMENT);
+                answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20));
             }
         }
-        if(fragentyp == 1) {
+
+        // Update the question text or image
+        if (fragentyp == 1) {
             try {
                 imagePanel = new JPanel(new BorderLayout());
                 imageLabel = new JLabel();
                 imagePanel.add(imageLabel, BorderLayout.CENTER);
                 loadImage(question);
                 this.question.add(imagePanel);
-            }
-            catch (MalformedURLException e) {
+            } catch (MalformedURLException e) {
                 this.questionText = new JLabel("Fehler beim Laden des Bildes");
             }
-        }
-        else {
-
+        } else {
             this.questionText.setText(question);
             int minFontSize = 10;
             int maxFontSize = 60;
-            textLength = answerlength;
             int newFontSize = maxFontSize - textLength;
             newFontSize = Math.max(newFontSize, minFontSize);
-
             questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
-
         }
+
+        this.repaint();
+        this.revalidate();
     }
     public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
         this.removeAll();

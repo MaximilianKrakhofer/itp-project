@@ -16,7 +16,6 @@ public class WordleControl implements ActionListener {
     private KarteiKarte[] shuffled;
     private int currentCard = 0;
     public WordleControl(MasterController controller) {
-        System.out.println("quiz control");
         this.controller = controller;
         this.model = new WordleModel();
         this.view = new WordleView(isLoaded());
@@ -42,7 +41,6 @@ public class WordleControl implements ActionListener {
                     view.addButtonListener(this);
                     view.repaint();
                     view.revalidate();
-                    model.increaseQustions();
                 }
                 else{
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
@@ -54,10 +52,10 @@ public class WordleControl implements ActionListener {
                     currentCard = 0;
                     model.check(new String(view.getAnswers()));
                     System.out.println("endquizcheck");
-                    int[] affe = model.endQuiz();
-                    double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
+                    int[] stats = model.endQuiz();
 
-                    view.endQuiz(affe[0],affe[1],affe[2],prozent);
+                    double percentage = stats[0] == 0 ? 0.0 : ((double) stats[1] / stats[0]) * 100;
+                    view.endQuiz(stats[0], stats[1], stats[2], percentage);
                     view.addButtonListener(this);
                 }
                 else{
@@ -66,6 +64,9 @@ public class WordleControl implements ActionListener {
                 break;
             case "Check":
                 if(model.check(new String(view.getAnswers()))){
+                    model.increaseQuestionsCorrect();
+
+                    model.increaseQustions();
                     if(currentCard +1 >= cards.getCards().length) {
                         System.out.println("endquizcheck");
                         currentCard = 0;
@@ -73,13 +74,10 @@ public class WordleControl implements ActionListener {
                         double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
                         view.endQuiz(affe[0],affe[1],affe[2],prozent);
                         view.addButtonListener(this);
-                        model.increaseQuestionsCorrect();
                     }
                     else{
                         currentCard+=1;
                         view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
-                        model.increaseQuestionsCorrect();
-                        model.increaseQustions();
                     }
                 }
                 else{
