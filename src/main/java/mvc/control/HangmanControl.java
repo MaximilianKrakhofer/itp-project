@@ -37,6 +37,7 @@ public class HangmanControl implements ActionListener {
                 view.addButtonListener(this);
             case "start":
                 if(isLoaded()) {
+                    currentCard = 0;
 
                     model.setCurrentHangman(currentCard);
                     this.shuffled = model.startQuiz(cards);
@@ -86,7 +87,7 @@ public class HangmanControl implements ActionListener {
                             model.check(view.getAnswer());
                             System.out.println("endquizcheck");
 
-                            view.setCheck(true, cards.getCardAnswer(currentCard) );
+                            view.setCheck(false, shuffled[currentCard].getAntwort()  );
                             int[] affe = model.endQuiz();
 
 
@@ -108,7 +109,7 @@ public class HangmanControl implements ActionListener {
                     if(currentCard +1 >= cards.getCards().length) {
                         System.out.println("endquizcheck");
 
-                        view.setCheck(true, cards.getCardAnswer(currentCard) );
+                        view.setCheck(true, shuffled[currentCard].getAntwort() );
                         int[] affe = model.endQuiz();
 
                         double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
@@ -117,6 +118,8 @@ public class HangmanControl implements ActionListener {
 
                     }
                     else{
+
+                        view.setCheck(true, shuffled[currentCard].getAntwort() );
                         currentCard+=1;
                         view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
                     }
@@ -137,7 +140,7 @@ public class HangmanControl implements ActionListener {
                     if(currentCard +1 >= cards.getCards().length) {
                         System.out.println("endquizcheck");
 
-                        view.setCheck(true, cards.getCardAnswer(currentCard) );
+                        view.setCheck(true, shuffled[currentCard].getAntwort() );
                         int[] affe = model.endQuiz();
                         double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
                         view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
@@ -145,6 +148,8 @@ public class HangmanControl implements ActionListener {
 
                     }
                     else{
+
+                        view.setCheck(true, shuffled[currentCard].getAntwort()  );
                         currentCard+=1;
                         view.nextCard(shuffled[currentCard].getFrage(),shuffled[currentCard].getAntwort().length(),shuffled[currentCard].getFragentyp());
                     }
@@ -159,7 +164,7 @@ public class HangmanControl implements ActionListener {
                             model.check(view.getAnswer());
                             System.out.println("endquizcheck");
 
-                            view.setCheck(true, cards.getCardAnswer(currentCard));
+                            view.setCheck(false, shuffled[currentCard].getAntwort());
                             int[] affe = model.endQuiz();
 
                             double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;

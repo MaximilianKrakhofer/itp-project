@@ -17,7 +17,7 @@ public class HangmanView extends JPanel {
 
     private JButton mainMenu, check, restart, stop, start, checkWord;
     private JPanel question;
-    private JTextPane answer, realAnswer, hangmanAscii;
+    private JTextPane  answer, hangmanAscii;
     private JPanel grid, imagePanel;
     private JLabel imageLabel, questionText, solutionPreview;
     private boolean isLoaded;
@@ -342,11 +342,7 @@ public class HangmanView extends JPanel {
         grid.add(new JLabel("Your answer"));
         grid.add(new JLabel(solutionPreview.getText()));
         grid.add(new JLabel("Solution: "));
-        realAnswer = new JTextPane();
-        realAnswer.setText(answerText);
-
-        realAnswer.setEditable(false);
-        grid.add(realAnswer);
+        grid.add(new JLabel(answerText));
         main.add(grid);
         JOptionPane.showConfirmDialog(null, main,
                 "Solution", JOptionPane.OK_CANCEL_OPTION);
@@ -418,5 +414,8 @@ public class HangmanView extends JPanel {
 
     public String getSolutionPreview() {
         return solutionPreview.getText();
+    }
+    public void addAttemptChars(){
+
     }
 }

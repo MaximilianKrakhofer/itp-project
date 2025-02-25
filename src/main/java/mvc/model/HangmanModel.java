@@ -158,4 +158,5 @@ public class HangmanModel {
     public int[] getHangmanCompletions() {
         return hangmanCompletions;
     }
+
 }
