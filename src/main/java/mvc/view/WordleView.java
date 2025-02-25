@@ -93,10 +93,10 @@ public class WordleView extends JPanel {
             questionText.setText(question);
             this.question.add(questionText);
         }
-        int minFontSize = 10;
+        int minFontSize = 20;
         int maxFontSize = 60;
         textLength = answerlength;
-        int newFontSize = maxFontSize - textLength;
+        int newFontSize = maxFontSize - this.questionText.getText().length();
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
         this.add(this.question, BorderLayout.NORTH);
@@ -177,14 +177,13 @@ public class WordleView extends JPanel {
                 answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20));
             }
 
-            int minFontSize = 10;
+            int minFontSize = 20;
             int maxFontSize = 100;
             int textLength = questionText.getText().length();
             int newFontSize = maxFontSize - textLength;
             newFontSize = Math.max(newFontSize, minFontSize);
 
 
-            questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
 
             questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
         }
@@ -202,9 +201,9 @@ public class WordleView extends JPanel {
             }
         } else {
             this.questionText.setText(question);
-            int minFontSize = 10;
+            int minFontSize = 20;
             int maxFontSize = 60;
-            int newFontSize = maxFontSize - textLength;
+            int newFontSize = maxFontSize - this.questionText.getText().length();
             newFontSize = Math.max(newFontSize, minFontSize);
 
             questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));

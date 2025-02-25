@@ -112,7 +112,7 @@ public class HangmanView extends JPanel {
 
         }
 
-        int minFontSize = 10;
+        int minFontSize = 20;
         int maxFontSize = 60;
         int textLength = this.questionText.getText().length();
         int newFontSize = maxFontSize - textLength;
@@ -209,7 +209,7 @@ public class HangmanView extends JPanel {
         underscore.append("_");
 
         solutionPreview.setText(underscore.toString());
-        int minFontSize = 10;
+        int minFontSize = 20;
         int maxFontSize = 60;
         int textLength = answerlength;
         int newFontSize = maxFontSize - textLength;
