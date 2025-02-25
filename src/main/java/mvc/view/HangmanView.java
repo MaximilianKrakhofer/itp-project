@@ -114,7 +114,7 @@ public class HangmanView extends JPanel {
 
         int minFontSize = 10;
         int maxFontSize = 60;
-        int textLength = answerlength;
+        int textLength = this.questionText.getText().length();
         int newFontSize = maxFontSize - textLength;
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
