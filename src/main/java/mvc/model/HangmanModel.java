@@ -159,4 +159,7 @@ public class HangmanModel {
         return hangmanCompletions;
     }
 
+    public int getCurrentHangman() {
+        return currentHangman;
+    }
 }

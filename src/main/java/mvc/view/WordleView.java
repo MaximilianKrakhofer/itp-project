@@ -176,6 +176,17 @@ public class WordleView extends JPanel {
                 answers[i][j].setAlignmentY(Component.CENTER_ALIGNMENT);
                 answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20));
             }
+
+            int minFontSize = 10;
+            int maxFontSize = 100;
+            int textLength = questionText.getText().length();
+            int newFontSize = maxFontSize - textLength;
+            newFontSize = Math.max(newFontSize, minFontSize);
+
+
+            questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
+
+            questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
         }
 
         // Update the question text or image
@@ -195,8 +206,11 @@ public class WordleView extends JPanel {
             int maxFontSize = 60;
             int newFontSize = maxFontSize - textLength;
             newFontSize = Math.max(newFontSize, minFontSize);
+
             questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
         }
+
+
 
         this.repaint();
         this.revalidate();

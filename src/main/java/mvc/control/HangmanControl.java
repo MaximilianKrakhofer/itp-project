@@ -58,7 +58,8 @@ public class HangmanControl implements ActionListener {
                     System.out.println("endquizcheck");
                     int[] affe = model.endQuiz();
 
-                    view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+                    int prozent = affe[0]/(model.getCurrentHangman() +1);
+                    view.endQuiz(model.getCurrentHangman() +1, model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
                     view.addButtonListener(this);
                 }
                 else{
@@ -82,7 +83,6 @@ public class HangmanControl implements ActionListener {
                     if(view.getAnswer() != null && !view.getAnswer().isBlank()){
 
                         view.setHangmanAscii(model.increaseCounter());
-                        model.increaseFailedChars();
                         if(model.getCounter() >6){
                             model.check(view.getAnswer());
                             System.out.println("endquizcheck");
@@ -95,6 +95,9 @@ public class HangmanControl implements ActionListener {
                             double prozent = affe[1] == 0 ? 0.0: (double) (affe[1] / affe[0])*100;
                             view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
                             view.addButtonListener(this);
+                        }
+                        else{
+                            model.increaseFailedChars();
                         }
 
                     }
@@ -158,7 +161,6 @@ public class HangmanControl implements ActionListener {
 
                     if(view.getAnswer() != null && !view.getAnswer().isBlank()) {
                         currentCard++;
-                        model.increaseFailedWords();
                         view.setHangmanAscii(model.increaseCounter());
                         if (model.getCounter() > 6) {
                             model.check(view.getAnswer());
@@ -171,6 +173,9 @@ public class HangmanControl implements ActionListener {
                             view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
                             view.addButtonListener(this);
 
+                        }
+                        else{
+                            model.increaseFailedWords();
                         }
                     }
                 }
