@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class MainMenuView extends JPanel {
     private JButton fragenVerwaltung, quiz, hangman, settings, wordle;
+
     public MainMenuView() {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -31,6 +32,7 @@ public class MainMenuView extends JPanel {
         this.add(wordle);
         this.add(settings);
     }
+
     public void addButtonListener(MainMenuController l) {
 
         this.fragenVerwaltung.addActionListener(l);
@@ -56,8 +58,7 @@ public class MainMenuView extends JPanel {
             button.setFocusPainted(false);
 
             return button;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -66,9 +67,11 @@ public class MainMenuView extends JPanel {
     public JButton getFragenverwaltung() {
         return fragenVerwaltung;
     }
+
     public JButton getQuiz() {
         return quiz;
     }
+
     public JButton getHangman() {
         return hangman;
     }

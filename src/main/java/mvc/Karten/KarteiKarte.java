@@ -4,7 +4,10 @@ public class KarteiKarte {
     private String frage;
     private String antwort;
     private int fragentyp;
-    public KarteiKarte(){}
+
+    public KarteiKarte() {
+    }
+
     public KarteiKarte(String frage, String antwort, int fragentyp) {
         if (frage != null && antwort != null) {
             setFrage(frage);
@@ -12,30 +15,34 @@ public class KarteiKarte {
             setFragentyp(fragentyp);
         }
     }
+
     public void setFragentyp(int fragentyp) {
-        if(fragentyp >=0 &&fragentyp <3) {
+        if (fragentyp >= 0 && fragentyp < 3) {
             this.fragentyp = fragentyp;
-        }
-        else{
+        } else {
             this.fragentyp = 0;
         }
     }
+
     public int getFragentyp() {
         return fragentyp;
     }
+
     public String getFrage() {
         return frage;
     }
+
     public String getAntwort() {
         return antwort;
     }
+
     public int[] containsCharacter(char character) {
         int[] charsat = new int[0];
         int[] temp;
-        for(int i = 0; i < antwort.length();i++) {
-            if(character == antwort.charAt(i)) {
-                temp = new int[charsat.length+1];
-                for(int j = 0; j < charsat.length; j++) {
+        for (int i = 0; i < antwort.length(); i++) {
+            if (character == antwort.charAt(i)) {
+                temp = new int[charsat.length + 1];
+                for (int j = 0; j < charsat.length; j++) {
                     temp[j] = charsat[j];
                 }
                 temp[charsat.length] = i;
@@ -44,16 +51,19 @@ public class KarteiKarte {
         }
         return charsat;
     }
+
     public void setFrage(String frage) {
-        if(frage != null) {
+        if (frage != null) {
             this.frage = frage;
         }
     }
+
     public void setAntwort(String antwort) {
-        if(antwort != null) {
+        if (antwort != null) {
             this.antwort = antwort;
         }
     }
+
     public boolean isAntwort(String antw) {
         return antw.equalsIgnoreCase(this.antwort);
     }

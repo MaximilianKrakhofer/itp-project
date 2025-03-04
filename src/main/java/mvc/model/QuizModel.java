@@ -9,7 +9,8 @@ public class QuizModel {
     private int currentAnswer;
     private int questions;
     private int questionscorrect;
-    private long startTime,endTime;
+    private long startTime, endTime;
+
     public KarteiKarte[] startQuiz(KarteiKarten cards) {
         startTime = System.currentTimeMillis();
         currentAnswer = 0;
@@ -24,20 +25,20 @@ public class QuizModel {
         int[] results = new int[3];
         results[0] = questions;
         results[1] = questionscorrect;
-        results[2] = (int) (endTime-startTime)/1000;
+        results[2] = (int) (endTime - startTime) / 1000;
         return results;
     }
+
     public boolean check(String answer) {
         questions++;
-        System.out.println("checkmet" +cards[currentAnswer].getAntwort() +"answ"+ answer + cards[currentAnswer].isAntwort(answer));
+        System.out.println("checkmet" + cards[currentAnswer].getAntwort() + "answ" + answer + cards[currentAnswer].isAntwort(answer));
 
-        if( cards[currentAnswer].isAntwort(answer)) {
-            System.out.println(cards[currentAnswer].getAntwort() +"answ"+ answer + cards[currentAnswer].isAntwort(answer));
+        if (cards[currentAnswer].isAntwort(answer)) {
+            System.out.println(cards[currentAnswer].getAntwort() + "answ" + answer + cards[currentAnswer].isAntwort(answer));
             this.questionscorrect++;
             this.currentAnswer++;
             return true;
-        }
-        else{
+        } else {
             this.currentAnswer++;
             return false;
         }

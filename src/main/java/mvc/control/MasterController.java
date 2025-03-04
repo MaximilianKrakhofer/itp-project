@@ -27,69 +27,79 @@ public class MasterController {
                 if (configPath != null) {
                     loada.setConfigPath(configPath);
                 }
-                karten =loada.getLoadCards();
-                System.out.println(""+ karten== null);
+                karten = loada.getLoadCards();
+                System.out.println("" + karten == null);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
     }
+
     public static void setupTheme() {
         MasterView.setupTheme();
     }
+
     public void repaint() {
         view.repaint();
     }
+
     public void showMainMenu() {
         MainMenuController mainMenuController = new MainMenuController(this);
         view.updateContent(mainMenuController.getView());
     }
+
     public void showFragenVerwaltung() {
-        if(fragenverwaltungControl == null){
+        if (fragenverwaltungControl == null) {
             fragenverwaltungControl = new FragenverwaltungControl(this);
-            if(karten != null) {
+            if (karten != null) {
                 fragenverwaltungControl.setKarten(karten);
             }
         }
-        if(karten != null && karten.getCards()!= null) {
+        if (karten != null && karten.getCards() != null) {
             fragenverwaltungControl = new FragenverwaltungControl(this);
             fragenverwaltungControl.setKarten(karten);
         }
         boolean autosave = Boolean.parseBoolean(SettingsModel.getConfig("autosave", "false"));
         boolean autoload = Boolean.parseBoolean(SettingsModel.getConfig("autoload", "false"));
         configPath = SettingsModel.getConfig("saveLocation", null);
-        fragenverwaltungControl.setAutoSaveLoadPathConfig(autosave,autoload,configPath);
+        fragenverwaltungControl.setAutoSaveLoadPathConfig(autosave, autoload, configPath);
         view.updateContent(fragenverwaltungControl.getView());
     }
+
     public void showQuiz() {
         System.out.println("showQUi");
         QuizControl quizControl = new QuizControl(this);
         view.updateContent(quizControl.getView());
     }
+
     public void showHangman() {
         HangmanControl hangmanControl = new HangmanControl(this);
         view.updateContent(hangmanControl.getView());
     }
-    public void showWordle(){
+
+    public void showWordle() {
         WordleControl wordleControl = new WordleControl(this);
         view.updateContent(wordleControl.getView());
     }
-    public void showSettings()
-    {
+
+    public void showSettings() {
         SettingsControl settingsControl = new SettingsControl(this);
         view.updateContent(settingsControl.getView());
 
     }
+
     public void setCards(KarteiKarten cards) {
         this.karten = cards;
     }
+
     public KarteiKarten getCards() {
         return karten;
     }
+
     public static void main(String[] args) {
         MasterController masterController = new MasterController();
 
-        MainMenuController  a = new MainMenuController(masterController);
+        MainMenuController a = new MainMenuController(masterController);
 
 
     }

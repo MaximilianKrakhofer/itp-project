@@ -7,9 +7,9 @@ import javax.swing.*;
 import java.io.*;
 
 public class FragenSaveLoader {
-    private String configPath= null;
-    private String saveDirectory ="."+File.separator + "LearnITP-saves";
-    private String saveFileName = "LearnITP-save.txt" ;
+    private String configPath = null;
+    private String saveDirectory = "." + File.separator + "LearnITP-saves";
+    private String saveFileName = "LearnITP-save.txt";
     private boolean autoLoad;
     private boolean autoSave;
 
@@ -22,15 +22,17 @@ public class FragenSaveLoader {
     }
 
     public String saveLocation() {
-        return configPath == null ? saveDirectory+File.separator + saveFileName:configPath;
+        return configPath == null ? saveDirectory + File.separator + saveFileName : configPath;
     }
+
     public void setSaveDirectory(String saveDirectory) {
-        if(!saveDirectory.endsWith(File.separator)) this.saveDirectory = saveDirectory;
+        if (!saveDirectory.endsWith(File.separator)) this.saveDirectory = saveDirectory;
     }
 
     public void setConfigPath(String configPath) {
         this.configPath = configPath;
     }
+
     public String getConfigPath() {
         return configPath;
     }
@@ -46,29 +48,31 @@ public class FragenSaveLoader {
     public boolean saveCards(KarteiKarte[] karten, String dir) {
         File file = new File(dir);
         File folder = file.getParentFile();
-        if(!folder.exists()) {
+        if (!folder.exists()) {
             folder.mkdirs();
         }
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for(int i = 0; i < karten.length; i++) {
-                writer.write(karten[i].getFrage()+";"+ karten[i].getAntwort() + ";" + karten[i].getFragentyp() + System.lineSeparator() );
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < karten.length; i++) {
+                writer.write(karten[i].getFrage() + ";" + karten[i].getAntwort() + ";" + karten[i].getFragentyp() + System.lineSeparator());
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
     }
+
     public boolean saveCards(KarteiKarte[] karten) {
-        return saveCards(karten, configPath== null?saveDirectory + File.separator + saveFileName:configPath);
+        return saveCards(karten, configPath == null ? saveDirectory + File.separator + saveFileName : configPath);
     }
-    public KarteiKarten getLoadCards()  {
-       return getLoadCards(configPath==null?saveDirectory+File.separator+saveFileName:configPath);
+
+    public KarteiKarten getLoadCards() {
+        return getLoadCards(configPath == null ? saveDirectory + File.separator + saveFileName : configPath);
     }
-    public KarteiKarten getLoadCards(String directory)  {
+
+    public KarteiKarten getLoadCards(String directory) {
         try {
-            System.out.println(directory +"was ist loos");
+            System.out.println(directory + "was ist loos");
             File save = new File(directory);
             if (!save.exists()) {
                 System.out.println("File does not exist.");
@@ -85,8 +89,7 @@ public class FragenSaveLoader {
                 e.printStackTrace();
             }
             return karten;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Fehler beim Laden der KarteiKarten");
             return null;
         }

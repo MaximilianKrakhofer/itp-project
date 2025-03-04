@@ -17,7 +17,7 @@ public class SettingsControl implements ActionListener {
     public SettingsControl(MasterController controller) {
         this.controller = controller;
         this.model = new SettingsModel();
-        this.view = new SettingsView(SettingsModel.getConfig("theme"),Boolean.parseBoolean(SettingsModel.getConfig("autosave")),Boolean.parseBoolean(SettingsModel.getConfig("autoload")),SettingsModel.getConfig("saveLocation"));
+        this.view = new SettingsView(SettingsModel.getConfig("theme"), Boolean.parseBoolean(SettingsModel.getConfig("autosave")), Boolean.parseBoolean(SettingsModel.getConfig("autoload")), SettingsModel.getConfig("saveLocation"));
         view.addButtonListener(this);
     }
 
@@ -29,21 +29,20 @@ public class SettingsControl implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         switch (command) {
-            case"mainmenu":
+            case "mainmenu":
                 controller.showMainMenu();
                 break;
             case "path":
                 try {
                     String loc = SettingsModel.getConfig("saveLocation");
-                    String location = view.getSaveLocation(loc!=null&&!loc.isEmpty()?loc: ("."+ File.separator + "LearnITP-saves" + File.separator +"LearnITP-save.txt") );
+                    String location = view.getSaveLocation(loc != null && !loc.isEmpty() ? loc : ("." + File.separator + "LearnITP-saves" + File.separator + "LearnITP-save.txt"));
                     SettingsModel.saveSetting("saveLocation", location);
-                    if(location == null || location.isEmpty()){
+                    if (location == null || location.isEmpty()) {
                         return;
                     }
                     view.setPath(location);
-                }
-                catch(Exception exc) {
-                    JOptionPane.showMessageDialog(null,"Cards not Found");
+                } catch (Exception exc) {
+                    JOptionPane.showMessageDialog(null, "Cards not Found");
                     exc.printStackTrace();
                     exc.getMessage();
                 }

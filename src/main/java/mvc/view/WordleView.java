@@ -13,7 +13,7 @@ import java.net.URL;
 
 public class WordleView extends JPanel {
 
-    private JButton mainMenu, check,restart, stop, start;
+    private JButton mainMenu, check, restart, stop, start;
     private JPanel question, answersGrid;
     private JTextPane answer, realAnswer;
     private JPanel grid, imagePanel;
@@ -22,6 +22,7 @@ public class WordleView extends JPanel {
     private JTextPane[][] answers;
     private int rowCounter;
     private int textLength;
+
     public WordleView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -39,34 +40,34 @@ public class WordleView extends JPanel {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
         }
     }
+
     public void loadImage(String url) throws MalformedURLException {
-        try{
+        try {
             File file = new File(url);
-            if(file.exists()) {
+            if (file.exists()) {
                 file = new File(file.getAbsolutePath());
-            }
-            else{
+            } else {
                 throw new RuntimeException();
             }
-            BufferedImage scaledImg = Thumbnails.of(file.getAbsolutePath()).size(300,400).asBufferedImage();
+            BufferedImage scaledImg = Thumbnails.of(file.getAbsolutePath()).size(300, 400).asBufferedImage();
             //Image scaledImg = img.getScaledInstance(400,300, Image.SCALE_DEFAULT);
             // Library Benötigt Gradle/Maven, also wird das später esetzt
             // BufferedImage resizedImage = Scalr.resize(originalImage, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC, 400, 300);
             imageLabel.setIcon(new ImageIcon(scaledImg));
-        }
-        catch(Exception e) {
-            try{
+        } catch (Exception e) {
+            try {
                 URL loc = new URL(url);
-                BufferedImage img = Thumbnails.of(loc).size(300,400).asBufferedImage();;
+                BufferedImage img = Thumbnails.of(loc).size(300, 400).asBufferedImage();
+                ;
                 imageLabel.setIcon(new ImageIcon(img));
-            }
-            catch (Exception e2) {
+            } catch (Exception e2) {
                 throw new MalformedURLException();
             }
         }
 
     }
-    public void startQuiz(String question,int answerlength, int fragentyp) {
+
+    public void startQuiz(String question, int answerlength, int fragentyp) {
         rowCounter = 0;
         this.questionText = new JLabel();
 
@@ -149,6 +150,7 @@ public class WordleView extends JPanel {
         this.revalidate();
 
     }
+
     public void nextCard(String question, int answerlength, int fragentyp) {
         rowCounter = 0;
         textLength = answerlength; // Update the textLength to the new answer length
@@ -184,8 +186,7 @@ public class WordleView extends JPanel {
             newFontSize = Math.max(newFontSize, minFontSize);
 
 
-
-            questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+            questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
         }
 
         // Update the question text or image
@@ -210,10 +211,10 @@ public class WordleView extends JPanel {
         }
 
 
-
         this.repaint();
         this.revalidate();
     }
+
     public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
         this.removeAll();
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
@@ -253,35 +254,36 @@ public class WordleView extends JPanel {
         this.repaint();
         this.revalidate();
     }
+
     public String getAnswers() {
         char[] answersChar = new char[textLength];
-        for (int i = 0; answers !=null && i < textLength; i++) {
-            if(answers[rowCounter][i].getText()!= null)
-            {
-                if(!answers[rowCounter][i].getText().isBlank()){
+        for (int i = 0; answers != null && i < textLength; i++) {
+            if (answers[rowCounter][i].getText() != null) {
+                if (!answers[rowCounter][i].getText().isBlank()) {
                     answersChar[i] = answers[rowCounter][i].getText().charAt(0);
                 }
             }
         }
         return new String(answersChar);
     }
+
     public void addButtonListener(WordleControl l) {
 
-        if(mainMenu!=null && mainMenu.getActionListeners().length ==0) {
+        if (mainMenu != null && mainMenu.getActionListeners().length == 0) {
 
             this.mainMenu.addActionListener(l);
         }
-        if(check!=null  && check.getActionListeners().length ==0) {
+        if (check != null && check.getActionListeners().length == 0) {
             this.check.addActionListener(l);
         }
-        if(restart!=null && restart.getActionListeners().length == 0) {
+        if (restart != null && restart.getActionListeners().length == 0) {
 
             this.restart.addActionListener(l); // kochen
         }
-        if(stop!=null  && stop.getActionListeners().length ==0) {
+        if (stop != null && stop.getActionListeners().length == 0) {
             this.stop.addActionListener(l);
         }
-        if(start!=null &&  start.getActionListeners().length ==0) {
+        if (start != null && start.getActionListeners().length == 0) {
             this.start.addActionListener(l);
         }
 
@@ -305,7 +307,7 @@ public class WordleView extends JPanel {
         }
     };
 
-    private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
+    private static JButton createButton(String text, String imagePath, int width, int height, int imgWidth, int imgHeight) {
         ImageIcon icon = new ImageIcon(QuizView.class.getResource(imagePath));
 
         Image scaledImage = icon.getImage().getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
@@ -321,6 +323,7 @@ public class WordleView extends JPanel {
         button.setFocusPainted(false);
         return button;
     }
+
     public void setColors(int[] characters) {
         for (int i = 0; i < characters.length; i++) {
             if (characters[i] == 1) {
@@ -332,12 +335,13 @@ public class WordleView extends JPanel {
             }
         }
     }
-    public void activateNewFields(){
-        for (int i = 0; i < textLength  ; i++) {
+
+    public void activateNewFields() {
+        for (int i = 0; i < textLength; i++) {
             answers[rowCounter][i].setEditable(false);
-            answers[rowCounter +1 ][i].setEditable(true);
+            answers[rowCounter + 1][i].setEditable(true);
         }
-        rowCounter ++;
+        rowCounter++;
 
     }
 

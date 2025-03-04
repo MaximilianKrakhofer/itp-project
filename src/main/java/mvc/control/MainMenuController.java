@@ -11,14 +11,15 @@ public class MainMenuController implements ActionListener {
 
     public MainMenuController(MasterController masterController) {
         this.masterController = masterController;
-        this.view=new MainMenuView();
+        this.view = new MainMenuView();
         view.addButtonListener(this);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        String command=e.getActionCommand();
+        String command = e.getActionCommand();
         System.out.println(command);
-        switch(command) {
+        switch (command) {
             case "Fragenverwaltung":
                 masterController.showFragenVerwaltung();
                 break;
@@ -36,6 +37,7 @@ public class MainMenuController implements ActionListener {
                 break;
         }
     }
+
     public JPanel getView() {
         return view;
     }

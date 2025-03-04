@@ -155,6 +155,7 @@ public class FragenverwaltungView extends JPanel {
     public JButton getMainMenu() {
         return mainMenu;
     }
+
     private static JButton createButton(String text, String imagePath) {
         try {
             BufferedImage image = Thumbnails.of(SettingsView.class.getResource(imagePath).getPath()).size(25, 25).asBufferedImage();
@@ -167,8 +168,7 @@ public class FragenverwaltungView extends JPanel {
             button.setFont(font);
             button.setFocusPainted(false);
             return button;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }

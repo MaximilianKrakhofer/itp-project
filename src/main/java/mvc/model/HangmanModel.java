@@ -7,7 +7,7 @@ import mvc.Karten.KarteiKarten;
 public class HangmanModel {
     private KarteiKarte[] cards;
     private int questionscorrect, counter, questions, currentAnswer, failedChars, failedWords, currentHangman;
-    private long startTime,endTime;
+    private long startTime, endTime;
     private boolean atleastOne;
     private int[] hangmanCompletions;
 
@@ -18,7 +18,7 @@ public class HangmanModel {
         this.cards = cards.shuffle();
         questions = 0;
         questionscorrect = 0;
-        hangmanCompletions = new int [cards.getCards().length];
+        hangmanCompletions = new int[cards.getCards().length];
         return this.cards;
     }
 
@@ -27,41 +27,44 @@ public class HangmanModel {
         int[] results = new int[3];
         results[0] = questions;
         results[1] = questionscorrect;
-        results[2] = (int) (endTime-startTime)/1000;
+        results[2] = (int) (endTime - startTime) / 1000;
         return results;
     }
+
     public boolean check(String answer) {
         for (int i = 0; i < answer.length(); i++) {
-            if (answer.charAt(i) == '_'){
+            if (answer.charAt(i) == '_') {
                 return false;
             }
         }
         return true;
 
     }
-    public int[] compareChars(char character, String solution){
+
+    public int[] compareChars(char character, String solution) {
         int[] correctChars = new int[solution.length()];
-        int j= 0;
+        int j = 0;
         atleastOne = false;
         for (int i = 0; i < solution.length(); i++) {
-            if(solution.charAt(i) == character){
+            if (solution.charAt(i) == character) {
                 correctChars[i] = i;
-                atleastOne =true;
-            }
-            else {
+                atleastOne = true;
+            } else {
                 correctChars[i] = -1;
             }
         }
         return correctChars;
     }
-    public boolean getAtleastOne(){
+
+    public boolean getAtleastOne() {
         return this.atleastOne;
     }
-    public String increaseCounter(){
-        counter ++;
-        hangmanCompletions[currentHangman] ++;
-        String hangman ="";
-        switch (counter){
+
+    public String increaseCounter() {
+        counter++;
+        hangmanCompletions[currentHangman]++;
+        String hangman = "";
+        switch (counter) {
 
             case 1:
                 hangman = "  +---+\n" +
@@ -140,10 +143,12 @@ public class HangmanModel {
     public void setAtleastOne(boolean atleastOne) {
         this.atleastOne = atleastOne;
     }
-    public void increaseFailedChars(){
-        failedChars ++;
+
+    public void increaseFailedChars() {
+        failedChars++;
     }
-    public void increaseFailedWords(){
+
+    public void increaseFailedWords() {
         failedWords++;
     }
 

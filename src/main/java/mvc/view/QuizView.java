@@ -21,6 +21,7 @@ public class QuizView extends JPanel {
     private JPanel grid, imagePanel;
     private JLabel imageLabel, questionText;
     private boolean isLoaded;
+
     public QuizView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
         JPanel operations = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -38,77 +39,63 @@ public class QuizView extends JPanel {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
         }
     }
+
     public void showSolution(String answer) {
-        JOptionPane.showMessageDialog(null, this.questionText.getText()+ "\nAntwort:" + answer);
+        JOptionPane.showMessageDialog(null, this.questionText.getText() + "\nAntwort:" + answer);
     }
+
     public void loadImage(String url) throws MalformedURLException {
-        try{
+        try {
             File file = new File(url);
-            if(file.exists()) {
+            if (file.exists()) {
                 file = new File(file.getAbsolutePath());
-            }
-            else{
+            } else {
                 throw new RuntimeException();
             }
-            BufferedImage scaledImg = Thumbnails.of(file.getAbsolutePath()).size(300,400).asBufferedImage();
+            BufferedImage scaledImg = Thumbnails.of(file.getAbsolutePath()).size(300, 400).asBufferedImage();
             //Image scaledImg = img.getScaledInstance(400,300, Image.SCALE_DEFAULT);
             // Library Benötigt Gradle/Maven, also wird das später esetzt
             //
             imageLabel.setIcon(new ImageIcon(scaledImg));
-        }
-        catch(Exception e) {
-            try{
+        } catch (Exception e) {
+            try {
                 URL loc = new URL(url);
-                BufferedImage img = Thumbnails.of(loc).size(300,400).asBufferedImage();;
+                BufferedImage img = Thumbnails.of(loc).size(300, 400).asBufferedImage();
+                ;
                 imageLabel.setIcon(new ImageIcon(img));
-            }
-            catch (Exception e2) {
+            } catch (Exception e2) {
                 throw new MalformedURLException();
             }
         }
 
     }
+
     public void startQuiz(String question, int fragentyp) {
 
         this.questionText = new JLabel();
         this.answer = new JTextPane();
-        if(!isLoaded) {
+        if (!isLoaded) {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
             return;
         }
         this.removeAll();
 
         this.question = new JPanel();
-        double half = this.getHeight()/2.0;
+        double half = this.getHeight() / 2.0;
         this.question.setPreferredSize(new Dimension(80, (int) half));
-        if(fragentyp == 1) {
-            try {
-                imagePanel = new JPanel(new BorderLayout());
-                imageLabel = new JLabel();
-                imagePanel.add(imageLabel, BorderLayout.CENTER);
-                loadImage(question);
-                this.question.add(imagePanel);
-            }
-            catch (MalformedURLException e) {
-                this.questionText = new JLabel("Fehler beim Laden des Bildes");
-            }
-        }
 
-
-        else{
-            questionText.setText(question);
+            questionText.setText("<html>"+question+"<html>");
             this.question.add(questionText);
-        }
-        int minFontSize = 10;
-        int maxFontSize = 100;
+        int minFontSize = 14;
+        int maxFontSize = 70;
         int textLength = questionText.getText().length();
-        int newFontSize = maxFontSize - textLength;
+        int newFontSize = maxFontSize -(int) (textLength*0.8);
         newFontSize = Math.max(newFontSize, minFontSize);
-        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
         answer.setAlignmentX(Component.CENTER_ALIGNMENT);
         answer.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
+        answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50));
         this.add(this.question, BorderLayout.NORTH);
 
         this.stop = createButton("Stop", "/images/end.png", 70, 70, 20, 20);
@@ -116,7 +103,7 @@ public class QuizView extends JPanel {
         this.check = new JButton("Check");
         this.check = createButton("Check", "/images/check.png", 70, 70, 20, 20);
         check.setActionCommand("Check");
-        grid = new JPanel(new GridLayout(1,2));
+        grid = new JPanel(new GridLayout(1, 2));
         grid.add(check);
 
 
@@ -132,24 +119,23 @@ public class QuizView extends JPanel {
         this.repaint();
         this.revalidate();
     }
+
     public void nextCard(String question, int fragentyp) {
         this.question.removeAll();
 
         this.answer.setText("");
 
-        if(fragentyp == 1) {
+        if (fragentyp == 1) {
             try {
                 imagePanel = new JPanel(new BorderLayout());
                 imageLabel = new JLabel(question);
                 imagePanel.add(imageLabel, BorderLayout.CENTER);
                 loadImage(question);
                 this.question.add(imagePanel);
-            }
-            catch (MalformedURLException e) {
+            } catch (MalformedURLException e) {
                 this.questionText = new JLabel("Fehler beim Laden des Bildes");
             }
-        }
-        else{
+        } else {
             this.questionText.setText(question);
             this.question.add(questionText);
         }
@@ -161,7 +147,7 @@ public class QuizView extends JPanel {
         newFontSize = Math.max(newFontSize, minFontSize);
 
 
-        answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50 ));
+        answer.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 50));
 
         StyledDocument doc = answer.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -170,11 +156,12 @@ public class QuizView extends JPanel {
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
 
-        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize ));
+        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
 
         this.repaint();
         this.revalidate();
     }
+
     public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
         this.removeAll();
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
@@ -214,66 +201,82 @@ public class QuizView extends JPanel {
         this.repaint();
         this.revalidate();
     }
+
     public String getAnswer() {
         return answer.getText();
     }
+
     public void addButtonListener(QuizControl l) {
 
-        if(mainMenu!=null && mainMenu.getActionListeners().length ==0) {
+        if (mainMenu != null && mainMenu.getActionListeners().length == 0) {
 
             this.mainMenu.addActionListener(l);
         }
-        if(check!=null  && check.getActionListeners().length ==0) {
+        if (check != null && check.getActionListeners().length == 0) {
             this.check.addActionListener(l);
         }
-        if(restart!=null && restart.getActionListeners().length == 0) {
+        if (restart != null && restart.getActionListeners().length == 0) {
 
             this.restart.addActionListener(l); // kochen
         }
-        if(stop!=null  && stop.getActionListeners().length ==0) {
+        if (stop != null && stop.getActionListeners().length == 0) {
             this.stop.addActionListener(l);
         }
-        if(start!=null &&  start.getActionListeners().length ==0) {
+        if (start != null && start.getActionListeners().length == 0) {
             this.start.addActionListener(l);
         }
 
     }
-    public void setCheck(boolean truth, String answerText, int fragentyp){
+    public void setCheck(boolean truth, String answerText, int fragentyp) {
+        JPanel main = new JPanel(new GridLayout(2, 1));
+        JPanel gridy = new JPanel();
+        gridy.setLayout(new BoxLayout(gridy, BoxLayout.Y_AXIS));
 
-        JPanel main = new JPanel( new GridLayout(2, 1));
-        JPanel grid = new JPanel( new GridLayout(3, 2));
-        JEditorPane correct =  new JEditorPane();
+        JPanel boxquest = new JPanel();
+        boxquest.setLayout(new BoxLayout(boxquest, BoxLayout.X_AXIS));
+        boxquest.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel boxansw = new JPanel();
+        boxansw.setLayout(new BoxLayout(boxansw, BoxLayout.X_AXIS));
+        boxansw.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel boxsolut = new JPanel();
+        boxsolut.setLayout(new BoxLayout(boxsolut, BoxLayout.X_AXIS));
+        boxsolut.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JEditorPane correct = new JEditorPane();
         correct.setContentType("text/html");
-        if(truth){
+        if (truth) {
             correct.setText("<html><font color=green>CORRECT</font></html>");
-        }
-        else{
+        } else {
             correct.setText("<html><font color=red>WRONG</font></html>");
         }
         main.add(correct);
 
-        grid.add(new JLabel("Question"));
-        if(fragentyp == 0) {
-            grid.add(new JLabel(questionText.getText()));
+        boxquest.add(new JLabel("Question: "));
+        if (fragentyp == 0) {
+            boxquest.add(new JLabel(questionText.getText()));
+        } else {
+            boxquest.add(new JLabel(imageLabel.getText()));
         }
-        else{
-            grid.add(new JLabel(imageLabel.getText()));
-        }
-        grid.add(new JLabel("Your answer"));
-        grid.add(new JLabel(answer.getText()));
-        grid.add(new JLabel("Solution: "));
+
+        boxansw.add(new JLabel("Your answer: "));
+        boxansw.add(new JLabel(answer.getText()));
+
+        boxsolut.add(new JLabel("Solution: "));
         realAnswer = new JTextPane();
         realAnswer.setText(answerText);
-
         realAnswer.setEditable(false);
-        grid.add(realAnswer);
-        main.add(grid);
-        JOptionPane.showConfirmDialog(null, main,
-                "Solution", JOptionPane.OK_CANCEL_OPTION);
+        boxsolut.add(realAnswer);
 
+        gridy.add(boxquest);
+        gridy.add(boxansw);
+        gridy.add(boxsolut);
+        main.add(gridy);
+
+        JOptionPane.showConfirmDialog(null, main, "Solution", JOptionPane.OK_CANCEL_OPTION);
     }
-
-    private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
+    private static JButton createButton(String text, String imagePath, int width, int height, int imgWidth, int imgHeight) {
         ImageIcon icon = new ImageIcon(QuizView.class.getResource(imagePath));
 
         Image scaledImage = icon.getImage().getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);

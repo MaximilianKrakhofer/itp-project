@@ -9,7 +9,8 @@ public class WordleModel {
     private int currentAnswer;
     private int questions;
     private int questionscorrect;
-    private long startTime,endTime;
+    private long startTime, endTime;
+
     public KarteiKarte[] startQuiz(KarteiKarten cards) {
         startTime = System.currentTimeMillis();
         currentAnswer = 0;
@@ -24,21 +25,22 @@ public class WordleModel {
         int[] results = new int[3];
         results[0] = questions;
         results[1] = questionscorrect;
-        results[2] = (int) (endTime-startTime)/1000;
+        results[2] = (int) (endTime - startTime) / 1000;
         return results;
     }
-    public boolean check(String answer) {
-        if( cards[currentAnswer].getAntwort().equals (answer)) {
 
-            currentAnswer ++;
+    public boolean check(String answer) {
+        if (cards[currentAnswer].getAntwort().equals(answer)) {
+
+            currentAnswer++;
             return true;
-        }
-        else{
+        } else {
             return false;
         }
 
 
     }
+
     public int[] compareChars(String attempt, String solution) {
         int[] correctChars = new int[solution.length()];
         boolean[] used = new boolean[solution.length()];
@@ -67,10 +69,12 @@ public class WordleModel {
 
         return correctChars;
     }
-    public void increaseQuestionsCorrect(){
+
+    public void increaseQuestionsCorrect() {
         this.questionscorrect++;
     }
-    public void increaseQustions(){
+
+    public void increaseQustions() {
         this.questions++;
     }
 

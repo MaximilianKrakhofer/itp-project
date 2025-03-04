@@ -8,6 +8,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+
 import net.coobird.thumbnailator.*;
 
 
@@ -17,12 +18,12 @@ public class SettingsView extends JPanel {
     private JButton mainMenu, savePath;
     private JCheckBox autosave, autoload;
     private JComboBox<String> themeBox;
-    private String[] themes= { "FlatIntelliJLaf", "FlatDarculaLaf","FlatMacLightLaf", "FlatMacDarkLaf", "FlatCarbonIJTheme",
-            "FlatHiberbeeDarkIJTheme", "FlatDraculaIJTheme", "FlatMonokaiProIJTheme","FlatNordIJTheme","FlatOneDarkIJTheme",
-            "FlatGitHubIJTheme","FlatGitHubDarkIJTheme","FlatMoonlightIJTheme","FlatMaterialPalenightIJTheme",
-            "FlatMaterialDeepOceanIJTheme","FlatMaterialOceanicIJTheme","FlatNightOwlIJTheme"};
+    private String[] themes = {"FlatIntelliJLaf", "FlatDarculaLaf", "FlatMacLightLaf", "FlatMacDarkLaf", "FlatCarbonIJTheme",
+            "FlatHiberbeeDarkIJTheme", "FlatDraculaIJTheme", "FlatMonokaiProIJTheme", "FlatNordIJTheme", "FlatOneDarkIJTheme",
+            "FlatGitHubIJTheme", "FlatGitHubDarkIJTheme", "FlatMoonlightIJTheme", "FlatMaterialPalenightIJTheme",
+            "FlatMaterialDeepOceanIJTheme", "FlatMaterialOceanicIJTheme", "FlatNightOwlIJTheme"};
 
-    public SettingsView(String selectedTheme,boolean autoSave,boolean autoLoad, String filedir){
+    public SettingsView(String selectedTheme, boolean autoSave, boolean autoLoad, String filedir) {
         this.setLayout(new BorderLayout());
 
         JPanel operations = new JPanel(new BorderLayout());
@@ -32,18 +33,18 @@ public class SettingsView extends JPanel {
         operations.add(mainMenu, BorderLayout.EAST);
 
         JLabel title = new JLabel("Settings");
-        title.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 60 ));
-        operations.add(title, BorderLayout.CENTER) ;
+        title.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 60));
+        operations.add(title, BorderLayout.CENTER);
 
         this.add(operations, BorderLayout.NORTH);
-        JPanel settingsGrid = new JPanel(new GridLayout(8,1));
+        JPanel settingsGrid = new JPanel(new GridLayout(8, 1));
 
         JPanel saving = new JPanel();
         saving.setLayout(new BoxLayout(saving, BoxLayout.X_AXIS));
         saving.add(new JLabel("Kartei Speicher-Pfad:"));
         savePath = new JButton("Default-Pfad auswählen");
         System.out.println(filedir);
-        path = new JLabel(filedir == null?"":filedir);
+        path = new JLabel(filedir == null ? "" : filedir);
         saving.add(Box.createRigidArea(new Dimension(10, 0)));
         saving.add(savePath);
         saving.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -78,30 +79,35 @@ public class SettingsView extends JPanel {
         theme.add(this.themeBox);
         this.themeBox.setActionCommand("theme");
         settingsGrid.add(theme);
-        if(!(selectedTheme == null || selectedTheme.isEmpty())){
+        if (!(selectedTheme == null || selectedTheme.isEmpty())) {
             this.themeBox.setSelectedItem(selectedTheme);
         }
-        this.setBorder(new EmptyBorder(10,10,10,10));
+        this.setBorder(new EmptyBorder(10, 10, 10, 10));
         this.add(settingsGrid, BorderLayout.CENTER);
 
 
     }
-    public String getTheme(){
-        System.out.println((String)this.themeBox.getSelectedItem());
-        return (String)this.themeBox.getSelectedItem();
+
+    public String getTheme() {
+        System.out.println((String) this.themeBox.getSelectedItem());
+        return (String) this.themeBox.getSelectedItem();
     }
+
     public boolean autoSaveIsChecked() {
         return this.autosave.isSelected();
     }
+
     public boolean autoLoadIsChecked() {
         return this.autoload.isSelected();
     }
-    public void setPath(String path){
+
+    public void setPath(String path) {
         this.path.setText(path);
         this.repaint();
         this.revalidate();
     }
-    private static JButton createButton(String text, String imagePath,  int width, int height, int imgWidth, int imgHeight) {
+
+    private static JButton createButton(String text, String imagePath, int width, int height, int imgWidth, int imgHeight) {
         ImageIcon icon = new ImageIcon(SettingsView.class.getResource(imagePath));
         Image scaledImage = icon.getImage().getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledImage);
@@ -116,6 +122,7 @@ public class SettingsView extends JPanel {
         button.setFocusPainted(false);
         return button;
     }
+
     public String getSaveLocation(String location) {
         File defaultLocation = new File(location);
         JFileChooser chooser = new JFileChooser();
@@ -131,8 +138,9 @@ public class SettingsView extends JPanel {
             return null;
         }
     }
+
     public void addButtonListener(SettingsControl l) {
-        if(mainMenu!=null && mainMenu.getActionListeners().length ==0) {
+        if (mainMenu != null && mainMenu.getActionListeners().length == 0) {
             this.autosave.addActionListener(l);
             this.autoload.addActionListener(l);
             this.themeBox.addActionListener(l);
