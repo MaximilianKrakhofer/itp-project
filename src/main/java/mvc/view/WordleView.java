@@ -80,24 +80,12 @@ public class WordleView extends JPanel {
         this.question = new JPanel();
         double half = this.getHeight() / 6.0;
         this.question.setPreferredSize(new Dimension(80, (int) half));
-        if (fragentyp == 1) {
-            try {
-                imagePanel = new JPanel(new BorderLayout());
-                imageLabel = new JLabel();
-                imagePanel.add(imageLabel, BorderLayout.CENTER);
-                loadImage(question);
-                this.question.add(imagePanel);
-            } catch (MalformedURLException e) {
-                this.questionText = new JLabel("Fehler beim Laden des Bildes");
-            }
-        } else {
-            questionText.setText(question);
-            this.question.add(questionText);
-        }
-        int minFontSize = 20;
+        questionText.setText("<html>"+question+"<html>");
+        this.question.add(questionText);
+        int minFontSize = 15;
         int maxFontSize = 60;
         textLength = answerlength;
-        int newFontSize = maxFontSize - this.questionText.getText().length();
+        int newFontSize = maxFontSize - (int)(this.questionText.getText().length()*0.5);
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
         this.add(this.question, BorderLayout.NORTH);

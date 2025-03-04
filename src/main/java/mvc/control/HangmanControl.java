@@ -73,7 +73,7 @@ public class HangmanControl implements ActionListener {
 
                 int[] correctChars = {-1};
                 if (view.getAnswer() != null && !view.getAnswer().isBlank()) {
-                    correctChars = model.compareChars(view.getAnswer().charAt(0), shuffled[currentCard].getAntwort());
+                    correctChars = model.compareChars(view.getAnswer().toLowerCase().charAt(0), shuffled[currentCard].getAntwort());
                 }
 
                 if (model.getAtleastOne()) {
@@ -134,7 +134,7 @@ public class HangmanControl implements ActionListener {
                 a = view.checkWord();
 
 
-                if ((a != null && a.equals(shuffled[currentCard].getAntwort()))) {
+                if ((a != null && a.equalsIgnoreCase(shuffled[currentCard].getAntwort()))) {
                     if (currentCard + 1 >= cards.getCards().length) {
                         System.out.println("endquizcheck");
 

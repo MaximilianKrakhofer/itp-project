@@ -42,6 +42,7 @@ public class HangmanModel {
     }
 
     public int[] compareChars(char character, String solution) {
+        solution = solution.toLowerCase();
         int[] correctChars = new int[solution.length()];
         int j = 0;
         atleastOne = false;

@@ -47,32 +47,6 @@ public class HangmanView extends JPanel {
         JOptionPane.showMessageDialog(null, this.questionText.getText() + "\nAntwort:" + answer);
     }
 
-    public void loadImage(String url) throws MalformedURLException {
-        try {
-            File file = new File(url);
-            if (file.exists()) {
-                file = new File(file.getAbsolutePath());
-            } else {
-                throw new RuntimeException();
-            }
-            BufferedImage img = ImageIO.read(file);
-            Image scaledImg = img.getScaledInstance(400, 300, Image.SCALE_DEFAULT);
-            // Library Benötigt Gradle/Maven, also wird das später esetzt
-            // BufferedImage resizedImage = Scalr.resize(originalImage, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC, 400, 300);
-            imageLabel.setIcon(new ImageIcon(scaledImg));
-        } catch (Exception e) {
-            try {
-                URL loc = new URL(url);
-                BufferedImage img = ImageIO.read(loc);
-                Image scaledImg = img.getScaledInstance(400, 300, Image.SCALE_REPLICATE);
-                imageLabel.setIcon(new ImageIcon(scaledImg));
-            } catch (Exception e2) {
-                throw new MalformedURLException();
-            }
-        }
-
-    }
-
     public void startQuiz(String question, int answerlength, int fragentyp) {
 
         this.answer = new JTextPane();
@@ -101,12 +75,11 @@ public class HangmanView extends JPanel {
 
         int minFontSize = 14;
         int maxFontSize = 70;
-        int textLength = this.questionText.getText().length();
-        int newFontSize = maxFontSize - textLength;
+        int textLength = Math.max(70-this.solutionPreview.getText().length(),20);
+        int newFontSize = maxFontSize - (int)(this.questionText.getText().length()*0.8);
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
-
-        solutionPreview.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
+        solutionPreview.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, textLength));
 
         questionText.setHorizontalAlignment(SwingConstants.CENTER);
         solutionPreview.setHorizontalAlignment(SwingConstants.CENTER);
@@ -173,19 +146,6 @@ public class HangmanView extends JPanel {
         underscore = new StringBuilder();
         this.answer.setText("");
         this.answerlength = answerlength;
-        if (fragentyp == 1) {
-            try {
-                imagePanel = new JPanel(new BorderLayout());
-                imageLabel = new JLabel();
-                imagePanel.add(imageLabel, BorderLayout.CENTER);
-                loadImage(question);
-                this.question.add(imagePanel);
-            } catch (MalformedURLException e) {
-                this.questionText = new JLabel("Fehler beim Laden des Bildes");
-            }
-        } else {
-
-        }
         this.questionText.setText("<html>"+question + "<html>");
 
         underscore = new StringBuilder();
@@ -195,10 +155,9 @@ public class HangmanView extends JPanel {
         underscore.append("_");
 
         solutionPreview.setText(underscore.toString());
-        int minFontSize = 20;
-        int maxFontSize = 60;
-        int textLength = answerlength;
-        int newFontSize = maxFontSize - textLength;
+        int minFontSize = 14;
+        int maxFontSize = 70;
+        int newFontSize = maxFontSize - this.questionText.getText().length();
         newFontSize = Math.max(newFontSize, minFontSize);
 
         StyledDocument doc = answer.getStyledDocument();
