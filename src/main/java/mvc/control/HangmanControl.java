@@ -105,7 +105,7 @@ public class HangmanControl implements ActionListener, KeyListener {
                         } else {
                             model.increaseFailedWords();
                             if (model.getFailedWords() ==0){
-                                model.setCurrentHangman(currentCard+1);
+                                model.setCurrentHangman(currentCard);
                             }
                         }
                     }
@@ -160,7 +160,7 @@ public class HangmanControl implements ActionListener, KeyListener {
     public void endQuiz(){
         int[] results = model.endQuiz();
 
-        view.endQuiz(results[0],results[1],results[2], model.getHangmanCompletions(), results[3], results[4]);
+        view.endQuiz(results[0],results[1],results[2],  results[3], results[4]);
         view.addButtonListener(this);
 
     }

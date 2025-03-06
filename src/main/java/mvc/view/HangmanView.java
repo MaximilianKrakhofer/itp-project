@@ -183,32 +183,25 @@ public class HangmanView extends JPanel {
         return a.getText();
     }
 
-    public void endQuiz(int beantwortet, int failedChars, int failedWords, int[] hangmanCompletions, int dauer, int prozent) {
+    public void endQuiz(int beantwortet, int failedChars, int failedWords,  int dauer, int prozent) {
         this.removeAll();
 
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
 
         fragenbeantwortetLabel = new JLabel("Fragenbeantwortet:" + beantwortet);
-        StringBuilder hangmanCompletionsString = new StringBuilder();
 
-        for (int i = 0; i < hangmanCompletions.length; i++) {
-            hangmanCompletionsString.append(hangmanCompletions[i] + "/7; ");
-        }
 
         Font labelFont = new Font("Arial", Font.PLAIN, 30);
 
         fragenbeantwortetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         fragenbeantwortetLabel.setFont(labelFont);
-        JLabel hangmanCompletionsLabel = new JLabel(hangmanCompletionsString.toString());
-        hangmanCompletionsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        hangmanCompletionsLabel.setFont(labelFont);
         JLabel failedWordsLabel = new JLabel("Failed Words: " + failedWords);
         failedWordsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         failedWordsLabel.setFont(labelFont);
         JLabel charWrongLabel = new JLabel("Buchstaben Falsch erraten:" + failedChars);
         charWrongLabel.setFont(labelFont);
         charWrongLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        dauerLabel = new JLabel("Dauer:" + dauer);
+        dauerLabel = new JLabel("Dauer:" + dauer + "Sekunden");
         dauerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         dauerLabel.setFont(labelFont);
         prozentLabel = new JLabel("Prozent:" + prozent);
@@ -218,7 +211,6 @@ public class HangmanView extends JPanel {
         JPanel box = new JPanel();
         box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
         box.add(fragenbeantwortetLabel);
-        box.add(hangmanCompletionsLabel);
         box.add(failedWordsLabel);
         box.add(charWrongLabel);
         box.add(dauerLabel);
