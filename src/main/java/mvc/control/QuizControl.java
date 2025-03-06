@@ -53,13 +53,9 @@ public class QuizControl implements ActionListener {
             case "End Quiz":
                 if (view.getAnswer() != null) {
                     currentCard = 0;
-                    model.check(view.getAnswer());
                     System.out.println("endquizcheck");
-                    int[] affe = model.endQuiz();
-                    double prozent = affe[1] == 0 ? 0.0 : (double) (affe[1] / affe[0]) * 100;
+                    endQuiz();
 
-                    view.endQuiz(affe[0], affe[1], affe[2], prozent);
-                    view.addButtonListener(this);
                 } else {
                     JOptionPane.showMessageDialog(view, "Answer not entered");
                 }
@@ -70,10 +66,8 @@ public class QuizControl implements ActionListener {
                 if (currentCard + 1 >= cards.getCards().length) {
                     System.out.println("endquizcheck");
                     currentCard = 0;
-                    int[] affe = model.endQuiz();
-                    double prozent = affe[1] == 0 ? 0.0 : (double) (affe[1] / affe[0]) * 100;
-                    view.endQuiz(affe[0], affe[1], affe[2], prozent);
-                    view.addButtonListener(this);
+
+                    this.endQuiz();
                 } else {
                     currentCard += 1;
                     view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getFragentyp());
@@ -83,8 +77,7 @@ public class QuizControl implements ActionListener {
                 break;
             case "stop":
                 if (currentCard > 0) {
-                    int[] affe = model.endQuiz();
-                    view.endQuiz(affe[0], affe[1], affe[2], (double) affe[0] / affe[1]);
+                    endQuiz();
                 } else {
                     controller.showMainMenu();
                 }
@@ -99,6 +92,12 @@ public class QuizControl implements ActionListener {
             return true;
         }
         return false;
+    }
+    public void endQuiz() {
+        int[] results = model.getEndResults();
+
+        view.endQuiz(results[0], results[1], results[2], results[3]);
+
     }
 
     public JPanel getView() {

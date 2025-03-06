@@ -162,7 +162,7 @@ public class QuizView extends JPanel {
         this.revalidate();
     }
 
-    public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
+    public void endQuiz(int beantwortet, int korrekt, int dauer, int prozent) {
         this.removeAll();
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
         Font labelFont = new Font("Arial", Font.PLAIN, 30);
@@ -174,7 +174,7 @@ public class QuizView extends JPanel {
         korrektLabel.setFont(labelFont);
         korrektLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        dauerLabel = new JLabel("Dauer: " + dauer);
+        dauerLabel = new JLabel("Dauer: " + dauer + " Sekunden");
         dauerLabel.setFont(labelFont);
         dauerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
