@@ -121,8 +121,9 @@ public class HangmanControl implements ActionListener, KeyListener {
                 }
                 break;
         }
-        view.setTextFieldActive();
-
+        if(!e.getActionCommand().equals("mainmenu")) {
+            view.setTextFieldActive();
+        }
     }
     @Override
     public void keyPressed(KeyEvent e) {
