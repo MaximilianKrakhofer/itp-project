@@ -18,7 +18,6 @@ public class WordleControl implements ActionListener, KeyListener {
     private KarteiKarten cards;
     private KarteiKarte[] shuffled;
     private int currentCard = 0;
-    private boolean shiftPressed = false;
 
     public WordleControl(MasterController controller) {
         this.controller = controller;
@@ -83,23 +82,37 @@ public class WordleControl implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            e.consume();
-            check();
-
-
-        } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
-            if (e.isShiftDown()) {
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_ENTER:
                 e.consume();
-                shiftPressed = true;
-                view.setFocusPrevious();
-            } else {
+                check();
+                break;
+            case KeyEvent.VK_TAB:
                 e.consume();
-                shiftPressed = false;
-                view.setFocusNext();
-            }
+                if (e.isShiftDown()) {
+                    e.consume();
+                    view.setFocusPrevious();
+                } else {
+                    e.consume();
+                    view.setFocusNext();
+                }
+                break;
+            case KeyEvent.VK_BACK_SPACE:
+                break;
 
+            default:
+                if(!e.isShiftDown() && e.getKeyCode()!= KeyEvent.VK_TAB){
+                    view.setFocusNext();
+                }
+                break;
+
+            // SHIFT,
         }
+
+
+
+
+
     }
 
 
@@ -107,10 +120,7 @@ public class WordleControl implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
-        if (!(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_TAB|| shiftPressed)) {
 
-            view.setFocusNext();
-        }
     }
 
     @Override
