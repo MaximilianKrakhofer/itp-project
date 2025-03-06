@@ -183,7 +183,7 @@ public class HangmanView extends JPanel {
         return a.getText();
     }
 
-    public void endQuiz(int beantwortet, int failedChars, int failedWords, int[] hangmanCompletions, int dauer, double prozent) {
+    public void endQuiz(int beantwortet, int failedChars, int failedWords, int[] hangmanCompletions, int dauer, int prozent) {
         this.removeAll();
 
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;

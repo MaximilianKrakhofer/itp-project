@@ -56,12 +56,8 @@ public class HangmanControl implements ActionListener {
             case "End Quiz":
 
                 if (view.getAnswer() != null) {
-                    model.check(view.getAnswer());
                     System.out.println("endquizcheck");
-                    int[] affe = model.endQuiz();
-
-                    int prozent = affe[0] / (model.getCurrentHangman() + 1);
-                    view.endQuiz(model.getCurrentHangman() + 1, model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
+                    endQuiz();
                     view.addButtonListener(this);
                 } else {
                     JOptionPane.showMessageDialog(view, "Answer not entered");
@@ -88,12 +84,7 @@ public class HangmanControl implements ActionListener {
                             System.out.println("endquizcheck");
 
                             view.setCheck(false, shuffled[currentCard].getAntwort());
-                            int[] affe = model.endQuiz();
-
-
-                            double prozent = affe[1] == 0 ? 0.0 : (double) (affe[1] / affe[0]) * 100;
-                            view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
-                            view.addButtonListener(this);
+                            endQuiz();
                         } else {
                             model.increaseFailedChars();
                         }
@@ -109,11 +100,7 @@ public class HangmanControl implements ActionListener {
                         System.out.println("endquizcheck");
 
                         view.setCheck(true, shuffled[currentCard].getAntwort());
-                        int[] affe = model.endQuiz();
-
-                        double prozent = affe[1] == 0 ? 0.0 : (double) (affe[1] / affe[0]) * 100;
-                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
-                        view.addButtonListener(this);
+                        endQuiz();
 
                     } else {
 
@@ -139,10 +126,7 @@ public class HangmanControl implements ActionListener {
                         System.out.println("endquizcheck");
 
                         view.setCheck(true, shuffled[currentCard].getAntwort());
-                        int[] affe = model.endQuiz();
-                        double prozent = affe[1] == 0 ? 0.0 : (double) (affe[1] / affe[0]) * 100;
-                        view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
-                        view.addButtonListener(this);
+                        endQuiz();
 
                     } else {
 
@@ -160,11 +144,7 @@ public class HangmanControl implements ActionListener {
                             System.out.println("endquizcheck");
 
                             view.setCheck(false, shuffled[currentCard].getAntwort());
-                            int[] affe = model.endQuiz();
-
-                            double prozent = affe[1] == 0 ? 0.0 : (double) (affe[1] / affe[0]) * 100;
-                            view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], prozent);
-                            view.addButtonListener(this);
+                            endQuiz();
 
                         } else {
                             model.increaseFailedWords();
@@ -176,8 +156,7 @@ public class HangmanControl implements ActionListener {
                 break;
             case "stop":
                 if (currentCard > 0) {
-                    int[] affe = model.endQuiz();
-                    view.endQuiz(affe[0], model.getFailedChars(), model.getFailedWords(), model.getHangmanCompletions(), affe[2], (double) affe[0] / affe[1]);
+                    endQuiz();
                 } else {
                     controller.showMainMenu();
                 }
@@ -197,6 +176,13 @@ public class HangmanControl implements ActionListener {
 
     public JPanel getView() {
         return view;
+    }
+    public void endQuiz(){
+        int[] results = model.endQuiz();
+
+        view.endQuiz(results[0],results[1],results[2], model.getHangmanCompletions(), results[3], results[4]);
+        view.addButtonListener(this);
+
     }
 
 }

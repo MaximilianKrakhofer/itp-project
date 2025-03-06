@@ -3,6 +3,8 @@ package mvc.model;
 import mvc.Karten.KarteiKarte;
 import mvc.Karten.KarteiKarten;
 
+import java.util.Arrays;
+
 
 public class HangmanModel {
     private KarteiKarte[] cards;
@@ -24,10 +26,26 @@ public class HangmanModel {
 
     public int[] endQuiz() {
         endTime = System.currentTimeMillis();
-        int[] results = new int[3];
-        results[0] = questions;
-        results[1] = questionscorrect;
-        results[2] = (int) (endTime - startTime) / 1000;
+        int[] results = new int[5];
+        results[0] = currentHangman ;
+        results[1] = failedChars;
+        results[2] = failedWords;
+        results[3] = (int) (endTime - startTime) / 1000;
+        double []toAvg = new double[hangmanCompletions.length ];
+        for (int i = 0; i < hangmanCompletions.length; i++) {
+                toAvg[i] = 100.0 - (hangmanCompletions[i] * (100.0/7.0));
+        }
+        int percent =0;
+        for (int i = 0; i < hangmanCompletions.length; i++) {
+            if(toAvg[i] != 0) {
+                percent += toAvg[i] /hangmanCompletions.length;
+
+            }
+
+
+        }
+
+        results[4] = percent;
         return results;
     }
 
