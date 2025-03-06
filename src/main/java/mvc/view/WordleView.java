@@ -129,6 +129,9 @@ public class WordleView extends JPanel {
                 answers[i][j].setMaximumSize(new Dimension(10, 10));
                 answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20));
 
+
+
+
             }
         }
         this.add(answersGrid, BorderLayout.CENTER);
@@ -243,7 +246,7 @@ public class WordleView extends JPanel {
         this.revalidate();
     }
 
-    public String getAnswers() {
+    public String getAnswersText() {
         char[] answersChar = new char[textLength];
         for (int i = 0; answers != null && i < textLength; i++) {
             if (answers[rowCounter][i].getText() != null) {
@@ -274,6 +277,17 @@ public class WordleView extends JPanel {
         if (start != null && start.getActionListeners().length == 0) {
             this.start.addActionListener(l);
         }
+        if(answers!=null){
+            for (int i = 0; i <answers.length ; i++) {
+                for (int j = 0; j < answers[i].length; j++) {
+                    if (answers[i][j] != null && answers[i][j].getKeyListeners().length == 0) {
+                        this.answers[i][j].addKeyListener(l);
+                    }
+                }
+            }
+        }
+
+
 
     }
 
@@ -335,5 +349,30 @@ public class WordleView extends JPanel {
 
     public int getRowCounter() {
         return rowCounter;
+    }
+    public void setFocus(){
+        answers[rowCounter][0].requestFocus();
+    }
+
+    public void setFocusNext(){
+        for (int i = 0; i < answers[rowCounter].length; i++) {
+            if(answers[rowCounter][i].hasFocus()){
+                if(i+2<answers[rowCounter].length){
+
+                    answers[rowCounter][i+1].requestFocus();
+                }
+                break;
+            }
+        }
+    }
+    public void setFocusPrevious(){
+        for (int i = 0; i < answers[rowCounter].length; i++) {
+            if(answers[rowCounter][i].hasFocus()){
+                if(i-1>=0){
+                    answers[rowCounter][i-1].requestFocus();
+                }
+                break;
+            }
+        }
     }
 }

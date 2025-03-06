@@ -22,10 +22,16 @@ public class WordleModel {
 
     public int[] endQuiz() {
         endTime = System.currentTimeMillis();
-        int[] results = new int[3];
+        int[] results = new int[4];
         results[0] = questions;
         results[1] = questionscorrect;
         results[2] = (int) (endTime - startTime) / 1000;
+        if(questions != 0) {
+            results[3] =  questionscorrect =(int)( (double) questionscorrect /questions *100.0);
+        }
+        else {
+            results[3] = 0;
+        }
         return results;
     }
 

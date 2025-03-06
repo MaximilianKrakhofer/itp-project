@@ -8,14 +8,17 @@ import mvc.view.WordleView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class WordleControl implements ActionListener {
+public class WordleControl implements ActionListener, KeyListener {
     private WordleModel model;
     private WordleView view;
     private MasterController controller;
     private KarteiKarten cards;
     private KarteiKarte[] shuffled;
     private int currentCard = 0;
+    private boolean shiftPressed = false;
 
     public WordleControl(MasterController controller) {
         this.controller = controller;
@@ -44,15 +47,16 @@ public class WordleControl implements ActionListener {
                     view.addButtonListener(this);
                     view.repaint();
                     view.revalidate();
+                    view.setFocus();
                 } else {
                     JOptionPane.showMessageDialog(view, "Cards are not loaded");
                     controller.showMainMenu();
                 }
                 break;
             case "End Quiz":
-                if (view.getAnswers() != null) {
+                if (view.getAnswersText() != null) {
                     currentCard = 0;
-                    model.check(new String(view.getAnswers()));
+                    model.check(new String(view.getAnswersText()));
                     System.out.println("endquizcheck");
                     int[] stats = model.endQuiz();
 
@@ -64,49 +68,53 @@ public class WordleControl implements ActionListener {
                 }
                 break;
             case "Check":
-                if (model.check(new String(view.getAnswers()))) {
-                    model.increaseQuestionsCorrect();
-
-                    model.increaseQustions();
-                    if (currentCard + 1 >= cards.getCards().length) {
-                        System.out.println("endquizcheck");
-                        currentCard = 0;
-                        int[] affe = model.endQuiz();
-                        double prozent = affe[1] == 0 ? 0.0 : (double) (affe[1] / affe[0]) * 100;
-                        view.endQuiz(affe[0], affe[1], affe[2], prozent);
-                        view.addButtonListener(this);
-                    } else {
-                        currentCard += 1;
-                        view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
-                    }
-                } else {
-                    if (view.getRowCounter() >= 4) {
-                        System.out.println("endquizcheck");
-                        currentCard = 0;
-                        int[] affe = model.endQuiz();
-                        double prozent = affe[1] == 0 ? 0.0 : (double) (affe[1] / affe[0]) * 100;
-                        view.endQuiz(affe[0], affe[1], affe[2], prozent);
-                        view.addButtonListener(this);
-                        currentCard += 1;
-                        view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
-                    } else {
-                        if (!view.getAnswers().isBlank()) {
-                            view.setColors(model.compareChars(new String(view.getAnswers()), shuffled[currentCard].getAntwort()));
-                            view.activateNewFields();
-                        }
-                    }
-                }
+                check();
                 break;
             case "stop":
                 if (currentCard > 0) {
-                    int[] affe = model.endQuiz();
-                    view.endQuiz(affe[0], affe[1], affe[2], (double) affe[0] / affe[1]);
+                    endQuiz();
                 } else {
                     controller.showMainMenu();
                 }
                 break;
         }
 
+    }
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            e.consume();
+            check();
+
+
+        } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
+            if (e.isShiftDown()) {
+                e.consume();
+                shiftPressed = true;
+                view.setFocusPrevious();
+            } else {
+                e.consume();
+                shiftPressed = false;
+                view.setFocusNext();
+            }
+
+        }
+    }
+
+
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+        if (!(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_TAB|| shiftPressed)) {
+
+            view.setFocusNext();
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 
     public boolean isLoaded() {
@@ -122,5 +130,37 @@ public class WordleControl implements ActionListener {
         return view;
     }
 
+    public void endQuiz() {
+        int [] results = model.endQuiz();
+        view.endQuiz(results[0], results[1], results[2], results[3]);
+        view.addButtonListener(this);
+    }
+    public void check(){
+        if (model.check(new String(view.getAnswersText()))) {
+            model.increaseQuestionsCorrect();
 
+            model.increaseQustions();
+            if (currentCard + 1 >= cards.getCards().length) {
+                System.out.println("endquizcheck");
+                currentCard = 0;
+                endQuiz();
+            } else {
+                currentCard += 1;
+                view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
+            }
+        } else {
+            if (view.getRowCounter() >= 4) {
+                System.out.println("endquizcheck");
+                currentCard = 0;
+                endQuiz();
+                currentCard += 1;
+                view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
+            } else {
+                if (!view.getAnswersText().isBlank()) {
+                    view.setColors(model.compareChars(new String(view.getAnswersText()), shuffled[currentCard].getAntwort()));
+                    view.activateNewFields();
+                }
+            }
+        }
+    }
 }
