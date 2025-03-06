@@ -33,7 +33,7 @@ public class HangmanModel {
         results[3] = (int) (endTime - startTime) / 1000;
         double []toAvg = new double[hangmanCompletions.length ];
         for (int i = 0; i < hangmanCompletions.length; i++) {
-                toAvg[i] = 100.0 - (hangmanCompletions[i] * (100.0/7.0));
+            toAvg[i] = 100.0 - (hangmanCompletions[i] * (100.0/7.0));
         }
         int percent =0;
         for (int i = 0; i < hangmanCompletions.length; i++) {
@@ -43,6 +43,9 @@ public class HangmanModel {
             }
 
 
+        }
+        if(currentHangman== 0) {
+            percent = 0;
         }
 
         results[4] = percent;

@@ -8,8 +8,10 @@ import mvc.view.HangmanView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class HangmanControl implements ActionListener {
+public class HangmanControl implements ActionListener, KeyListener {
     private HangmanModel model;
     private HangmanView view;
     private MasterController controller;
@@ -23,6 +25,7 @@ public class HangmanControl implements ActionListener {
         this.model = new HangmanModel();
         this.view = new HangmanView(isLoaded());
         view.addButtonListener(this);
+        view.addKeyListener(this);
     }
 
     @Override
@@ -64,59 +67,10 @@ public class HangmanControl implements ActionListener {
                 }
                 break;
             case "Check":
+                check();
 
-                model.setCurrentHangman(currentCard);
-
-                int[] correctChars = {-1};
-                if (view.getAnswer() != null && !view.getAnswer().isBlank()) {
-                    correctChars = model.compareChars(view.getAnswer().toLowerCase().charAt(0), shuffled[currentCard].getAntwort());
-                }
-
-                if (model.getAtleastOne()) {
-                    view.setCheckedChars(correctChars, view.getAnswer().charAt(0));
-                } else {
-
-                    if (view.getAnswer() != null && !view.getAnswer().isBlank()) {
-
-                        view.setHangmanAscii(model.increaseCounter());
-                        if (model.getCounter() > 6) {
-                            model.check(view.getAnswer());
-                            System.out.println("endquizcheck");
-
-                            view.setCheck(false, shuffled[currentCard].getAntwort());
-                            endQuiz();
-                        } else {
-                            model.increaseFailedChars();
-                        }
-
-                    }
-
-                }
-
-
-                if (model.check(view.getSolutionPreview())) {
-
-                    if (currentCard + 1 >= cards.getCards().length) {
-                        System.out.println("endquizcheck");
-
-                        view.setCheck(true, shuffled[currentCard].getAntwort());
-                        endQuiz();
-
-                    } else {
-
-                        view.setCheck(true, shuffled[currentCard].getAntwort());
-                        currentCard += 1;
-                        view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
-                    }
-                }
-
-                model.setAtleastOne(false);
-
-
-                view.setAnswer("");
                 break;
             case "CheckWord":
-                model.setCurrentHangman(currentCard);
                 String a = "";
                 a = view.checkWord();
 
@@ -132,6 +86,8 @@ public class HangmanControl implements ActionListener {
 
                         view.setCheck(true, shuffled[currentCard].getAntwort());
                         currentCard += 1;
+
+                        model.setCurrentHangman(currentCard);
                         view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
                     }
                 } else {
@@ -148,6 +104,9 @@ public class HangmanControl implements ActionListener {
 
                         } else {
                             model.increaseFailedWords();
+                            if (model.getFailedWords() ==0){
+                                model.setCurrentHangman(currentCard+1);
+                            }
                         }
                     }
                 }
@@ -162,8 +121,29 @@ public class HangmanControl implements ActionListener {
                 }
                 break;
         }
+        view.setTextFieldActive();
 
     }
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            e.consume();
+            check();
+            view.setAnswer("");
+
+
+        }
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // You can leave this empty if you don't need to handle the event
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // You can leave this empty if you don't need to handle the event
+    }
+
 
     public boolean isLoaded() {
 
@@ -183,6 +163,60 @@ public class HangmanControl implements ActionListener {
         view.endQuiz(results[0],results[1],results[2], model.getHangmanCompletions(), results[3], results[4]);
         view.addButtonListener(this);
 
+    }
+    public void check(){
+        int[] correctChars = {-1};
+        if (view.getAnswer() != null && !view.getAnswer().isBlank()) {
+            correctChars = model.compareChars(view.getAnswer().toLowerCase().charAt(0), shuffled[currentCard].getAntwort());
+        }
+
+        if (model.getAtleastOne()) {
+            view.setCheckedChars(correctChars, view.getAnswer().charAt(0));
+        } else {
+
+            if (view.getAnswer() != null && !view.getAnswer().isBlank()) {
+
+                view.setHangmanAscii(model.increaseCounter());
+                if (model.getCounter() > 6) {
+                    model.check(view.getAnswer());
+                    System.out.println("endquizcheck");
+
+                    view.setCheck(false, shuffled[currentCard].getAntwort());
+                    endQuiz();
+                } else {
+                    if (model.getFailedChars() ==0 ){
+                        model.setCurrentHangman(currentCard );
+                    }
+                    model.increaseFailedChars();
+                }
+
+            }
+
+        }
+
+
+        if (model.check(view.getSolutionPreview())) {
+
+            if (currentCard + 1 >= cards.getCards().length) {
+                System.out.println("endquizcheck");
+
+                view.setCheck(true, shuffled[currentCard].getAntwort());
+                endQuiz();
+
+            } else {
+
+                view.setCheck(true, shuffled[currentCard].getAntwort());
+                currentCard += 1;
+
+                model.setCurrentHangman(currentCard);
+                view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
+            }
+        }
+
+        model.setAtleastOne(false);
+
+
+        view.setAnswer("");
     }
 
 }

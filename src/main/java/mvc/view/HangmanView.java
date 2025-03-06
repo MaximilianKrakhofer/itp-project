@@ -263,10 +263,11 @@ public class HangmanView extends JPanel {
         if (start != null && start.getActionListeners().length == 0) {
             this.start.addActionListener(l);
         }
-        if (checkWord != null && checkWord.getActionListeners().length == 0) {
-            this.checkWord.addActionListener(l);
+        if (answer != null && answer.getKeyListeners().length== 0) {
+            answer.addKeyListener(l);
 
         }
+
     }
 
     public void setCheck(boolean truth, String answerText) {
@@ -363,7 +364,7 @@ public class HangmanView extends JPanel {
         return solutionPreview.getText();
     }
 
-    public void addAttemptChars() {
-
+    public void setTextFieldActive(){
+        answer.requestFocus();
     }
 }
