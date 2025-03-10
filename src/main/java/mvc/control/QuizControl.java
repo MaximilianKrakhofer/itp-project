@@ -8,8 +8,10 @@ import mvc.view.QuizView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class QuizControl implements ActionListener {
+public class QuizControl implements ActionListener, KeyListener {
     private QuizModel model;
     private QuizView view;
     private MasterController controller;
@@ -61,19 +63,7 @@ public class QuizControl implements ActionListener {
                 }
                 break;
             case "Check":
-                System.out.println("check" + currentCard);
-                view.setCheck(model.check(view.getAnswer()), shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp()); // checkt ob korrekt
-                if (currentCard + 1 >= cards.getCards().length) {
-                    System.out.println("endquizcheck");
-                    currentCard = 0;
-
-                    this.endQuiz();
-                } else {
-                    currentCard += 1;
-                    view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getFragentyp());
-                }
-
-
+                check();
                 break;
             case "stop":
                 if (currentCard > 0) {
@@ -83,6 +73,8 @@ public class QuizControl implements ActionListener {
                 }
                 break;
         }
+
+        view.setTextFieldActive();
 
     }
 
@@ -102,6 +94,39 @@ public class QuizControl implements ActionListener {
 
     public JPanel getView() {
         return view;
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            e.consume();
+            check();
+
+
+        }
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // You can leave this empty if you don't need to handle the event
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // You can leave this empty if you don't need to handle the event
+    }
+    public void check(){
+        System.out.println("check" + currentCard);
+        view.setCheck(model.check(view.getAnswer()), shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp()); // checkt ob korrekt
+        if (currentCard + 1 >= cards.getCards().length) {
+            System.out.println("endquizcheck");
+            currentCard = 0;
+
+            this.endQuiz();
+        } else {
+            currentCard += 1;
+            view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getFragentyp());
+        }
+
     }
 
 }

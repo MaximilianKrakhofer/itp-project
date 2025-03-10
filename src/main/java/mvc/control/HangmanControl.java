@@ -159,6 +159,7 @@ public class HangmanControl implements ActionListener, KeyListener {
         return view;
     }
     public void endQuiz(){
+
         int[] results = model.endQuiz();
 
         view.endQuiz(results[0],results[1],results[2],  results[3], results[4]);
@@ -186,8 +187,10 @@ public class HangmanControl implements ActionListener, KeyListener {
                     endQuiz();
                 } else {
                     if (model.getFailedChars() ==0 ){
-                        model.setCurrentHangman(currentCard );
+                        model.setCurrentHangman(currentCard +1);
+
                     }
+
                     model.increaseFailedChars();
                 }
 

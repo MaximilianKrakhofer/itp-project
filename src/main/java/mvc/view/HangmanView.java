@@ -188,7 +188,7 @@ public class HangmanView extends JPanel {
 
         JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
 
-        fragenbeantwortetLabel = new JLabel("Fragenbeantwortet:" + beantwortet);
+        fragenbeantwortetLabel = new JLabel("Fragenbeantwortet: " + beantwortet);
 
 
         Font labelFont = new Font("Arial", Font.PLAIN, 30);
@@ -198,13 +198,13 @@ public class HangmanView extends JPanel {
         JLabel failedWordsLabel = new JLabel("Failed Words: " + failedWords);
         failedWordsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         failedWordsLabel.setFont(labelFont);
-        JLabel charWrongLabel = new JLabel("Buchstaben Falsch erraten:" + failedChars);
+        JLabel charWrongLabel = new JLabel("Buchstaben Falsch erraten: " + failedChars);
         charWrongLabel.setFont(labelFont);
         charWrongLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        dauerLabel = new JLabel("Dauer:" + dauer + "Sekunden");
+        dauerLabel = new JLabel("Dauer: " + dauer + " Sekunde(n)");
         dauerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         dauerLabel.setFont(labelFont);
-        prozentLabel = new JLabel("Prozent:" + prozent);
+        prozentLabel = new JLabel("Prozent: " + prozent);
         prozentLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         prozentLabel.setFont(labelFont);
 
@@ -359,4 +359,5 @@ public class HangmanView extends JPanel {
     public void setTextFieldActive(){
         answer.requestFocus();
     }
+
 }

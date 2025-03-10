@@ -169,6 +169,7 @@ public class WordleControl implements ActionListener, KeyListener {
                 if (!view.getAnswersText().isBlank()) {
                     view.setColors(model.compareChars(new String(view.getAnswersText()), shuffled[currentCard].getAntwort()));
                     view.activateNewFields();
+                    view.setFocus();
                 }
             }
         }

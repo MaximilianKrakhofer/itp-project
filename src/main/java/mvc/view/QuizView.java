@@ -226,6 +226,11 @@ public class QuizView extends JPanel {
             this.start.addActionListener(l);
         }
 
+        if (answer != null && answer.getKeyListeners().length== 0) {
+            answer.addKeyListener(l);
+
+        }
+
     }
     public void setCheck(boolean truth, String answerText, int fragentyp) {
         JPanel main = new JPanel(new GridLayout(2, 1));
@@ -291,6 +296,10 @@ public class QuizView extends JPanel {
         button.setPreferredSize(new Dimension(width, height));
         button.setFocusPainted(false);
         return button;
+    }
+
+    public void setTextFieldActive(){
+        answer.requestFocus();
     }
 
 }
