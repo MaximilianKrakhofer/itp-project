@@ -17,6 +17,7 @@ public class HangmanModel {
     public KarteiKarte[] startQuiz(KarteiKarten cards) {
         startTime = System.currentTimeMillis();
         currentAnswer = 0;
+        cards.removePictures();
         this.cards = cards.shuffle();
         questions = 0;
         questionscorrect = 0;

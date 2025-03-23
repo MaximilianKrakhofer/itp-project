@@ -82,6 +82,13 @@ public class KarteiKarten {
         }
         return ausgabe;
     }
+    public void removePictures() {
+        for(int i = 0; i < this.karten.length;i++) {
+            if(karten[i].getFragentyp() == 1) {
+                removeKarte(i);
+            }
+        }
+    }
 
 
 }

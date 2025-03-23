@@ -80,12 +80,13 @@ public class WordleView extends JPanel {
         this.question = new JPanel();
         double half = this.getHeight() / 6.0;
         this.question.setPreferredSize(new Dimension(80, (int) half));
-        questionText.setText("<html>"+question+"<html>");
+        questionText.setText("<html>" + question + "<html>");
         this.question.add(questionText);
+        questionText.setPreferredSize(new Dimension(this.getWidth(),100));
         int minFontSize = 15;
         int maxFontSize = 60;
         textLength = answerlength;
-        int newFontSize = maxFontSize - (int)(this.questionText.getText().length()*0.5);
+        int newFontSize = maxFontSize - (int) (this.questionText.getText().length() * 0.5);
         newFontSize = Math.max(newFontSize, minFontSize);
         questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
         this.add(this.question, BorderLayout.NORTH);
@@ -130,8 +131,6 @@ public class WordleView extends JPanel {
                 answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20));
 
 
-
-
             }
         }
         this.add(answersGrid, BorderLayout.CENTER);
@@ -142,13 +141,77 @@ public class WordleView extends JPanel {
 
     }
 
+    public void setCheck(boolean truth, String answerText, int fragentyp) {
+        JPanel main = new JPanel(new GridLayout(2, 1));
+        JPanel gridy = new JPanel();
+        gridy.setLayout(new BoxLayout(gridy, BoxLayout.Y_AXIS));
+
+        JPanel boxquest = new JPanel();
+        boxquest.setLayout(new BoxLayout(boxquest, BoxLayout.X_AXIS));
+        boxquest.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel boxansw = new JPanel();
+        boxansw.setLayout(new BoxLayout(boxansw, BoxLayout.X_AXIS));
+        boxansw.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel boxsolut = new JPanel();
+        boxsolut.setLayout(new BoxLayout(boxsolut, BoxLayout.X_AXIS));
+        boxsolut.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JEditorPane correct = new JEditorPane();
+        correct.setContentType("text/html");
+        if (truth) {
+            correct.setText("<html><font color=green>CORRECT</font></html>");
+        } else {
+            correct.setText("<html><font color=red>WRONG</font></html>");
+        }
+        main.add(correct);
+
+        boxquest.add(new JLabel("Question: "));
+        if (fragentyp == 0) {
+            boxquest.add(new JLabel(questionText.getText()));
+        } else {
+            boxquest.add(new JLabel(imageLabel.getText()));
+        }
+
+        boxansw.add(new JLabel("Your answer: "));
+        boxansw.add(new JLabel(getAnswersText()));
+
+        boxsolut.add(new JLabel("Solution: "));
+        realAnswer = new JTextPane();
+        realAnswer.setText(answerText);
+        realAnswer.setEditable(false);
+        boxsolut.add(realAnswer);
+
+        gridy.add(boxquest);
+        gridy.add(boxansw);
+        gridy.add(boxsolut);
+        main.add(gridy);
+
+        JOptionPane.showConfirmDialog(null, main, "Solution", JOptionPane.OK_CANCEL_OPTION);
+    }
+
     public void nextCard(String question, int answerlength, int fragentyp) {
         rowCounter = 0;
         textLength = answerlength; // Update the textLength to the new answer length
-        answersGrid.removeAll(); // Clear the existing answer grid
+        this.removeAll(); // Clear the existing components
 
-        // Recreate the answer grid with the new text length
+        // Recreate the question panel
+        this.question = new JPanel();
+        double half = this.getHeight() / 6.0;
+        this.question.setPreferredSize(new Dimension(80, (int) half));
+        questionText.setText("<html>" + question + "<html>");
+        questionText.setPreferredSize(new Dimension(this.getWidth(),100));
+        this.question.add(questionText);
+        int minFontSize = 15;
+        int maxFontSize = 60;
+        int newFontSize = maxFontSize - (int) (this.questionText.getText().length() * 0.5);
+        newFontSize = Math.max(newFontSize, minFontSize);
+        questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
+        this.add(this.question, BorderLayout.NORTH);
+
         answers = new JTextPane[5][textLength];
+        answersGrid = new JPanel(new GridLayout(5, textLength, 10, 20));
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < textLength; j++) {
                 answers[i][j] = new JTextPane();
@@ -169,42 +232,21 @@ public class WordleView extends JPanel {
                 answers[i][j].setAlignmentY(Component.CENTER_ALIGNMENT);
                 answers[i][j].setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, 20));
             }
-
-            int minFontSize = 20;
-            int maxFontSize = 100;
-            int textLength = questionText.getText().length();
-            int newFontSize = maxFontSize - textLength;
-            newFontSize = Math.max(newFontSize, minFontSize);
-
-
-            questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
         }
+        this.add(answersGrid, BorderLayout.CENTER);
 
-        // Update the question text or image
-        if (fragentyp == 1) {
-            try {
-                imagePanel = new JPanel(new BorderLayout());
-                imageLabel = new JLabel();
-                imagePanel.add(imageLabel, BorderLayout.CENTER);
-                loadImage(question);
-                this.question.add(imagePanel);
-            } catch (MalformedURLException e) {
-                this.questionText = new JLabel("Fehler beim Laden des Bildes");
-            }
-        } else {
-            this.questionText.setText(question);
-            int minFontSize = 20;
-            int maxFontSize = 60;
-            int newFontSize = maxFontSize - this.questionText.getText().length();
-            newFontSize = Math.max(newFontSize, minFontSize);
-
-            questionText.setFont(new Font("Bahnschrift", Font.TRUETYPE_FONT, newFontSize));
-        }
-
+        this.stop = createButton("Stop", "/images/end.png", 70, 70, 20, 20);
+        stop.setActionCommand("End Quiz");
+        this.check = createButton("Check", "/images/check.png", 70, 70, 20, 20);
+        check.setActionCommand("Check");
+        grid = new JPanel(new GridLayout(1, 2));
+        grid.add(check);
+        grid.add(stop);
+        this.add(grid, BorderLayout.SOUTH);
 
         this.repaint();
         this.revalidate();
-    }
+ }
 
     public void endQuiz(int beantwortet, int korrekt, int dauer, double prozent) {
         this.removeAll();
@@ -279,7 +321,7 @@ public class WordleView extends JPanel {
         }
         if(answers!=null){
             for (int i = 0; i <answers.length ; i++) {
-                for (int j = 0; j < answers[i].length; j++) {
+                for (int j = 0; j < answers[i].length; j++) {;
                     if (answers[i][j] != null && answers[i][j].getKeyListeners().length == 0) {
                         this.answers[i][j].addKeyListener(l);
                     }
@@ -296,6 +338,7 @@ public class WordleView extends JPanel {
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if (fb.getDocument().getLength() + string.length() <= 1) {
                 super.insertString(fb, offset, string, attr);
+                SwingUtilities.invokeLater(() -> setFocusNext());
             }
         }
 
@@ -356,10 +399,11 @@ public class WordleView extends JPanel {
 
     public void setFocusNext(){
         for (int i = 0; i < answers[rowCounter].length; i++) {
-            if(answers[rowCounter][i].hasFocus()){
-                if(i+2<answers[rowCounter].length){
-
-                    answers[rowCounter][i+1].requestFocus();
+            if (answers[rowCounter][i].hasFocus()) {
+                if (i + 1 < answers[rowCounter].length) {
+                    answers[rowCounter][i + 1].requestFocus();
+                } else if (rowCounter + 1 < answers.length) {
+                    answers[rowCounter + 1][0].requestFocus();
                 }
                 break;
             }

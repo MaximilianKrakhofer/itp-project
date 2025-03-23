@@ -101,31 +101,17 @@ public class WordleControl implements ActionListener, KeyListener {
                 break;
 
             default:
-                if(!e.isShiftDown() && e.getKeyCode()!= KeyEvent.VK_TAB){
-                    view.setFocusNext();
+                if ((e.getKeyChar() != 0)) {
+                    SwingUtilities.invokeLater(view::setFocusNext);
                 }
                 break;
-
-            // SHIFT,
         }
-
-
-
-
-
     }
-
-
+    @Override
+    public void keyReleased(KeyEvent e) {}
 
     @Override
-    public void keyReleased(KeyEvent e) {
-
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
     public boolean isLoaded() {
 
@@ -146,25 +132,30 @@ public class WordleControl implements ActionListener, KeyListener {
         view.addButtonListener(this);
     }
     public void check(){
-        if (model.check(new String(view.getAnswersText()))) {
+        boolean isCorrect = model.check(new String(view.getAnswersText()));
+        model.increaseQustions();
+        if (isCorrect) {
             model.increaseQuestionsCorrect();
+            view.setCheck(isCorrect, shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp());
 
-            model.increaseQustions();
-            if (currentCard + 1 >= cards.getCards().length) {
+            if (currentCard + 1 >= shuffled.length) {
                 System.out.println("endquizcheck");
                 currentCard = 0;
                 endQuiz();
             } else {
                 currentCard += 1;
                 view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
+                view.addButtonListener(this);
             }
         } else {
             if (view.getRowCounter() >= 4) {
                 System.out.println("endquizcheck");
-                currentCard = 0;
+                view.setCheck(false, shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp());
                 endQuiz();
                 currentCard += 1;
                 view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
+                System.out.println("Antwort" + shuffled[currentCard].getAntwort() + "Länge: " + shuffled[currentCard].getAntwort().length());
+                view.addButtonListener(this);
             } else {
                 if (!view.getAnswersText().isBlank()) {
                     view.setColors(model.compareChars(new String(view.getAnswersText()), shuffled[currentCard].getAntwort()));

@@ -5,6 +5,8 @@ import mvc.model.FragenSaveLoader;
 import mvc.model.SettingsModel;
 import mvc.view.MasterView;
 
+import javax.swing.*;
+
 
 public class MasterController {
     private MasterView view;
@@ -14,25 +16,34 @@ public class MasterController {
 
 
     public MasterController() {
-        MasterView.setupTheme();
-        view = new MasterView();
-        showMainMenu();
-        try {
-            boolean autoload = Boolean.parseBoolean(SettingsModel.getConfig("autoload", "false"));
-            boolean autosave = Boolean.parseBoolean(SettingsModel.getConfig("autosave", "false"));
-            configPath = SettingsModel.getConfig("saveLocation", null);
-            if (autoload) {
-                System.out.println("WIMMER");
-                FragenSaveLoader loada = new FragenSaveLoader();
-                if (configPath != null) {
-                    loada.setConfigPath(configPath);
-                }
-                karten = loada.getLoadCards();
-                System.out.println("" + karten == null);
-            }
-        } catch (Exception e) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                MasterView.setupTheme();
+                view = new
 
+                        MasterView();
+
+                showMainMenu();
+                try {
+                    boolean autoload = Boolean.parseBoolean(SettingsModel.getConfig("autoload", "false"));
+                    boolean autosave = Boolean.parseBoolean(SettingsModel.getConfig("autosave", "false"));
+                    configPath = SettingsModel.getConfig("saveLocation", null);
+                    if (autoload) {
+                        System.out.println("WIMMER");
+                        FragenSaveLoader loada = new FragenSaveLoader();
+                        if (configPath != null) {
+                            loada.setConfigPath(configPath);
+                        }
+                        karten = loada.getLoadCards();
+                        System.out.println("" + karten == null);
+                    }
+                } catch (
+                        Exception e) {
+
+                }
+            }
         }
+        );
     }
 
     public static void setupTheme() {
