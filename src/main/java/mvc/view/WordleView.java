@@ -22,6 +22,8 @@ public class WordleView extends JPanel {
     private JTextPane[][] answers;
     private int rowCounter;
     private int textLength;
+    private int currentRow = 0;
+    private int currentCol = 0;
 
     public WordleView(boolean isLoaded) {
         this.setLayout(new BorderLayout());
@@ -141,6 +143,16 @@ public class WordleView extends JPanel {
 
     }
 
+    public int[] getCurrentFieldPosition() {
+        return new int[]{currentRow, currentCol};
+    }
+
+    public JTextPane getCurrentField() {
+        if (answers != null && currentRow < answers.length && currentCol < answers[currentRow].length) {
+            return answers[currentRow][currentCol];
+        }
+        return null;
+    }
     public void setCheck(boolean truth, String answerText, int fragentyp) {
         JPanel main = new JPanel(new GridLayout(2, 1));
         JPanel gridy = new JPanel();
@@ -193,10 +205,9 @@ public class WordleView extends JPanel {
 
     public void nextCard(String question, int answerlength, int fragentyp) {
         rowCounter = 0;
-        textLength = answerlength; // Update the textLength to the new answer length
-        this.removeAll(); // Clear the existing components
+        textLength = answerlength;
+        this.removeAll();
 
-        // Recreate the question panel
         this.question = new JPanel();
         double half = this.getHeight() / 6.0;
         this.question.setPreferredSize(new Dimension(80, (int) half));
@@ -393,27 +404,40 @@ public class WordleView extends JPanel {
     public int getRowCounter() {
         return rowCounter;
     }
-    public void setFocus(){
-        answers[rowCounter][0].requestFocus();
+    public void setFocus() {
+        currentRow = rowCounter;
+        currentCol = 0;
+        answers[currentRow][currentCol].requestFocus();
     }
 
-    public void setFocusNext(){
+    public void setFocusNext() {
         for (int i = 0; i < answers[rowCounter].length; i++) {
-            if (answers[rowCounter][i].hasFocus()) {
-                if (i + 1 < answers[rowCounter].length) {
-                    answers[rowCounter][i + 1].requestFocus();
-                } else if (rowCounter + 1 < answers.length) {
-                    answers[rowCounter + 1][0].requestFocus();
+            if (answers[rowCounter][i] != null && answers[rowCounter][i].hasFocus()) {
+                currentRow = rowCounter;
+                currentCol = i;
+
+                if ((i + 1) < answers[rowCounter].length && answers[rowCounter][i+1] != null) {
+                    currentCol = i + 1;
+                    answers[rowCounter][currentCol].requestFocus();
+                } else if (rowCounter + 1 < answers.length && answers[rowCounter+1][0] != null) {
+                    currentRow = rowCounter + 1;
+                    currentCol = 0;
+                    answers[currentRow][currentCol].requestFocus();
                 }
                 break;
             }
         }
     }
-    public void setFocusPrevious(){
+
+    public void setFocusPrevious() {
         for (int i = 0; i < answers[rowCounter].length; i++) {
-            if(answers[rowCounter][i].hasFocus()){
-                if(i-1>=0){
-                    answers[rowCounter][i-1].requestFocus();
+            if (answers[rowCounter][i].hasFocus()) {
+                currentRow = rowCounter;
+                currentCol = i;
+
+                if (i - 1 >= 0) {
+                    currentCol = i - 1;
+                    answers[rowCounter][currentCol].requestFocus();
                 }
                 break;
             }

@@ -81,8 +81,7 @@ public class WordleControl implements ActionListener, KeyListener {
     }
     @Override
     public void keyPressed(KeyEvent e) {
-
-        switch (e.getKeyCode()){
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_ENTER:
                 e.consume();
                 check();
@@ -99,10 +98,16 @@ public class WordleControl implements ActionListener, KeyListener {
                 break;
             case KeyEvent.VK_BACK_SPACE:
                 break;
-
             default:
-                if ((e.getKeyChar() != 0)) {
-                    SwingUtilities.invokeLater(view::setFocusNext);
+                char ch = e.getKeyChar();
+                if (Character.isLetterOrDigit(ch) || ch == '-'  ||ch == '_') {
+                    JTextPane currentField = view.getCurrentField();
+
+                    if (currentField != null && currentField.isEditable() && currentField.getText().isEmpty()) {
+                        currentField.setText(String.valueOf(ch));
+                        e.consume();
+                        SwingUtilities.invokeLater(view::setFocusNext);
+                    }
                 }
                 break;
         }
@@ -134,6 +139,7 @@ public class WordleControl implements ActionListener, KeyListener {
     public void check(){
         boolean isCorrect = model.check(new String(view.getAnswersText()));
         model.increaseQustions();
+        System.out.println("???" +view.getAnswersText() + isCorrect);
         if (isCorrect) {
             model.increaseQuestionsCorrect();
             view.setCheck(isCorrect, shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp());
@@ -158,7 +164,7 @@ public class WordleControl implements ActionListener, KeyListener {
                 view.addButtonListener(this);
             } else {
                 if (!view.getAnswersText().isBlank()) {
-                    view.setColors(model.compareChars(new String(view.getAnswersText()), shuffled[currentCard].getAntwort()));
+                    view.setColors(model.compareChars(new String(view.getAnswersText().toLowerCase()), shuffled[currentCard].getAntwort().toLowerCase()));
                     view.activateNewFields();
                     view.setFocus();
                 }

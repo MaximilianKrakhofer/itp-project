@@ -37,7 +37,7 @@ public class WordleModel {
     }
 
     public boolean check(String answer) {
-        if (cards[currentAnswer].getAntwort().equals(answer)) {
+        if (cards[currentAnswer].getAntwort().equalsIgnoreCase(answer)) {
 
             currentAnswer++;
             return true;

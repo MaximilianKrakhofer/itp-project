@@ -87,6 +87,7 @@ public class QuizView extends JPanel {
 
         this.questionText = new JLabel();
         this.answer = new JTextPane();
+
         questionText.setBorder(new EmptyBorder(0,3,0,0));
         if (!isLoaded) {
             JOptionPane.showMessageDialog(null, "Keine KarteiKarten vorhanden");
@@ -96,6 +97,7 @@ public class QuizView extends JPanel {
 
         this.question = new JPanel();
         double half = this.getHeight() / 2.0;
+        questionText.setPreferredSize(new Dimension(this.getWidth(),(int)half));
         this.question.setPreferredSize(new Dimension(80, (int) half));
         if (fragentyp == 1) {
             try {
@@ -165,7 +167,6 @@ public class QuizView extends JPanel {
                 this.question.add(questionText);
             }
         } else {
-            imagePanel.removeAll();
             imagePanel.removeAll();
             questionText.setText("<html>  " +"  "+ question + "<html>");
             this.question.add(questionText);
