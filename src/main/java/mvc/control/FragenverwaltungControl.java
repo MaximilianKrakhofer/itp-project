@@ -48,6 +48,8 @@ public class FragenverwaltungControl implements ActionListener {
                 break;
             case "add":
                 KarteiKarte card = view.getCard();
+
+
                 if (card.getFrage() == null || card.getFrage().isEmpty() || card.getAntwort() == null || card.getAntwort().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Leere Fragen oder Antworten sind nicht erlaubt");
                     break;

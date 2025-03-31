@@ -12,8 +12,6 @@ public class HangmanModel {
     private long startTime, endTime;
     private boolean atleastOne;
     private int[] hangmanCompletions;
-    private int hangmanCount;
-
 
 
     public KarteiKarte[] startQuiz(KarteiKarten cards) {
@@ -30,7 +28,7 @@ public class HangmanModel {
     public int[] endQuiz() {
         endTime = System.currentTimeMillis();
         int[] results = new int[5];
-        results[0] = questions;
+        results[0] = currentHangman ;
         results[1] = failedChars;
         results[2] = failedWords;
         results[3] = (int) (endTime - startTime) / 1000;
@@ -47,7 +45,6 @@ public class HangmanModel {
 
 
         }
-
         if(currentHangman== 0) {
             percent = 0;
         }
@@ -57,13 +54,11 @@ public class HangmanModel {
     }
 
     public boolean check(String answer) {
-
         for (int i = 0; i < answer.length(); i++) {
             if (answer.charAt(i) == '_') {
                 return false;
             }
         }
-        this.questions++;
         return true;
 
     }
@@ -194,9 +189,5 @@ public class HangmanModel {
 
     public int getCurrentHangman() {
         return currentHangman;
-    }
-
-    public void setHangmanCount(int hangmanCount) {
-        this.hangmanCount = hangmanCount;
     }
 }

@@ -338,7 +338,10 @@ public class QuizView extends JPanel {
     }
 
     public void setTextFieldActive(){
-        answer.requestFocus();
+        if (this.answer!=null) {
+
+            answer.requestFocus();
+        }
     }
 
 }

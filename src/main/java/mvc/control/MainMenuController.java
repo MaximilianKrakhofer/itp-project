@@ -24,6 +24,7 @@ public class MainMenuController implements ActionListener {
                 masterController.showFragenVerwaltung();
                 break;
             case "Quiz":
+
                 masterController.showQuiz();
                 break;
             case "Hangman":

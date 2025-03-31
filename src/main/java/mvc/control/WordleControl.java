@@ -129,7 +129,7 @@ public class WordleControl implements ActionListener, KeyListener {
 
     public boolean isLoaded() {
 
-        if (controller.getCards().getCard(0) != null) {
+        if (controller.getCards() !=null && controller.getCards().getCard(0) != null) {
             cards = controller.getCards();
             return true;
         }

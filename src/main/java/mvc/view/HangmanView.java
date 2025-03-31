@@ -357,7 +357,10 @@ public class HangmanView extends JPanel {
     }
 
     public void setTextFieldActive(){
-        answer.requestFocus();
+        if(answer!=null) {
+
+            answer.requestFocus();
+        }
     }
 
 }
