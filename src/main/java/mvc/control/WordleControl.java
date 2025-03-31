@@ -81,6 +81,10 @@ public class WordleControl implements ActionListener, KeyListener {
     }
     @Override
     public void keyPressed(KeyEvent e) {
+
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_ENTER:
                 e.consume();
@@ -97,36 +101,28 @@ public class WordleControl implements ActionListener, KeyListener {
                 }
                 break;
             case KeyEvent.VK_BACK_SPACE:
-                // Handle backspace if needed
+                view.setFocusPrevious();
+                view.getCurrentField().setText("");
+
                 break;
             default:
                 char ch = e.getKeyChar();
                 if (Character.isLetterOrDigit(ch) || ch == '-' || ch == '_') {
-                    // Get the current text field
                     JTextPane currentField = view.getCurrentField();
-
-                    // Debug output to trace execution
                     System.out.println("Key pressed: " + ch + ", current field: " +
                             (currentField != null ? "valid" : "null") +
                             (currentField != null ? ", editable: " + currentField.isEditable() : ""));
 
                     if (currentField != null && currentField.isEditable()) {
-                        // Set the text regardless of current content
                         currentField.setText(String.valueOf(ch));
                         e.consume();
-
-                        // Move focus to next field
                         view.setFocusNext();
-
-                        // Debug output to confirm we completed the action
                         System.out.println("Set text and moved focus");
                     }
                 }
                 break;
         }
     }
-    @Override
-    public void keyReleased(KeyEvent e) {}
 
     @Override
     public void keyTyped(KeyEvent e) {}

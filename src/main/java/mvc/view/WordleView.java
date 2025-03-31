@@ -440,6 +440,9 @@
                         currentCol = 0;
                         answers[currentRow][currentCol].requestFocus();
                     }
+                    if(answers[rowCounter][i+1] != null && !answers[rowCounter][i].getText().isEmpty()) {
+                        answers[rowCounter][i+1].setText("");
+                    }
                     break;
                 }
             }
