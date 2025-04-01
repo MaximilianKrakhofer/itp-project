@@ -35,6 +35,7 @@ public class WordleControl implements ActionListener, KeyListener {
                 break;
             case "restart":
                 this.model = new WordleModel();
+                currentCard = 0;
                 view.revalidate();
                 view.repaint();
                 view.addButtonListener(this);
@@ -168,9 +169,15 @@ public class WordleControl implements ActionListener, KeyListener {
                 view.setCheck(false, shuffled[currentCard].getAntwort(), shuffled[currentCard].getFragentyp());
                 endQuiz();
                 currentCard += 1;
-                view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
-                System.out.println("Antwort" + shuffled[currentCard].getAntwort() + "Länge: " + shuffled[currentCard].getAntwort().length());
-                view.addButtonListener(this);
+                try {
+                    view.nextCard(shuffled[currentCard].getFrage(), shuffled[currentCard].getAntwort().length(), shuffled[currentCard].getFragentyp());
+                    System.out.println("Antwort" + shuffled[currentCard].getAntwort() + "Länge: " + shuffled[currentCard].getAntwort().length());
+                    model.increaseCurrentAnswer();
+                    view.addButtonListener(this);
+                }
+                catch (Exception e) {
+                    //rip
+                }
             } else {
                 if (!view.getAnswersText().isBlank()) {
                     view.setColors(model.compareChars(new String(view.getAnswersText().toLowerCase()), shuffled[currentCard].getAntwort().toLowerCase()));

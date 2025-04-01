@@ -182,7 +182,45 @@ public class HangmanView extends JPanel {
                 "Solution", JOptionPane.OK_CANCEL_OPTION);
         return a.getText();
     }
-
+//public void endQuiz(int beantwortet, int korrekt, int dauer, int prozent) {
+//        this.removeAll();
+//        JLabel fragenbeantwortetLabel, korrektLabel, dauerLabel, prozentLabel;
+//        Font labelFont = new Font("Arial", Font.PLAIN, 30);
+//        fragenbeantwortetLabel = new JLabel("Fragenbeantwortet: " + beantwortet);
+//        fragenbeantwortetLabel.setFont(labelFont);
+//        fragenbeantwortetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+//
+//        korrektLabel = new JLabel("Korrekt: " + korrekt);
+//        korrektLabel.setFont(labelFont);
+//        korrektLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+//
+//        dauerLabel = new JLabel("Dauer: " + dauer + " Sekunden");
+//        dauerLabel.setFont(labelFont);
+//        dauerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+//
+//        prozentLabel = new JLabel("Prozent: " + prozent);
+//        prozentLabel.setFont(labelFont);
+//        prozentLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        JPanel box = new JPanel();
+//        box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
+//        box.add(Box.createVerticalGlue());
+//        box.add(fragenbeantwortetLabel);
+//        box.add(korrektLabel);
+//        box.add(dauerLabel);
+//        box.add(prozentLabel);
+//
+//
+//        box.add(Box.createVerticalGlue());
+//        JPanel buttons = new JPanel(new GridLayout(1, 2));
+//        buttons.add(mainMenu);
+//        restart = new JButton("restart");
+//        restart.setActionCommand("restart");
+//        buttons.add(restart);
+//        this.add(box, BorderLayout.CENTER);
+//        this.add(buttons, BorderLayout.SOUTH);
+//        this.repaint();
+//        this.revalidate();
+//    }
     public void endQuiz(int beantwortet, int failedChars, int failedWords,  int dauer, int prozent) {
         this.removeAll();
 
@@ -195,9 +233,6 @@ public class HangmanView extends JPanel {
 
         fragenbeantwortetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         fragenbeantwortetLabel.setFont(labelFont);
-        JLabel failedWordsLabel = new JLabel("Failed Words: " + failedWords);
-        failedWordsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        failedWordsLabel.setFont(labelFont);
         JLabel charWrongLabel = new JLabel("Buchstaben Falsch erraten: " + failedChars);
         charWrongLabel.setFont(labelFont);
         charWrongLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -210,18 +245,18 @@ public class HangmanView extends JPanel {
 
         JPanel box = new JPanel();
         box.setLayout(new BoxLayout(box, BoxLayout.PAGE_AXIS));
+        box.add(Box.createVerticalGlue());
         box.add(fragenbeantwortetLabel);
-        box.add(failedWordsLabel);
         box.add(charWrongLabel);
         box.add(dauerLabel);
         box.add(prozentLabel);
-
+        box.add(Box.createVerticalGlue());
         JPanel buttons = new JPanel(new GridLayout(1, 2));
         buttons.add(mainMenu);
         restart = new JButton("restart");
         restart.setActionCommand("restart");
         buttons.add(restart);
-        this.add(box);
+        this.add(box, BorderLayout.CENTER);
         this.add(buttons, BorderLayout.SOUTH);
         this.repaint();
         this.revalidate();
@@ -265,7 +300,21 @@ public class HangmanView extends JPanel {
     public void setCheck(boolean truth, String answerText) {
 
         JPanel main = new JPanel(new GridLayout(2, 1));
-        JPanel grid = new JPanel(new GridLayout(3, 2));
+        JPanel grid = new JPanel();
+        grid.setLayout(new BoxLayout(grid, BoxLayout.Y_AXIS));
+
+        JPanel boxquest = new JPanel();
+        boxquest.setLayout(new BoxLayout(boxquest, BoxLayout.X_AXIS));
+        boxquest.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel boxansw = new JPanel();
+        boxansw.setLayout(new BoxLayout(boxansw, BoxLayout.X_AXIS));
+        boxansw.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JPanel boxsolut = new JPanel();
+        boxsolut.setLayout(new BoxLayout(boxsolut, BoxLayout.X_AXIS));
+        boxsolut.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         JEditorPane correct = new JEditorPane();
         correct.setContentType("text/html");
         if (truth) {
@@ -275,14 +324,20 @@ public class HangmanView extends JPanel {
         }
         main.add(correct);
 
-        grid.add(new JLabel("Question"));
-        grid.add(new JLabel(questionText.getText()));
+        boxquest.add(new JLabel("Question"));
+        boxquest.add(new JLabel(questionText.getText()));
 
 
-        grid.add(new JLabel("Your answer"));
-        grid.add(new JLabel(solutionPreview.getText()));
-        grid.add(new JLabel("Solution: "));
-        grid.add(new JLabel(answerText));
+        boxansw.add(new JLabel("Your answer"));
+        boxansw.add(new JLabel(solutionPreview.getText()));
+        boxsolut.add(new JLabel("Solution: "));
+        JTextPane realAnswer = new JTextPane();
+        realAnswer.setText(answerText);
+        realAnswer.setEditable(false);
+        boxsolut.add(realAnswer);
+        grid.add(boxquest);
+        grid.add(boxansw);
+        grid.add(boxsolut);
         main.add(grid);
         JOptionPane.showConfirmDialog(null, main,
                 "Solution", JOptionPane.OK_CANCEL_OPTION);

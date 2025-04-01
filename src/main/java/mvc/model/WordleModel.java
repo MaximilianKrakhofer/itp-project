@@ -47,7 +47,9 @@ public class WordleModel {
 
 
     }
-
+    public void increaseCurrentAnswer() {
+        currentAnswer++;
+    }
     public int[] compareChars(String attempt, String solution) {
         int[] correctChars = new int[solution.length()];
         boolean[] used = new boolean[solution.length()];
